@@ -1,5 +1,5 @@
 {
-  "name": "bet",
+  "name": "howlongistheline",
   "private": true,
   "scripts": {
     "start": "meteor run",
