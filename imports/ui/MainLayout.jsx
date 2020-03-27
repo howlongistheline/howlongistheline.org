@@ -43,7 +43,7 @@ function SideBar({ children, history }) {
                         {/* <Route render={({ history }) => (
                             <img src='/images/...' onClick={() => { loadPage(history, "/") }}style={{height:"80%", maxWidth:"100%"}}></img>
                         )} /> */}
-                        Header
+                        How Long is the Line?
                         </div>
                         <div className="right">
                         <Route render={({ history }) => (
@@ -51,7 +51,7 @@ function SideBar({ children, history }) {
                                                     // loadPage(history, '/profile')
                                                 }}>
                                                     <Icon icon="fa-user-circle" />
-                                                </ToolbarButton>   
+                                                </ToolbarButton>
                         )} />
 
                         </div>
