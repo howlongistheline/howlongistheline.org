@@ -46,14 +46,7 @@ function SideBar({ children, history }) {
                         How Long is the Line?
                         </div>
                         <div className="right">
-                        <Route render={({ history }) => (
-                                                <ToolbarButton onClick={() => {
-                                                    // loadPage(history, '/profile')
-                                                }}>
-                                                    <Icon icon="fa-user-circle" />
-                                                </ToolbarButton>
-                        )} />
-
+                        
                         </div>
                     </Toolbar>}
                 >

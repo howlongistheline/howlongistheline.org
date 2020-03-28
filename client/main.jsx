@@ -6,6 +6,7 @@ import ons from 'onsenui';
 import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 import { renderRoutes } from '../imports/startup/client/routes';
+import 'react-toastify/dist/ReactToastify.css';
 
 Meteor.startup(() => {
   // render(<App />, document.getElementById('react-target'));
