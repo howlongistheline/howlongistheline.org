@@ -38,7 +38,7 @@ export default function AddLine({history}) {
     if(loading){
         return(
             <MainLayout>
-                <ProgressCircular indeterminate style={{width: 50}}/>
+                <ProgressCircular indeterminate/>
             </MainLayout>
         )
     }
