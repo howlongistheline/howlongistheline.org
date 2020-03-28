@@ -18,13 +18,44 @@ function Index({lines, history}) {
         }
     }
 
+    function timeSince(date) {
+
+        var seconds = Math.floor((new Date() - date) / 1000);
+      
+        var interval = Math.floor(seconds / 31536000);
+      
+        if (interval > 1) {
+        //   return interval + " years";
+        return "from " +date.toLocaleDateString()
+        }
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) {
+        //   return interval + " months";
+        return "from " +date.toLocaleDateString()
+        }
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) {
+          return interval + " days";
+        }
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) {
+          return interval + " hours ago";
+        }
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) {
+          return interval + " minutes ago";
+        }
+        return Math.floor(seconds) + " seconds ago";
+      }
+
     function renderList() {
         return lines.map((line) => {
+            // console.log(line.createdAt)
             return (
             <ListItem key={line._id} tappable onClick={()=>{
             }}>
                 <div className="left">{line.name + " : "}</div>
-                <div className="center"></div>
+                <div className="center">{timeSince(line.createdAt)}</div>
                 <div className="right">
                     {/* <Icon icon="md-chevron-right"></Icon>
                  */}
