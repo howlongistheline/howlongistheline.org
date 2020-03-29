@@ -4,7 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { locations } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
 import { Icon, Button, ListItem, ListTitle } from 'react-onsenui'
-var moment = require('moment');
+import moment from 'moment';
 
 function Index({locations, history}) {
 

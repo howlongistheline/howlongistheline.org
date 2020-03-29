@@ -12,6 +12,7 @@
     "history": "^4.10.1",
     "meteor-node-stubs": "^1.0.0",
     "minimist": ">=1.2.2",
+    "moment": "^2.24.0",
     "onsenui": "^2.10.10",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
