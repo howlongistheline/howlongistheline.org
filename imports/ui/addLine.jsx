@@ -43,6 +43,8 @@ export default function AddLine({ history }) {
         }, error)
 
         function error(err) {
+            toast("Cant get current location, please turn on browser's geolocation function")
+            setLoading(false)
             console.warn(`ERROR(${err.code}): ${err.message}`);
           }
     }
@@ -50,6 +52,7 @@ export default function AddLine({ history }) {
         return (
             <MainLayout>
                 <ProgressCircular indeterminate />
+                Loading
             </MainLayout>
         )
     }

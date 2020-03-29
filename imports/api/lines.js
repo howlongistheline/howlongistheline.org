@@ -7,7 +7,7 @@ export const locations = new Mongo.Collection('locations');
 
 export const locationsIndex = new Index({
     collection: locations,
-    fields: ['name'],
+    fields: ['name', 'address'],
     engine: new MinimongoEngine(),
 })
 

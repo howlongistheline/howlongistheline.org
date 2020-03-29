@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { locations } from '../api/lines.js';
@@ -7,7 +7,11 @@ import { Icon, Button, ListItem, ListTitle, Card } from 'react-onsenui'
 import moment from 'moment';
 
 function Index({ locations, history }) {
+    useEffect(() => {
+        return () => {
 
+        }
+    }, [])
     function statusToWord(statusCode) {
         switch (statusCode) {
             case "no":
@@ -22,12 +26,17 @@ function Index({ locations, history }) {
     function renderList() {
         return locations.map((location) => {
             return (
-                <Card key={location._id} tappable onClick={() => {
-                    history.push('/editLine?id=' + location._id)
-                }}>
-                    <ListTitle>
+                <Card key={location._id}>
+                    <ListItem>
                         Name: {location.name}
-                    </ListTitle>
+                        <div className="right">
+                            <Button
+                            onClick={() => {
+                                history.push('/editLine?id=' + location._id)
+                                }}
+                            >Update Status</Button>
+                        </div>
+                    </ListItem>
                     <ListItem>
                         Address: {location.address}
                     </ListItem>
