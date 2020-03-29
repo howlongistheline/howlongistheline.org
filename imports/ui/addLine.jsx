@@ -24,10 +24,10 @@ export default function AddLine({ history }) {
             toast("Please enter address");
             return
         }
-        // if (!navigator.geolocation) {
-        //     toast("Cant get current location")
-        //     console.log("Cant get current location")
-        // }
+        if (!navigator.geolocation) {
+            toast("Cant get current location")
+            console.log("Cant get current location")
+        }
         setLoading(true)
         navigator.geolocation.getCurrentPosition((position) => {
             Meteor.call('locations.insert', name, position.coords, address, status, function (err, result) {
@@ -81,8 +81,10 @@ export default function AddLine({ history }) {
             <ListTitle>
                 Address
             </ListTitle>
+            <ListItem>
             <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
+            </ListItem>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit" 
                 onClick={() => {
