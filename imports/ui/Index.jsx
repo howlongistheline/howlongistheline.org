@@ -4,49 +4,20 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { locations } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
 import { Icon, Button, ListItem, ListTitle } from 'react-onsenui'
+var moment = require('moment');
 
-function Index({locations, history}) {    
+function Index({locations, history}) {
 
     function statusToWord(statusCode){
         switch(statusCode){
             case "no":
-                return <div style={{color:"green"}}>Good</div>
+                return <div style={{color:"green"}}>No Lines!</div>
             case "small":
                 return <div style={{color:"orange"}}>Not Great</div>
             case "long":
-                return <div style={{color:"red"}}>Poor</div>
+                return <div style={{color:"red"}}>Busy</div>
         }
     }
-
-    function timeSince(date) {
-
-        var seconds = Math.floor((new Date() - date) / 1000);
-      
-        var interval = Math.floor(seconds / 31536000);
-      
-        if (interval > 1) {
-        //   return interval + " years";
-        return "from " +date.toLocaleDateString()
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval > 1) {
-        //   return interval + " months";
-        return "from " +date.toLocaleDateString()
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval > 1) {
-          return interval + " days";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval > 1) {
-          return interval + " hours ago";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval > 1) {
-          return interval + " minutes ago";
-        }
-        return Math.floor(seconds) + " seconds ago";
-      }
 
     function renderList() {
         return locations.map((location) => {
@@ -55,7 +26,7 @@ function Index({locations, history}) {
                 history.push('/editLine?id='+location._id)
             }}>
                 <div className="left">{location.name + " : "}</div>
-                <div className="center">{timeSince(location.lastUpdate)}</div>
+                <div className="center">{moment(location.lastUpdate).fromNow()}</div>
                 <div className="right">
                     {/* <Icon icon="md-chevron-right"></Icon>
                  */}
@@ -72,7 +43,7 @@ function Index({locations, history}) {
                 </ListTitle>
                 {renderList()}
                 <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
-                    // type="submit" 
+                    // type="submit"
                     onClick={() => {history.push('/addLine')}}>
                     Add line
                     <Icon style={{marginLeft: 10}} icon='fa-plus' />
@@ -84,7 +55,7 @@ function Index({locations, history}) {
 
 export default withTracker(() => {
     Meteor.subscribe('locations');
-  
+
     return {
       locations: locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
     //   currentUser: Meteor.user,
