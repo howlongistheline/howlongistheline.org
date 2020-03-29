@@ -52,9 +52,10 @@ function Index({locations, history}) {
         return locations.map((location) => {
             return (
             <ListItem key={location._id} tappable onClick={()=>{
+                history.push('/editLine?id='+location._id)
             }}>
                 <div className="left">{location.name + " : "}</div>
-                <div className="center">{timeSince(location.createdAt)}</div>
+                <div className="center">{timeSince(location.lastUpdate)}</div>
                 <div className="right">
                     {/* <Icon icon="md-chevron-right"></Icon>
                  */}
@@ -85,7 +86,7 @@ export default withTracker(() => {
     Meteor.subscribe('locations');
   
     return {
-      locations: locations.find({}, { sort: { createdAt: -1 } }).fetch(),
+      locations: locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
     //   currentUser: Meteor.user,
     };
   })(Index);
