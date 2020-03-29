@@ -26,10 +26,10 @@ function Index({ locations, history }) {
                     history.push('/editLine?id=' + location._id)
                 }}>
                     <ListTitle>
-                    {location.name}{location.address}
+                        Name: {location.name}
                     </ListTitle>
                     <ListItem>
-                    {location.address}
+                        Address: {location.address}
                     </ListItem>
                     <ListItem>
                         Last updated: {moment(location.lastUpdate).fromNow()}
