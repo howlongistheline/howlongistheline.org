@@ -13,9 +13,9 @@ function Index({locations, history}) {
             case "no":
                 return <div style={{color:"green"}}>No Lines!</div>
             case "small":
-                return <div style={{color:"orange"}}>A wee wait</div>
+                return <div style={{color:"orange"}}>A Wee Wait</div>
             case "long":
-                return <div style={{color:"red"}}>Busy. Go later.</div>
+                return <div style={{color:"red"}}>Busy. Stay Home.</div>
         }
     }
 
@@ -25,7 +25,8 @@ function Index({locations, history}) {
             <ListItem key={location._id} tappable onClick={()=>{
                 history.push('/editLine?id='+location._id)
             }}>
-                <div className="left">{location.name + " : "}</div>
+                //<div className="left">{location.name}</div>
+                <div className="left">{location.address}</div>
                 <div className="center">Last updated: {moment(location.lastUpdate).fromNow()}</div>
                 <div className="right">Waiting time:&nbsp;{statusToWord(location.status)}</div>
             </ListItem>)
@@ -35,7 +36,7 @@ function Index({locations, history}) {
     return (
         <MainLayout>
                 <ListTitle>
-                    Shops
+                    Shops Near You
                 </ListTitle>
                 {renderList()}
                 <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
