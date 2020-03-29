@@ -38,6 +38,7 @@ Meteor.methods({
             "coordinates": location,
             status,
             address,
+            upvote: 0,
             createdAt: new Date(),
             lastUpdate: new Date(),
         });
@@ -51,16 +52,16 @@ Meteor.methods({
         // if (!this.userId) {
         //     throw new Meteor.Error('not-authorized');
         // }
-
         locations.update({_id: id},{
             name,
             status,
             address,
+            upvote: 0,
             lastUpdate: new Date(),
         });
         return true
     },
-    'location.findnearby'(long, lat){
+    'locations.findnearby'(long, lat){
             var locs = locations.find({ 
                 "coordinates": {
                     $near: {
@@ -73,5 +74,11 @@ Meteor.methods({
                 } 
             },{limit: 3}).fetch()
             return locs
+    },
+    'locations.upvote' (id){
+        locations.update(
+            { _id: id },
+            { $inc: { upvote: 1} }
+        )
     }
 })

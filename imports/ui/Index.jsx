@@ -13,12 +13,11 @@ function Index({ history }) {
     const [nearby, setNearby] = useState();
     const [AllLocations, setAllLocations] = useState([])
     const [search, setSearch] = useState("");
-
+    const [currentLocation, setCurrentLocation] = useState();
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
-            Meteor.call('location.findnearby', position.coords.longitude, position.coords.latitude, (err, result) => {
-                setNearby(result)
-            })
+            setCurrentLocation(position)
+            getNearby(position)
         }, (err) => {
             toast("Cant get current location, please turn on browser's geolocation function and refresh")
             console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -27,32 +26,87 @@ function Index({ history }) {
         }
     }, [])
 
+
+    function getNearby(position){
+        Meteor.call('locations.findnearby', position.coords.longitude, position.coords.latitude, (err, result) => {
+            setNearby(result)
+        })
+    }
+
+
     useEffect(() => {
         let isCancelled = false;
         try {
             if (!isCancelled) {
                 Tracker.autorun(function () {
-                    if(!isCancelled){
-                    if(search == ""){
-                        setAllLocations(locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch(),)
+                    if (!isCancelled) {
+                        if (search == "") {
+                            setAllLocations(locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch())
+                        }
+                        else {
+                            let cursor = locationsIndex.search(search)
+                            setAllLocations(cursor.fetch())
+                        }
                     }
-                    else{
-                        let cursor = locationsIndex.search(search)
-                        setAllLocations(cursor.fetch())
-                    }
-                }
                 })
             }
-          } catch (e) {
+        } catch (e) {
             if (!isCancelled) {
-              throw e;
+                throw e;
             }
-          }
-        return function cleanup(){
+        }
+        return function cleanup() {
             isCancelled = true;
         }
     }, [search])
 
+    function renderCard(location) {
+        return (
+            <Card key={location._id}>
+                <ListItem>
+                    Name: {location.name}
+                    <div className="right">
+                        <Button
+                            onClick={() => {
+                                history.push('/editLine?id=' + location._id)
+                            }}
+                        >Update Status</Button>
+                    </div>
+                </ListItem>
+                <ListItem>
+                    Address: {location.address}
+                    <div className="right">
+                        Last updated: {moment(location.lastUpdate).fromNow()}
+                    </div>
+                </ListItem>
+                <ListItem>
+                    Waiting time:&nbsp;{statusToWord(location.status)}
+                    <div className="right">
+                        {location.upvote}
+                        <Button modifier="quiet"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                Meteor.call("locations.upvote", location._id, (err, result)=>{
+                                    if(err){
+                                    toast(err)
+                                    }
+                                    if(result=="wait"){
+                                        toast("please wait 1 min to upvote")
+                                    }
+                                })
+                                getNearby(currentLocation)
+                            }}>
+
+                            <Icon
+                                size={15}
+                                icon="fa-thumbs-up"
+                            />
+                        </Button>
+                    </div>
+                </ListItem>
+            </Card>
+        )
+    }
 
     function statusToWord(statusCode) {
         switch (statusCode) {
@@ -67,28 +121,7 @@ function Index({ history }) {
 
     function renderList() {
         return AllLocations.map((location) => {
-            return (
-                <Card key={location._id}>
-                    <ListItem>
-                        Name: {location.name}
-                        <div className="right">
-                            <Button
-                                onClick={() => {
-                                    history.push('/editLine?id=' + location._id)
-                                }}
-                            >Update Status</Button>
-                        </div>
-                    </ListItem>
-                    <ListItem>
-                        Address: {location.address}
-                    </ListItem>
-                    <ListItem>
-                        Last updated: {moment(location.lastUpdate).fromNow()}
-                    </ListItem>
-                    <ListItem>
-                        Waiting time:&nbsp;{statusToWord(location.status)}
-                    </ListItem>
-                </Card>)
+            return renderCard(location)
         })
     }
 
@@ -101,43 +134,22 @@ function Index({ history }) {
             )
         }
         return nearby.map((location) => {
-            return (
-                <Card key={location._id}>
-                    <ListItem>
-                        Name: {location.name}
-                        <div className="right">
-                            <Button
-                                onClick={() => {
-                                    history.push('/editLine?id=' + location._id)
-                                }}
-                            >Update Status</Button>
-                        </div>
-                    </ListItem>
-                    <ListItem>
-                        Address: {location.address}
-                    </ListItem>
-                    <ListItem>
-                        Last updated: {moment(location.lastUpdate).fromNow()}
-                    </ListItem>
-                    <ListItem>
-                        Waiting time:&nbsp;{statusToWord(location.status)}
-                    </ListItem>
-                </Card>)
+            return renderCard(location)
         })
     }
-    if(search != ""){
+    if (search != "") {
         return (
             <MainLayout>
-                <div style={{position: "sticky", top:0}}>
-                <ListItem>
-                        <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e)=>{
+                <div style={{ position: "sticky", top: 0 }}>
+                    <ListItem>
+                        <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e) => {
                             setSearch(e.target.value)
-                        }}/>
-                </ListItem>
+                        }} />
+                    </ListItem>
                 </div>
                 <div style={{ marginBottom: 55 }}>
-                <ListTitle>
-                    Results
+                    <ListTitle>
+                        Results
                 </ListTitle>
                     {renderList()}
                 </div>
@@ -152,12 +164,12 @@ function Index({ history }) {
     }
     return (
         <MainLayout>
-            <div style={{position: "sticky", top:0}}>
-            <ListItem>
-                    <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e)=>{
+            <div style={{ position: "sticky", top: 0 }}>
+                <ListItem>
+                    <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e) => {
                         setSearch(e.target.value)
-                    }}/>
-            </ListItem>
+                    }} />
+                </ListItem>
             </div>
             <div style={{ marginBottom: 55 }}>
                 <ListTitle>
