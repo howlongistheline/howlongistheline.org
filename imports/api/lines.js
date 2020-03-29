@@ -66,13 +66,12 @@ Meteor.methods({
                     $near: {
                         $geometry: {
                             type: "Point", 
-                            coordinates: [long, lat] 
+                            coordinates: [long, lat] ,
+                            $maxDistance : 10
                         },
-                    } 
+                    }
                 } 
             },{limit: 3}).fetch()
             return locs
     }
 })
-
-
