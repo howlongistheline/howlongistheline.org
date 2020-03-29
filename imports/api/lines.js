@@ -1,29 +1,37 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-export const Lines = new Mongo.Collection('lines');
+import { Index, MinimongoEngine } from 'meteor/easy:search'
+
+export const locations = new Mongo.Collection('locations');
+
+export const locationsIndex = new Index({
+    collection: locations,
+    fields: ['name'],
+    engine: new MinimongoEngine(),
+})
+
 
 if (Meteor.isServer) {
     // This code only runs on the server
-    Meteor.publish('lines', function tasksPublication() {
-      return Lines.find();
+    Meteor.publish('locations', function tasksPublication() {
+      return locations.find();
     });
 }
 
 
 
 Meteor.methods({
-    'lines.insert'(name, location, status) {
+    'locations.insert'(name, location, address, status) {
         check(name, String);
-        // check(type, String);
-        // check(location, String);
         check(status, String);
+        check(address, String);
         // Make sure the user is logged in before inserting a task
         // if (!this.userId) {
         //     throw new Meteor.Error('not-authorized');
         // }
 
-        Lines.insert({
+        locations.insert({
             name,
             location,
             status,
