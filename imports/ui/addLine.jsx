@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
-import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular } from 'react-onsenui'
+import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox } from 'react-onsenui'
 import { toast } from 'react-toastify';
 
 export default function AddLine({ history }) {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState("0"); //0:not selected
-    const [address, setAddress] = useState(""); //0:not selected
-
+    const [address, setAddress] = useState("");
+    const [confirm, setCofirm] = useState(false);
 
     function submit() {
 
@@ -22,6 +22,10 @@ export default function AddLine({ history }) {
         }
         if (address == "") {
             toast("Please enter address");
+            return
+        }
+        if (confirm == false) {
+            toast("Please confirm that you are at the shop");
             return
         }
         if (!navigator.geolocation) {
@@ -88,6 +92,13 @@ export default function AddLine({ history }) {
             <ListItem>
             <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
+            </ListItem>
+            <ListItem tappable onClick={()=>{setCofirm(!confirm)}}>
+            <Checkbox
+                style={{paddingRight: 10}}
+                checked={confirm}
+                modifier='material' />
+            I confirm that I am at the shop.
             </ListItem>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
