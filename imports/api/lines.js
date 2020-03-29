@@ -35,7 +35,26 @@ Meteor.methods({
             name,
             location,
             status,
+            address,
             createdAt: new Date(),
+            lastUpdate: new Date(),
+        });
+        return true
+    },    
+    'locations.update'(id, name, address, status) {
+        check(name, String);
+        check(status, String);
+        check(address, String);
+        // Make sure the user is logged in before inserting a task
+        // if (!this.userId) {
+        //     throw new Meteor.Error('not-authorized');
+        // }
+
+        locations.update({_id: id},{
+            name,
+            status,
+            address,
+            lastUpdate: new Date(),
         });
         return true
     },
