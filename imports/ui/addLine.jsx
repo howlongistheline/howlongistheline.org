@@ -76,7 +76,7 @@ export default function AddLine({ history }) {
             <ListTitle>
                 Address
             </ListTitle>
-            <textarea class="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
+            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit" 
