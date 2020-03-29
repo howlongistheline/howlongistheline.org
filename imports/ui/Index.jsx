@@ -26,12 +26,8 @@ function Index({locations, history}) {
                 history.push('/editLine?id='+location._id)
             }}>
                 <div className="left">{location.name + " : "}</div>
-                <div className="center">{moment(location.lastUpdate).fromNow()}</div>
-                <div className="right">
-                    {/* <Icon icon="md-chevron-right"></Icon>
-                 */}
-                 {statusToWord(location.status)}
-                </div>
+                <div className="center">Last updated: {moment(location.lastUpdate).fromNow()}</div>
+                <div className="right">Waiting time:&nbsp;{statusToWord(location.status)}</div>
             </ListItem>)
         })
     }
