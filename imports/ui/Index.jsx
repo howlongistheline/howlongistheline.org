@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import { Icon, Button, ListItem, ListTitle } from 'react-onsenui'
 
 function Index({locations, history}) {    
-
+    // console.log(navigator.geolocation)
     function statusToWord(statusCode){
         switch(statusCode){
             case "no":

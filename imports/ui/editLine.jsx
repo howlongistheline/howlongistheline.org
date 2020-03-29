@@ -81,9 +81,10 @@ function EditLine({ history, details }) {
             <ListTitle>
                 Address
             </ListTitle>
-            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" 
-            value={address} onChange={(e)=>{setAddress(e.target.value)}}>
+            <ListItem>
+            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
+            </ListItem>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit" 
                 onClick={() => {
