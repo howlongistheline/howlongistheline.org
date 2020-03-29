@@ -13,9 +13,9 @@ function Index({locations, history}) {
             case "no":
                 return <div style={{color:"green"}}>No Lines!</div>
             case "small":
-                return <div style={{color:"orange"}}>Not Great</div>
+                return <div style={{color:"orange"}}>A wee wait</div>
             case "long":
-                return <div style={{color:"red"}}>Busy</div>
+                return <div style={{color:"red"}}>Busy. Go later.</div>
         }
     }
 
@@ -39,13 +39,13 @@ function Index({locations, history}) {
     return (
         <MainLayout>
                 <ListTitle>
-                    Locations
+                    Shops
                 </ListTitle>
                 {renderList()}
                 <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                     // type="submit"
                     onClick={() => {history.push('/addLine')}}>
-                    Add line
+                    Add a new shop
                     <Icon style={{marginLeft: 10}} icon='fa-plus' />
                 </Button>
         </MainLayout>
