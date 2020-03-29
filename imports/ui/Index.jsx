@@ -1,11 +1,11 @@
 import React from 'react'
 import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
-import { Lines } from '../api/lines.js';
+import { locations } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
 import { Icon, Button, ListItem, ListTitle } from 'react-onsenui'
 
-function Index({lines, history}) {    
+function Index({locations, history}) {    
 
     function statusToWord(statusCode){
         switch(statusCode){
@@ -49,13 +49,12 @@ function Index({lines, history}) {
       }
 
     function renderList() {
-        return lines.map((line) => {
-            // console.log(line.createdAt)
+        return locations.map((location) => {
             return (
             <ListItem key={line._id} tappable onClick={()=>{
             }}>
-                <div className="left">{line.name + " : "}</div>
-                <div className="center">{timeSince(line.createdAt)}</div>
+                <div className="left">{location.name + " : "}</div>
+                <div className="center">{timeSince(location.createdAt)}</div>
                 <div className="right">
                     {/* <Icon icon="md-chevron-right"></Icon>
                  */}
@@ -83,10 +82,10 @@ function Index({lines, history}) {
 
 
 export default withTracker(() => {
-    Meteor.subscribe('lines');
+    Meteor.subscribe('locations');
   
     return {
-      lines: Lines.find({}, { sort: { createdAt: -1 } }).fetch(),
+      locations: locations.find({}, { sort: { createdAt: -1 } }).fetch(),
     //   currentUser: Meteor.user,
     };
   })(Index);
