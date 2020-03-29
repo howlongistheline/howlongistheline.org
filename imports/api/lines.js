@@ -14,6 +14,7 @@ export const locationsIndex = new Index({
 
 if (Meteor.isServer) {
     // This code only runs on the server
+    locations._ensureIndex( { "coordinates" : "2dsphere" } )
     Meteor.publish('locations', function tasksPublication() {
       return locations.find();
     });
@@ -33,7 +34,8 @@ Meteor.methods({
 
         locations.insert({
             name,
-            location,
+            "type": "Point",
+            "coordinates": location,
             status,
             address,
             createdAt: new Date(),
@@ -58,4 +60,19 @@ Meteor.methods({
         });
         return true
     },
+    'location.findnearby'(long, lat){
+            var locs = locations.find({ 
+                "coordinates": {
+                    $near: {
+                        $geometry: {
+                            type: "Point", 
+                            coordinates: [long, lat] 
+                        },
+                    } 
+                } 
+            },{limit: 3}).fetch()
+            return locs
+    }
 })
+
+

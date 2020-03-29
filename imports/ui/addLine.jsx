@@ -30,7 +30,7 @@ export default function AddLine({ history }) {
         }
         setLoading(true)
         navigator.geolocation.getCurrentPosition((position) => {
-            Meteor.call('locations.insert', name, position.coords, address, status, function (err, result) {
+            Meteor.call('locations.insert', name, [position.coords.longitude, position.coords.latitude], address, status, function (err, result) {
                 if (err) {
                     setLoading(false)
                     console.log(err)
@@ -52,12 +52,13 @@ export default function AddLine({ history }) {
         return (
             <MainLayout>
                 <ProgressCircular indeterminate />
-                Loading
+                Loading...
             </MainLayout>
         )
     }
     return (
         <MainLayout>
+             <div style={{ marginBottom: 55 }}>
             <ListTitle>
                 Location Name
             </ListTitle>
@@ -88,6 +89,7 @@ export default function AddLine({ history }) {
             <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
             </ListItem>
+            </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit" 
                 onClick={() => {

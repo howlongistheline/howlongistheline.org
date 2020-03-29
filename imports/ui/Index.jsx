@@ -1,17 +1,30 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { locations } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular } from 'react-onsenui'
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
-function Index({ locations, history }) {
+function Index({ AllLocations, history }) {
+    
+    const [nearby ,setNearby]=useState();
+
     useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            Meteor.call('location.findnearby',position.coords.longitude, position.coords.latitude, (err, result)=>{         
+                setNearby(result)
+            })
+        }, (err) => {
+            toast("Cant get current location, please turn on browser's geolocation function and refresh")
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        });
         return () => {
-
         }
     }, [])
+
+
     function statusToWord(statusCode) {
         switch (statusCode) {
             case "no":
@@ -24,15 +37,49 @@ function Index({ locations, history }) {
     }
 
     function renderList() {
-        return locations.map((location) => {
+        return AllLocations.map((location) => {
             return (
                 <Card key={location._id}>
                     <ListItem>
                         Name: {location.name}
                         <div className="right">
                             <Button
-                            onClick={() => {
-                                history.push('/editLine?id=' + location._id)
+                                onClick={() => {
+                                    history.push('/editLine?id=' + location._id)
+                                }}
+                            >Update Status</Button>
+                        </div>
+                    </ListItem>
+                    <ListItem>
+                        Address: {location.address}
+                    </ListItem>
+                    <ListItem>
+                        Last updated: {moment(location.lastUpdate).fromNow()}
+                    </ListItem>
+                    <ListItem>
+                        Waiting time:&nbsp;{statusToWord(location.status)}
+                    </ListItem>
+                </Card>)
+        })
+    }
+
+    function renderNearby() {
+        if(!nearby){
+            return (
+                <Card>
+                    <ProgressCircular indeterminate />
+                </Card>
+            )
+        }
+        return nearby.map((location) => {
+            return (
+                <Card key={location._id}>
+                    <ListItem>
+                        Name: {location.name}
+                        <div className="right">
+                            <Button
+                                onClick={() => {
+                                    history.push('/editLine?id=' + location._id)
                                 }}
                             >Update Status</Button>
                         </div>
@@ -52,10 +99,16 @@ function Index({ locations, history }) {
 
     return (
         <MainLayout>
+            <div style={{ marginBottom: 55 }}>
             <ListTitle>
                 Shops Near You
-                </ListTitle>
+            </ListTitle>
+            {renderNearby()}
+            <ListTitle>
+                All Shops
+            </ListTitle>
             {renderList()}
+            </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => { history.push('/addLine') }}>
@@ -71,7 +124,7 @@ export default withTracker(() => {
     Meteor.subscribe('locations');
 
     return {
-        locations: locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
+        AllLocations: locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
         //   currentUser: Meteor.user,
     };
 })(Index);
