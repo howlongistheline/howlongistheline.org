@@ -51,14 +51,14 @@ function Index({locations, history}) {
     function renderList() {
         return locations.map((location) => {
             return (
-            <ListItem key={line._id} tappable onClick={()=>{
+            <ListItem key={location._id} tappable onClick={()=>{
             }}>
                 <div className="left">{location.name + " : "}</div>
                 <div className="center">{timeSince(location.createdAt)}</div>
                 <div className="right">
                     {/* <Icon icon="md-chevron-right"></Icon>
                  */}
-                 {statusToWord(line.status)}
+                 {statusToWord(location.status)}
                 </div>
             </ListItem>)
         })
