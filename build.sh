@@ -66,10 +66,10 @@ touch /home/gareth/npminstall.success
 export MONGO_URL=mongodb://UPDATE
 export PORT=9000
 export ROOT_URL=http://howlongistheline.org
-/usr/bin/forever stop /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstop.log
+/usr/local/bin/forever stop /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstop.log
 rm -rf ~/howlongistheline.org
 cp -R ~/temp/howlongistheline.orgbundle/bundle ~/howlongistheline.org
-/usr/bin/forever start /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstart.log
+/usr/local/bin/forever start /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstart.log
 echo "started howlongistheline.org instance"
 
 exit 0;
