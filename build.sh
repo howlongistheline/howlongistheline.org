@@ -63,9 +63,9 @@ fi
 cd ~/temp/howlongistheline.orgbundle/bundle/programs/server
 /usr/bin/npm install &> /home/gareth/npm.log
 touch /home/gareth/npminstall.success
-export MONGO_URL=mongodb://UPDATE
-export PORT=9000
-export ROOT_URL=http://howlongistheline.org
+export MONGO_URL="mongodb://UPDATE"
+export PORT="9000"
+export ROOT_URL="http://howlongistheline.org"
 /usr/local/bin/forever stop /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstop.log
 rm -rf ~/howlongistheline.org
 cp -R ~/temp/howlongistheline.orgbundle/bundle ~/howlongistheline.org
