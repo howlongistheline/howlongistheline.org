@@ -13,19 +13,19 @@ export default function AddLine({ history }) {
     function submit() {
 
         if (name == "") {
-            toast("Please enter name");
+            toast("Please enter the shop name");
             return
         }
         if (status == "0") {
-            toast("Please select status");
+            toast("How busy is it right now?");
             return
         }
         if (address == "") {
-            toast("Please enter address");
+            toast("Please enter address or branch name");
             return
         }
         if (confirm == false) {
-            toast("Please confirm that you are at the shop");
+            toast("Are you at this location right now?");
             return
         }
         if (!navigator.geolocation) {
@@ -47,7 +47,7 @@ export default function AddLine({ history }) {
         }, error)
 
         function error(err) {
-            toast("Cant get current location, please turn on browser's geolocation function")
+            toast("Cant get current location, please turn on browser's geolocation function or try a different browser")
             setLoading(false)
             console.warn(`ERROR(${err.code}): ${err.message}`);
           }
@@ -64,45 +64,44 @@ export default function AddLine({ history }) {
         <MainLayout>
              <div style={{ marginBottom: 55 }}>
             <ListTitle>
-                Location Name
+            Shop Details
             </ListTitle>
-            <ListItem>
+            <ListItem modifier="nodivider">
                 <Input
                     style={{ width: "100%" }}
                     value={name}
                     onChange={(event) => { setName(event.target.value) }}
                     modifier='material'
-                    placeholder='Location Name' />
+                    placeholder='Name of shop; e.g. Countdown' />
             </ListItem>
+
             <ListTitle>
-                Status
             </ListTitle>
-            <Select modifier="material"
-                style={{ width: "80%", margin: 20 }}
-                value={status}
-                onChange={(event) => setStatus(event.target.value)}>
-                <option value="0">Please select status</option>
-                <option value="no">No line</option>
-                <option value="small">Small line</option>
-                <option value="long">Long line</option>
-            </Select>
-            <ListTitle>
-                Address
-            </ListTitle>
-            <ListItem>
-            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
+            <ListItem modifier="nodivider">
+            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Branch name OR full address; e.g. South Dunedun or 323 Andersons Bay Road, South Dunedin, Dunedin 9012" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
             </ListItem>
-            <ListItem tappable onClick={()=>{setCofirm(!confirm)}}>
+            <ListItem modifier="nodivider" tappable onClick={()=>{setCofirm(!confirm)}}>
             <Checkbox
                 style={{paddingRight: 10}}
                 checked={confirm}
                 modifier='material' />
-            I confirm that I am at the shop.
+            I am at this location right now
             </ListItem>
+            <ListTitle>
+            </ListTitle>
+            <Select modifier="material" modifier="nodivider"
+                style={{ width: "80%", margin: 20 }}
+                value={status}
+                onChange={(event) => setStatus(event.target.value)}>
+                <option value="0">How busy is it right now?</option>
+                <option value="no">There's no line right now</option>
+                <option value="small">Less than 5 people waiting</option>
+                <option value="long">More than 5 people waiting</option>
+            </Select>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
-                // type="submit" 
+                // type="submit"
                 onClick={() => {
                     submit()
                 }}>
@@ -112,5 +111,3 @@ export default function AddLine({ history }) {
         </MainLayout>
     )
 }
-
-
