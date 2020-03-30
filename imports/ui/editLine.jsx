@@ -13,36 +13,26 @@ function EditLine({ history, details }) {
             </MainLayout>
         )
     }
-    const [name, setName] = useState(details.name);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(details.status); //0:not selected
-    const [address, setAddress] = useState(details.address);
 
 
     function submit() {
 
-        if (name == "") {
-            toast("Please enter name");
-            return
-        }
         if (status == "0") {
-            toast("Please select status");
-            return
-        }
-        if (address == "") {
-            toast("Please enter address");
+            toast("How busy is it right now?");
             return
         }
 
         setLoading(true)
-        Meteor.call('locations.update', details._id ,name, address, status, function (err, result) {
+        Meteor.call('locations.update', details._id , status, function (err, result) {
             if (err) {
                 setLoading(false)
                 console.log(err)
                 return
             }
             // setLoading(false)
-            toast("Success!")
+            toast("Thank You!")
             history.push('/')
         });
     }
@@ -56,37 +46,20 @@ function EditLine({ history, details }) {
     return (
         <MainLayout>
             <ListTitle>
-                Location Name
-            </ListTitle>
-            <ListItem>
-                <Input
-                    style={{ width: "100%" }}
-                    value={name}
-                    onChange={(event) => { setName(event.target.value) }}
-                    modifier='material'
-                    placeholder='Location Name' />
-            </ListItem>
-            <ListTitle>
                 Status
             </ListTitle>
-            <Select modifier="material"
+            <Select modifier="material" modifier="nodivider"
                 style={{ width: "80%", margin: 20 }}
                 value={status}
                 onChange={(event) => setStatus(event.target.value)}>
-                <option value="0">Please select status</option>
-                <option value="no">No line</option>
-                <option value="small">Small line</option>
-                <option value="long">Long line</option>
+                <option value="0">How busy is it?</option>
+                <option value="no">There's no line right now</option>
+                <option value="small">Less than 5 people waiting</option>
+                <option value="long">More than 5 people waiting</option>
             </Select>
-            <ListTitle>
-                Address
-            </ListTitle>
-            <ListItem>
-            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full Address" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
-            </textarea>
-            </ListItem>
+            
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
-                // type="submit" 
+                // type="submit"
                 onClick={() => {
                     submit()
                 }}>
