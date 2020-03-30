@@ -19,7 +19,7 @@ function Index({ history }) {
             setCurrentLocation(position)
             getNearby(position)
         }, (err) => {
-            toast("Cant get current location, please turn on browser's geolocation function and refresh")
+            toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
             console.warn(`ERROR(${err.code}): ${err.message}`);
         });
         return () => {
@@ -64,45 +64,46 @@ function Index({ history }) {
         return (
             <Card key={location._id}>
                 <ListItem>
-                    Name: {location.name}
+                    {location.name}
                     <div className="right">
-                        <Button
-                            onClick={() => {
-                                history.push('/editLine?id=' + location._id)
-                            }}
-                        >Update Status</Button>
-                    </div>
-                </ListItem>
-                <ListItem>
-                    Address: {location.address}
-                    <div className="right">
-                        Last updated: {moment(location.lastUpdate).fromNow()}
-                    </div>
-                </ListItem>
-                <ListItem>
-                    Waiting time:&nbsp;{statusToWord(location.status)}
-                    <div className="right">
-                        {location.upvote}
-                        <Button modifier="quiet"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                Meteor.call("locations.upvote", location._id, (err, result)=>{
-                                    if(err){
-                                    toast(err)
-                                    }
-                                    if(result=="wait"){
-                                        toast("please wait 1 min to upvote")
-                                    }
-                                })
-                                getNearby(currentLocation)
-                            }}>
+                        Updated: {moment(location.lastUpdate).fromNow()}
 
-                            <Icon
-                                size={15}
-                                icon="fa-thumbs-up"
-                            />
-                        </Button>
                     </div>
+                </ListItem>
+                <ListItem>
+                    {location.address}
+                    <div className="right">
+                    <Button
+                        onClick={() => {
+                            history.push('/editLine?id=' + location._id)
+                        }}
+                    >I'm here right now!</Button>
+                    </div>
+                </ListItem>
+                <ListItem>
+                    Status:&nbsp;{statusToWord(location.status)}
+                    // <div className="right">
+                    //     {location.upvote}
+                    //     <Button modifier="quiet"
+                    //         onClick={(e) => {
+                    //             e.preventDefault()
+                    //             Meteor.call("locations.upvote", location._id, (err, result)=>{
+                    //                 if(err){
+                    //                 toast(err)
+                    //                 }
+                    //                 if(result=="wait"){
+                    //                     toast("please wait 1 min to upvote")
+                    //                 }
+                    //             })
+                    //             getNearby(currentLocation)
+                    //         }}>
+                    //
+                    //         <Icon
+                    //             size={15}
+                    //             icon="fa-thumbs-up"
+                    //         />
+                    //     </Button>
+                    // </div>
                 </ListItem>
             </Card>
         )
