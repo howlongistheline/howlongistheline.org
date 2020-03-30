@@ -1,23 +1,23 @@
 #! /bin/bash
 cd ~/temp
 rm newhead.txt
-if [ -d ~/temp/howlongistheline ]
+if [ -d ~/temp/howlongistheline.org ]
 then
-    cd /home/gareth/temp/howlongistheline
+    cd /home/gareth/temp/howlongistheline.org
     echo "Fetching current HEAD sha1"
     CURRENTHEAD=$(git rev-parse --verify HEAD)
     # github API sometimes times out, so we use git clone which is more resiliant.
     echo "Attempting to pull latest commits from Github..."
     cd ..
-    rm -rf howlongistheline
+    rm -rf ]
     git clone https://github.com/gazhayes/howlongistheline.org.git
-    cd howlongistheline
+    cd howlongistheline.org
     NEWHEAD=$(git rev-parse --verify HEAD)
 else
-    echo "howlongistheline directory doesn't exist, pulling from Github..."
+    echo "howlongistheline.org directory doesn't exist, pulling from Github..."
     CURRENTHEAD=false
     git clone https://github.com/gazhayes/howlongistheline.org.git
-    cd /home/gareth/temp/howlongistheline
+    cd /home/gareth/temp/howlongistheline.org
     NEWHEAD=$(git rev-parse --verify HEAD)
 fi
 echo "CURRENT HEAD: $CURRENTHEAD"
@@ -34,14 +34,14 @@ then
     exit 1;
 fi
 cd ~/temp
-if ! [ -d ~/temp/howlongistheline ]
+if ! [ -d ~/temp/howlongistheline.org ]
 then
-    touch nohowlongisthelinedir.problem
-    echo "No howlongistheline directory!"
+    touch nohowlongistheline.orgdir.problem
+    echo "No howlongistheline.org directory!"
     exit 1;
 fi
 cd ~/temp
-cd howlongistheline
+cd howlongistheline.org
 ( /usr/bin/npm install ) & pid=$!
 ( sleep 300s && kill -HUP $pid ) 2>/dev/null & watcher=$!
 if wait $pid 2>/dev/null
@@ -54,22 +54,22 @@ else
 fi
 rm -rf node_modules/.bin
 /usr/bin/npm prune --production
-/usr/local/bin/meteor build --directory ~/temp/howlongisthelinebundle
-if ! [ -d ~/temp/howlongisthelinebundle/bundle/programs/server ]
+/usr/local/bin/meteor build --directory ~/temp/howlongistheline.orgbundle
+if ! [ -d ~/temp/howlongistheline.orgbundle/bundle/programs/server ]
 then
     echo "else 8"
     exit 1;
 fi
-cd ~/temp/howlongisthelinebundle/bundle/programs/server
+cd ~/temp/howlongistheline.orgbundle/bundle/programs/server
 /usr/bin/npm install &> /home/gareth/npm.log
 touch /home/gareth/npminstall.success
 export MONGO_URL=mongodb://UPDATE
 export PORT=9000
 export ROOT_URL=http://howlongistheline.org
-/usr/bin/forever stop /home/gareth/howlongistheline/main.js &> /home/gareth/howlongisthelineforeverstop.log
-rm -rf ~/howlongistheline
-cp -R ~/temp/howlongisthelinebundle/bundle ~/howlongistheline
-/usr/bin/forever start /home/gareth/howlongistheline/main.js &> /home/gareth/howlongisthelineforeverstart.log
-echo "started howlongistheline instance"
+/usr/bin/forever stop /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstop.log
+rm -rf ~/howlongistheline.org
+cp -R ~/temp/howlongistheline.orgbundle/bundle ~/howlongistheline.org
+/usr/bin/forever start /home/gareth/howlongistheline.org/main.js &> /home/gareth/howlongistheline.orgforeverstart.log
+echo "started howlongistheline.org instance"
 
 exit 0;
