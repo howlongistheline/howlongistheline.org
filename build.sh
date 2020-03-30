@@ -10,13 +10,13 @@ then
     echo "Attempting to pull latest commits from Github..."
     cd ..
     rm -rf howlongistheline
-    git clone https://github.com/gazhayes/howlongistheline.git
+    git clone https://github.com/gazhayes/howlongistheline.org.git
     cd howlongistheline
     NEWHEAD=$(git rev-parse --verify HEAD)
 else
     echo "howlongistheline directory doesn't exist, pulling from Github..."
     CURRENTHEAD=false
-    git clone https://github.com/gazhayes/howlongistheline.git
+    git clone https://github.com/gazhayes/howlongistheline.org.git
     cd /home/gareth/temp/howlongistheline
     NEWHEAD=$(git rev-parse --verify HEAD)
 fi
