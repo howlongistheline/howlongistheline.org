@@ -27,6 +27,9 @@ Meteor.methods({
         check(name, String);
         check(status, String);
         check(address, String);
+        if(location == undefined){
+            throw new Meteor.Error("location is undefined")
+        }
         // Make sure the user is logged in before inserting a task
         // if (!this.userId) {
         //     throw new Meteor.Error('not-authorized');
@@ -44,18 +47,14 @@ Meteor.methods({
         });
         return true
     },    
-    'locations.update'(id, name, address, status) {
-        check(name, String);
+    'locations.update'(id, status) {
         check(status, String);
-        check(address, String);
         // Make sure the user is logged in before inserting a task
         // if (!this.userId) {
         //     throw new Meteor.Error('not-authorized');
         // }
         locations.update({_id: id},{
-            name,
             status,
-            address,
             upvote: 0,
             lastUpdate: new Date(),
         });
