@@ -46,7 +46,6 @@ Meteor.methods({
             createdAt: new Date(),
             lastUpdate: new Date(),
         },(err, id)=>{
-            console.log(id)
             additionals.insert({
                 locationId: id,
                 history: [{status: status, time: new Date()}]
@@ -60,14 +59,29 @@ Meteor.methods({
         // if (!this.userId) {
         //     throw new Meteor.Error('not-authorized');
         // }
-        locations.update({_id: id},{
+        locations.update({_id: id},
+        { $set:
+            {
             status,
             upvote: 0,
             lastUpdate: new Date(),
+            }
         });
 
         additionals.update({locationId: id},{
             $push: {history: {status: status, time: new Date()}}
+        })
+        return true
+    },
+    'locations.comment'(id, comment) {
+        check(status, String);
+        // Make sure the user is logged in before inserting a task
+        // if (!this.userId) {
+        //     throw new Meteor.Error('not-authorized');
+        // }
+
+        additionals.update({locationId: id},{
+            $push: {comments: {comment: comment, time: new Date()}}
         })
         return true
     },
