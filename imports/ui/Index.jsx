@@ -63,15 +63,20 @@ function Index({ history }) {
     function renderCard(location) {
         return (
             <Card key={location._id}>
-                <ListItem>
+                <ListItem modifier="nodivider">
                     {location.name}
                     <div className="right">
                         Updated: {moment(location.lastUpdate).fromNow()}
 
                     </div>
                 </ListItem>
-                <ListItem>
+                <ListItem modifier="nodivider">
                     {location.address}
+
+                </ListItem>
+                <ListItem modifier="nodivider">
+                    <div className="left">Status:&nbsp;{statusToWord(location.status)}</div>
+
                     <div className="right">
                     <Button
                         onClick={() => {
@@ -79,32 +84,31 @@ function Index({ history }) {
                         }}
                     >I'm here right now!</Button>
                     </div>
-                </ListItem>
-                <ListItem>
-                    Status:&nbsp;{statusToWord(location.status)}
-                    // <div className="right">
-                    //     {location.upvote}
-                    //     <Button modifier="quiet"
-                    //         onClick={(e) => {
-                    //             e.preventDefault()
-                    //             Meteor.call("locations.upvote", location._id, (err, result)=>{
-                    //                 if(err){
-                    //                 toast(err)
-                    //                 }
-                    //                 if(result=="wait"){
-                    //                     toast("please wait 1 min to upvote")
-                    //                 }
-                    //             })
-                    //             getNearby(currentLocation)
-                    //         }}>
-                    //
-                    //         <Icon
-                    //             size={15}
-                    //             icon="fa-thumbs-up"
-                    //         />
-                    //     </Button>
-                    // </div>
-                </ListItem>
+                    </ListItem>
+                    {/*
+                    <div className="right">
+                        {location.upvote}
+                        <Button modifier="quiet"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                Meteor.call("locations.upvote", location._id, (err, result)=>{
+                                    if(err){
+                                    toast(err)
+                                    }
+                                    if(result=="wait"){
+                                        toast("please wait 1 min to upvote")
+                                    }
+                                })
+                                getNearby(currentLocation)
+                            }}>
+
+                            <Icon
+                                size={15}
+                                icon="fa-thumbs-up"
+                            />
+                        </Button>
+                    </div>
+                    */}
             </Card>
         )
     }
