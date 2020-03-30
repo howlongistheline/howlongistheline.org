@@ -13,6 +13,7 @@ function EditLine({ history, details }) {
             </MainLayout>
         )
     }
+    
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(details.status); //0:not selected
 
