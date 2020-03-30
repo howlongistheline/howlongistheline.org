@@ -4,6 +4,7 @@ import { check } from 'meteor/check';
 import { Index, MinimongoEngine } from 'meteor/easy:search'
 
 export const locations = new Mongo.Collection('locations');
+export const additionals = new Mongo.Collection('additionals');
 
 export const locationsIndex = new Index({
     collection: locations,
@@ -44,6 +45,12 @@ Meteor.methods({
             upvote: 0,
             createdAt: new Date(),
             lastUpdate: new Date(),
+        },(err, id)=>{
+            console.log(id)
+            additionals.insert({
+                locationId: id,
+                history: [{status: status, time: new Date()}]
+            })
         });
         return true
     },    
@@ -58,6 +65,10 @@ Meteor.methods({
             upvote: 0,
             lastUpdate: new Date(),
         });
+
+        additionals.update({locationId: id},{
+            $push: {history: {status: status, time: new Date()}}
+        })
         return true
     },
     'locations.findnearby'(long, lat){
