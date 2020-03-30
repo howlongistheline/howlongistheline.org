@@ -9,7 +9,7 @@ then
     # github API sometimes times out, so we use git clone which is more resiliant.
     echo "Attempting to pull latest commits from Github..."
     cd ..
-    rm -rf ]
+    rm -rf howlongistheline.org
     git clone https://github.com/gazhayes/howlongistheline.org.git
     cd howlongistheline.org
     NEWHEAD=$(git rev-parse --verify HEAD)
