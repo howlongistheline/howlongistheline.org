@@ -90,8 +90,8 @@ Meteor.methods({
             _id: id
         })
 
-        if(distance(loc.coordinates[1],loc.coordinates[0], lat, long, "M")> 10){
-            throw new Meteor.Error('too far');
+        if(distance(loc.coordinates[1],loc.coordinates[0], lat, long, "M")> 100){
+            throw new Meteor.Error('You do not appear to be at this location right now');
         }
 
         locations.update({ _id: id },
