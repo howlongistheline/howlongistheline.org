@@ -6,10 +6,10 @@ import { locations, additionals, locationsIndex } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 
-function ShopDetails({ details, additional, history }) {
-    if(!details || !additional){
+function ShopDetails({ details, additional, comments, historys, history }) {
+    if (!details || !additional) {
         return <MainLayout>
-            <ProgressCircular indeterminate/>
+            <ProgressCircular indeterminate />
         </MainLayout>
 
     }
@@ -27,13 +27,13 @@ function ShopDetails({ details, additional, history }) {
         }
     }
 
-    function addComment(){
+    function addComment() {
         if (comment == "") {
             toast("please enter comment");
             return
         }
-        Meteor.call("locations.comment", details._id, comment, (err, result)=>{
-            if(err){
+        Meteor.call("locations.comment", details._id, comment, (err, result) => {
+            if (err) {
                 toast("error when comment")
                 return
             }
@@ -43,9 +43,9 @@ function ShopDetails({ details, additional, history }) {
 
     }
 
-    function renderComments(){
-    
-        return additional.comments.map((comment, idx) => {
+    function renderComments() {
+
+        return comments.map((comment, idx) => {
             return (
                 <ListItem key={idx}>
                     {comment.comment}
@@ -56,8 +56,8 @@ function ShopDetails({ details, additional, history }) {
     }
 
 
-    function renderHistorys(){ 
-        return additional.history.map((history, idx) => {
+    function renderHistorys() {
+        return historys.map((history, idx) => {
             return (
                 <ListItem key={idx}>
                     {statusToWord(history.status)}
@@ -70,39 +70,39 @@ function ShopDetails({ details, additional, history }) {
     return (
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
-            <ListTitle>
-            Shop Details
+                <ListTitle>
+                    Shop Details
             </ListTitle>
-            <ListItem modifier="nodivider">
-                {details.name}
-            </ListItem>
-            <ListTitle>
+                <ListItem modifier="nodivider">
+                    {details.name}
+                </ListItem>
+                <ListTitle>
+                </ListTitle>
+                <ListItem modifier="nodivider">
+                    {details.address}
+                </ListItem>
+                <ListTitle>
+                    Line Status: {statusToWord(details.status)}
+                </ListTitle>
+                <ListTitle style={{ marginTop: 30 }}>
+                    Comments:
             </ListTitle>
-            <ListItem modifier="nodivider">
-                {details.address}
-            </ListItem>
-            <ListTitle>
-                Line Status: {statusToWord(details.status)}
-            </ListTitle>
-            <ListTitle style={{marginTop: 30}}>
-                Comments:
-            </ListTitle>
-            <ListItem> 
-                <Input
-                style={{width:"80%"}}
-                value={comment} float
-                onChange={(event) => { setComment(event.target.value)} }
-                modifier='material'
-                placeholder='leave your comment' />
-                <div className="right">
-                 <Button onClick={()=>{addComment()}}>
-                     <Icon icon="fa-send"></Icon>
-                 </Button>
-                </div>
-            </ListItem>
+                <ListItem>
+                    <Input
+                        style={{ width: "80%" }}
+                        value={comment} float
+                        onChange={(event) => { setComment(event.target.value) }}
+                        modifier='material'
+                        placeholder='leave your comment' />
+                    <div className="right">
+                        <Button onClick={() => { addComment() }}>
+                            <Icon icon="fa-send"></Icon>
+                        </Button>
+                    </div>
+                </ListItem>
                 {renderComments()}
-            <ListTitle style={{marginTop: 30}}>
-                Historys:
+                <ListTitle style={{ marginTop: 30 }}>
+                    Historys:
             </ListTitle>
                 {renderHistorys()}
             </div>
@@ -115,8 +115,16 @@ export default withTracker(() => {
     Meteor.subscribe('additionals')
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
+    if(additionals.findOne({ locationId: id })){
+        return {
+            details: locations.findOne({ _id: id }),
+            additional: additionals.findOne({ locationId: id }),
+            comments: additionals.findOne({ locationId: id }).comments.reverse(),
+            historys: additionals.findOne({ locationId: id }).history.reverse(),
+        }
+    }
     return {
-        details: locations.findOne({_id: id}),
-        additional: additionals.findOne({locationId: id}),
+        details: locations.findOne({ _id: id }),
+        additional: additionals.findOne({ locationId: id }),
     };
 })(ShopDetails);
