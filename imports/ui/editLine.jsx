@@ -13,7 +13,7 @@ function EditLine({ history, details }) {
             </MainLayout>
         )
     }
-    
+
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(details.status); //0:not selected
 
@@ -46,6 +46,7 @@ function EditLine({ history, details }) {
     }
     return (
         <MainLayout>
+            <div style={{ marginBottom: 55 }}>
             <ListTitle>
                 Status
             </ListTitle>
@@ -58,7 +59,7 @@ function EditLine({ history, details }) {
                 <option value="small">Less than 5 people waiting</option>
                 <option value="long">More than 5 people waiting</option>
             </Select>
-            
+            </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => {
