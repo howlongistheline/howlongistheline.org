@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
 import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox } from 'react-onsenui'
 import { toast } from 'react-toastify';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 export default function AddLine({ history }) {
     const [name, setName] = useState("");
@@ -88,17 +93,14 @@ export default function AddLine({ history }) {
                 modifier='material' />
             I am at this location right now
             </ListItem>
-            <ListTitle>
-            </ListTitle>
-            <Select modifier="material" modifier="nodivider"
-                style={{ width: "80%", margin: 20 }}
-                value={status}
-                onChange={(event) => setStatus(event.target.value)}>
-                <option value="0">How busy is it right now?</option>
-                <option value="no">There's no line right now</option>
-                <option value="small">Less than 5 people waiting</option>
-                <option value="long">More than 5 people waiting</option>
-            </Select>
+            <FormControl component="fieldset" style={{ width: "80%", margin: 20 }}>
+                <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>
+                    {/* <FormControlLabel value="0" control={<Radio />} label="How busy is it?" /> */}
+                    <FormControlLabel value="no" control={<Radio />} label="There's no line right now" />
+                    <FormControlLabel value="small" control={<Radio />} label="Less than 5 people waiting" />
+                    <FormControlLabel value="long" control={<Radio />} label="More than 5 people waiting" />
+                </RadioGroup>
+            </FormControl>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
