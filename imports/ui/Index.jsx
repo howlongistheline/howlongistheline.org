@@ -27,7 +27,7 @@ function Index({ history }) {
     }, [])
 
 
-    function getNearby(position){
+    function getNearby(position) {
         Meteor.call('locations.findnearby', position.coords.longitude, position.coords.latitude, (err, result) => {
             setNearby(result)
         })
@@ -78,14 +78,14 @@ function Index({ history }) {
                     <div className="left">Status:&nbsp;{statusToWord(location.status)}</div>
 
                     <div className="right">
-                    <Button
-                        onClick={() => {
-                            history.push('/editLine?id=' + location._id)
-                        }}
-                    >I'm here right now!</Button>
+                        <Button
+                            onClick={() => {
+                                history.push('/editLine?id=' + location._id)
+                            }}
+                        >I'm here right now!</Button>
                     </div>
-                    </ListItem>
-                    {/*
+                </ListItem>
+                {/*
                     <div className="right">
                         {location.upvote}
                         <Button modifier="quiet"
