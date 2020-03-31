@@ -38,6 +38,7 @@ function ShopDetails({ details, additional, history }) {
                 return
             }
             toast("success!")
+            setComment("")
         })
 
     }
