@@ -30,16 +30,31 @@ function EditLine({ history, details }) {
         }
 
         setLoading(true)
-        Meteor.call('locations.update', details._id , status, function (err, result) {
-            if (err) {
-                setLoading(false)
-                console.log(err)
-                return
-            }
-            // setLoading(false)
-            toast("Thank You!")
-            history.push('/')
-        });
+        navigator.geolocation.getCurrentPosition((position) => {
+            Meteor.call('locations.update', details._id , status, position.coords.longitude, position.coords.latitude, function (err, result) {
+                if (err) {
+                    setLoading(false)
+                    if(err.error == "too far")
+                        {
+                            toast("You are too far away from the shop!")
+                        }
+                    else{
+                        toast("Some Error happens!")
+                    }
+                    console.log(err)
+                    return
+                }
+                // setLoading(false)
+                toast("Thank You!")
+                history.push('/')
+            });
+        }, error)
+
+        function error(err) {
+            toast("Cant get current location, please turn on browser's geolocation function or try a different browser")
+            setLoading(false)
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
     }
     if (loading) {
         return (
