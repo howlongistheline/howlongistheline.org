@@ -77,7 +77,7 @@ function Index({ history }) {
                         onClick={() => {
                             history.push('/shopDetails?id=' + location._id)
                         }}
-                    >Details</Button>
+                    >More Details</Button>
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
