@@ -72,13 +72,7 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider">
                     {location.address}
-                    <div className="right">
-                    <Button
-                        onClick={() => {
-                            history.push('/shopDetails?id=' + location._id)
-                        }}
-                    >Details</Button>
-                    </div>
+
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="left">Status:&nbsp;{statusToWord(location.status)}</div>
@@ -140,7 +134,7 @@ function Index({ history }) {
         if (!nearby) {
             return (
                 <Card>
-                    <ProgressCircular indeterminate />
+                    <div><ProgressCircular indeterminate />Please wait, finding your current location...</div>
                 </Card>
             )
         }

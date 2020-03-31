@@ -56,7 +56,7 @@ export default function AddLine({ history }) {
         return (
             <MainLayout>
                 <ProgressCircular indeterminate />
-                Loading...
+                Finding your current GPS location, please wait...
             </MainLayout>
         )
     }
