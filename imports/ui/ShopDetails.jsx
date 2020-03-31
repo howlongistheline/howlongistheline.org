@@ -4,6 +4,7 @@ import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Che
 import { toast } from 'react-toastify';
 import { locations, additionals, locationsIndex } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
+import moment from 'moment';
 
 function ShopDetails({ details, additional, history }) {
     if(!details || !additional){
@@ -47,6 +48,19 @@ function ShopDetails({ details, additional, history }) {
             return (
                 <ListItem key={idx}>
                     {comment.comment}
+                    <div className="right">{moment(comment.time).fromNow()}</div>
+                </ListItem>
+            )
+        })
+    }
+
+
+    function renderHistorys(){ 
+        return additional.history.reverse().map((history, idx) => {
+            return (
+                <ListItem key={idx}>
+                    {statusToWord(history.status)}
+                    <div className="right">{moment(history.time).fromNow()}</div>
                 </ListItem>
             )
         })
@@ -69,7 +83,7 @@ function ShopDetails({ details, additional, history }) {
             <ListTitle>
                 Line Status: {statusToWord(details.status)}
             </ListTitle>
-            <ListTitle>
+            <ListTitle style={{marginTop: 30}}>
                 Comments:
             </ListTitle>
             <ListItem> 
@@ -86,6 +100,10 @@ function ShopDetails({ details, additional, history }) {
                 </div>
             </ListItem>
                 {renderComments()}
+            <ListTitle style={{marginTop: 30}}>
+                Historys:
+            </ListTitle>
+                {renderHistorys()}
             </div>
         </MainLayout>
     )
