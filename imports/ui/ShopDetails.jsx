@@ -57,7 +57,7 @@ function ShopDetails({ details, additional, history }) {
 
 
     function renderHistorys(){ 
-        return additional.history.reverse().map((history, idx) => {
+        return additional.history.map((history, idx) => {
             return (
                 <ListItem key={idx}>
                     {statusToWord(history.status)}
