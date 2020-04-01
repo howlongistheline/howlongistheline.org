@@ -28,6 +28,9 @@ function SideBar({ children, history }) {
                         <Route render={({ history }) => (
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/feedback") }} tappable>FeedBack</Ons.ListItem>
                         )} />
+                        <Route render={({ history }) => (
+                            <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { window.open("https://github.com/gazhayes/howlongistheline.org") }} tappable>Github</Ons.ListItem>
+                        )} />
                     </Ons.List>
                 </Ons.Page>
             </Ons.SplitterSide>
