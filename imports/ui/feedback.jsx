@@ -39,7 +39,7 @@ export default function feedback({ history, details }) {
                         value={feedback} float
                         onChange={(event) => { setFeedback(event.target.value) }}
                         modifier='material'
-                        placeholder='leave your comment' />
+                        placeholder='Please leave your comment here and press Submit below. Leave your email address if you would like a reply.' />
             </ListItem>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}

@@ -30,7 +30,7 @@ export default function AddLine({ history }) {
             return
         }
         if (confirm == false) {
-            toast("Are you at this location right now?");
+            toast("You must be at the shop's location in order to add it or update the status.");
             return
         }
         if (!navigator.geolocation) {
