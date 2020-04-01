@@ -81,9 +81,10 @@ function Index({ history }) {
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="left">Status:&nbsp;{statusToWord(location.status)}</div>
-
-                    <div className="right">
+                    <div className="center">Status:&nbsp;{statusToWord(location.status)}</div>
+                </ListItem>
+                <ListItem modifier="nodivider">
+                    <div className="center">
                     <Button
                         onClick={() => {
                             history.push('/editLine?id=' + location._id)
