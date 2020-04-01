@@ -47,6 +47,15 @@ export default function faq({}) {
         </ul>
 
       </Card>
+          
+           <Card>
+        <div className="title">Who are you?</div>
+               <p><a href="https://www.facebook.com/chancelloronbrinkofsecondbailoutforbanks">https://www.facebook.com/chancelloronbrinkofsecondbailoutforbanks</a></p>
+               <p><a href="https://github.com/gazhayes">https://github.com/gazhayes</a></p>
+               <p><a href="http://socialarchitecture.science/">http://socialarchitecture.science/</a>
+
+      </Card>
+          
       </div>
       </MainLayout>
     )
