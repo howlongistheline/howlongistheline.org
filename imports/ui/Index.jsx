@@ -168,7 +168,7 @@ function Index({ history }) {
                 <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                     // type="submit"
                     onClick={() => { history.push('/addLine') }}>
-                    Add a new shop
+                    Missing shop? Add it now!
                         <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
                 </Button>
             </MainLayout>
