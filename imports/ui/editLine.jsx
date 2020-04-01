@@ -39,7 +39,7 @@ function EditLine({ history, details }) {
                             toast("You are too far away from the shop!")
                         }
                     else{
-                        toast("Some Error happens!")
+                        toast("Are you really at this shop?")
                     }
                     console.log(err)
                     return
