@@ -7,6 +7,7 @@ import Main from '../../ui/Index';
 import AddLine from '../../ui/addLine';
 import EditLine from '../../ui/editLine';
 import ShopDetails from '../../ui/ShopDetails';
+import FeedBack from '../../ui/feedback'
 import { ToastContainer } from 'react-toastify';
 
 
@@ -21,6 +22,7 @@ export const renderRoutes = () => (
         <Route exact path="/addLine" component={AddLine} />
         <Route exact path="/editLine" component={EditLine} />
         <Route exact path="/shopDetails" component={ShopDetails} />
+        <Route exact path="/feedback" component={FeedBack} />
       </Switch>
     </Router>
   // </Provider>

@@ -25,6 +25,9 @@ function SideBar({ children, history }) {
                         <Route render={({ history }) => (
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/") }} tappable>Home</Ons.ListItem>
                         )} />
+                        <Route render={({ history }) => (
+                            <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/feedback") }} tappable>FeedBack</Ons.ListItem>
+                        )} />
                     </Ons.List>
                 </Ons.Page>
             </Ons.SplitterSide>
@@ -46,7 +49,7 @@ function SideBar({ children, history }) {
                         How Long is the Line?
                         </div>
                         <div className="right">
-                        
+
                         </div>
                     </Toolbar>}
                 >
