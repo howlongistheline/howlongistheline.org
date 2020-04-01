@@ -16,7 +16,7 @@ function Index({ history }) {
     const [search, setSearch] = useState("");
 
     useEffect(() => {
-        if(loc){
+        if(loc.location!=undefined){
             if((new Date().getTime()- new Date(loc.location.time).getTime())/1000 < 300){
                 getNearby(loc.location.longitude, loc.location.latitude)
             }
