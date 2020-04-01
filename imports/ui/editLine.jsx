@@ -65,6 +65,7 @@ function EditLine({ history, details }) {
     }
     return (
         <MainLayout>
+            <div style={{ marginBottom: 55 }}>
             <ListTitle>
                 Status
             </ListTitle>
@@ -76,7 +77,7 @@ function EditLine({ history, details }) {
                     <FormControlLabel value="long" control={<Radio />} label="More than 5 people waiting" />
                 </RadioGroup>
             </FormControl>
-
+            </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => {
