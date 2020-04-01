@@ -73,11 +73,11 @@ function Index({ history }) {
                 <ListItem modifier="nodivider">
                     {location.address}
                     <div className="right">
-                    <Button
+                        {/*<Button
                         onClick={() => {
                             history.push('/shopDetails?id=' + location._id)
                         }}
-                    >More Details</Button>
+                    >More Details</Button> */}
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
