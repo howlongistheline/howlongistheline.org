@@ -20,3 +20,7 @@ body {
   --background-color-active: #50c3bd;
   --svg-stroke-width: 5px;
 }
+
+.FAQ {
+  height: 100px;
+}

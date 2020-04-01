@@ -8,6 +8,7 @@ import AddLine from '../../ui/addLine';
 import EditLine from '../../ui/editLine';
 import ShopDetails from '../../ui/ShopDetails';
 import FeedBack from '../../ui/feedback'
+import faq from '../../ui/FAQ'
 import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 
@@ -24,6 +25,7 @@ export const renderRoutes = () => (
         <Route exact path="/editLine" component={EditLine} />
         <Route exact path="/shopDetails" component={ShopDetails} />
         <Route exact path="/feedback" component={FeedBack} />
+        <Route exact path="/FAQ" component={faq} />
       </Switch>
       </CookiesProvider>
     </Router>
