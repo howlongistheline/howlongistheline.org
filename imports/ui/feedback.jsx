@@ -17,7 +17,7 @@ export default function feedback({ history, details }) {
         }
             Meteor.call('feedbacks.insert', feedback, function (err, result) {
                 if (err) {
-                    toast("Some Error happens!")
+                    toast("Such error! If this keeps happening please report it.")
                     console.log(err)
                     return
                 }
