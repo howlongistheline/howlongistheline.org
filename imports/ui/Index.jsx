@@ -88,7 +88,7 @@ function Index({ history }) {
                         onClick={() => {
                             history.push('/editLine?id=' + location._id)
                         }}
-                    >I'm here right now!</Button>
+                    >Update line status now</Button>
                     </div>
                     </ListItem>
                     {/*
