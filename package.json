@@ -16,6 +16,7 @@
     "moment": "^2.24.0",
     "onsenui": "^2.10.10",
     "react": "^16.13.0",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.0",
     "react-onsenui": "^1.11.2",
     "react-router": "^5.1.2",

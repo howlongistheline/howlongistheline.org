@@ -7,28 +7,44 @@ import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput 
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
 
 function Index({ history }) {
-
+    const [loc, setLoc] = useCookies(['location']);
     const [nearby, setNearby] = useState();
     const [AllLocations, setAllLocations] = useState([])
     const [search, setSearch] = useState("");
-    const [currentLocation, setCurrentLocation] = useState();
+
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setCurrentLocation(position)
-            getNearby(position)
-        }, (err) => {
-            toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
-            console.warn(`ERROR(${err.code}): ${err.message}`);
-        });
+        if(loc){
+            if((new Date().getTime()- new Date(loc.location.time).getTime())/1000 < 300){
+                getNearby(loc.location.longitude, loc.location.latitude)
+            }
+            else{
+                getLocation()
+            }
+        }
+        else{
+            getLocation()
+        }
+
         return () => {
         }
     }, [])
 
+    function getLocation(){
+        navigator.geolocation.getCurrentPosition((position) => {
+            setLoc('location', { longitude :position.coords.longitude, latitude :position.coords.latitude, time: new Date()}, { path: '/' });
+            getNearby(position.coords.longitude, position.coords.latitude)
+        }, (err) => {
+            toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        });
+    }
 
-    function getNearby(position){
-        Meteor.call('locations.findnearby', position.coords.longitude, position.coords.latitude, (err, result) => {
+
+    function getNearby(long, lat){
+        Meteor.call('locations.findnearby', long, lat, (err, result) => {
             setNearby(result)
         })
     }

@@ -10,13 +10,14 @@ import ShopDetails from '../../ui/ShopDetails';
 import FeedBack from '../../ui/feedback'
 import faq from '../../ui/FAQ'
 import { ToastContainer } from 'react-toastify';
-
+import { CookiesProvider } from 'react-cookie';
 
 const browserHistory = history.createBrowserHistory();
 
 export const renderRoutes = () => (
   // <Provider store={store}>
     <Router history={browserHistory}>
+    <CookiesProvider>
     <ToastContainer />
       <Switch>
         <Route exact path="/" component={Main} />
@@ -26,6 +27,8 @@ export const renderRoutes = () => (
         <Route exact path="/feedback" component={FeedBack} />
         <Route exact path="/FAQ" component={faq} />
       </Switch>
+      </CookiesProvider>
     </Router>
+    
   // </Provider>
 );
