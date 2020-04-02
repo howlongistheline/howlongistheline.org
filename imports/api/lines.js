@@ -41,7 +41,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 		dist = dist * 180/Math.PI;
 		dist = dist * 60 * 1.1515;
 		if (unit=="K") { dist = dist * 1.609344 }
-		if (unit=="N") { dist = dist * 0.8684 }
+        if (unit=="N") { dist = dist * 0.8684 }
 		return dist;
 	}
 }
@@ -89,8 +89,8 @@ Meteor.methods({
         var loc = locations.findOne({
             _id: id
         })
-
-        if(distance(loc.coordinates[1],loc.coordinates[0], lat, long, "M")> 100){
+        var distanceInMeter =  distance(loc.coordinates[1],loc.coordinates[0], lat, long, "K")*1000
+        if(distanceInMeter > 100){
             throw new Meteor.Error('You do not appear to be at this location right now');
         }
 
