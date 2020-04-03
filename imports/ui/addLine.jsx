@@ -14,6 +14,7 @@ export default function AddLine({ history }) {
     const [status, setStatus] = useState("0"); //0:not selected
     const [address, setAddress] = useState("");
     const [confirm, setCofirm] = useState(false);
+    const [listed, setListed] = useState(false);
 
     function submit() {
 
@@ -31,6 +32,10 @@ export default function AddLine({ history }) {
         }
         if (confirm == false) {
             toast("You must be at the shop's location in order to add it or update the status.");
+            return
+        }
+        if (listed == false) {
+            toast("Please make sure the shop is not already listed first.");
             return
         }
         if (!navigator.geolocation) {
@@ -71,6 +76,13 @@ export default function AddLine({ history }) {
             <ListTitle>
             Shop Details
             </ListTitle>
+            <ListItem modifier="nodivider" tappable onClick={()=>{setListed(!listed)}}>
+            <Checkbox
+                style={{paddingRight: 10}}
+                checked={listed}
+                modifier='material' />
+            Please use the search bar at the top of the home page to verify that the store you are adding is not already listed and then come back and tick this box, thank you!
+            </ListItem>
             <ListItem modifier="nodivider">
                 <Input
                     style={{ width: "100%" }}
