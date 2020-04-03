@@ -4,7 +4,6 @@ import Feedbacks from '/imports/api/feedback'
 import moment from 'moment';
 
 Meteor.startup(() => {
-  updateStatus();
   SyncedCron.add({
   name: 'Reset status to No Line if it has not been updated for a while',
   schedule: function(parser) {
@@ -15,6 +14,7 @@ Meteor.startup(() => {
     updateStatus();
   }
 });
+SyncedCron.start();
 });
 function updateStatus() {
     var now = moment();
