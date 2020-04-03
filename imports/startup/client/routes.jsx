@@ -11,12 +11,18 @@ import FeedBack from '../../ui/feedback'
 import faq from '../../ui/FAQ'
 import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
+// pick a date util library
+import MomentUtils from '@date-io/moment';
 
 const browserHistory = history.createBrowserHistory();
+
 
 export const renderRoutes = () => (
   // <Provider store={store}>
     <Router history={browserHistory}>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
     <CookiesProvider>
     <ToastContainer />
       <Switch>
@@ -28,6 +34,7 @@ export const renderRoutes = () => (
         <Route exact path="/FAQ" component={faq} />
       </Switch>
       </CookiesProvider>
+      </MuiPickersUtilsProvider>
     </Router>
     
   // </Provider>
