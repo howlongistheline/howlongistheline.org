@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { locations, locationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, Tabbar, TabPage, Tab } from 'react-onsenui'
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
@@ -15,10 +15,40 @@ function Index({ history }) {
     const [AllLocations, setAllLocations] = useState([])
     const [search, setSearch] = useState("");
 
+    function compare(a,b) {
+        if (distance(a.coordinates[1], a.coordinates[0], loc.location.latitude, loc.location.longitude, "K") < distance(b.coordinates[1], b.coordinates[0], loc.location.latitude, loc.location.longitude, "K"))
+           return -1;
+        if (distance(a.coordinates[1], a.coordinates[0], loc.location.latitude, loc.location.longitude, "K") > distance(b.coordinates[1], b.coordinates[0], loc.location.latitude, loc.location.longitude, "K"))
+          return 1;
+        return 0;
+    }
+
+    function distance(lat1, lon1, lat2, lon2, unit) {
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            var radlat1 = Math.PI * lat1/180;
+            var radlat2 = Math.PI * lat2/180;
+            var theta = lon1-lon2;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+                dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist;
+        }
+    }
+    
     useEffect(() => {
         if(loc.location!=undefined){
             if((new Date().getTime()- new Date(loc.location.time).getTime())/1000 < 300){
-                getNearby(loc.location.longitude, loc.location.latitude)
+                // getNearby(loc.location.longitude, loc.location.latitude)   
             }
             else{
                 getLocation()
@@ -27,7 +57,6 @@ function Index({ history }) {
         else{
             getLocation()
         }
-
         return () => {
         }
     }, [])
@@ -148,6 +177,12 @@ function Index({ history }) {
     }
 
     function renderList() {
+        if(loc.location != undefined){
+            var sorted = AllLocations.sort(compare)
+            return sorted.map((location) => {
+                return renderCard(location)
+            })
+        }
         return AllLocations.map((location) => {
             return renderCard(location)
         })
@@ -190,6 +225,8 @@ function Index({ history }) {
             </MainLayout>
         )
     }
+
+
     return (
         <MainLayout>
             <div style={{ position: "sticky", top: 0 }}>
@@ -200,11 +237,11 @@ function Index({ history }) {
                 </ListItem>
             </div>
             <div style={{ marginBottom: 55 }}>
-                <ListTitle>
+                {/* <ListTitle>
                     Shops Near You
             </ListTitle>
-                {renderNearby()}
-                <ListTitle>
+                {renderNearby()} */}
+            <ListTitle>
                     All Shops
             </ListTitle>
                 {renderList()}
