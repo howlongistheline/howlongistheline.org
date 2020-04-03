@@ -164,13 +164,13 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider">
                     {location.address}
-                    <div className="right">
-                        <Button
+                    {/*<div className="right">
+                         }<Button
                         onClick={() => {
                             history.push('/shopDetails?id=' + location._id)
                         }}
                     >More Details</Button>
-                    </div>
+                    </div> */}
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center">Status:&nbsp;{statusToWord(location.status)}</div>
