@@ -91,7 +91,7 @@ export default function AddLine({ history }) {
                 style={{paddingRight: 10}}
                 checked={confirm}
                 modifier='material' />
-            I am at this location right now
+            Are you at this location right now? If not, the listing will probably be removed. Please use the feedback form to contact us know if you want a store added but can't physically go there, thank you :)
             </ListItem>
             <FormControl component="fieldset" style={{ width: "80%", margin: 20 }}>
                 <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>
