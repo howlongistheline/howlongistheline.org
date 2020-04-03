@@ -270,7 +270,7 @@ function Index({ history }) {
             <MainLayout>
                 <div style={{ position: "sticky", top: 0 }}>
                     <ListItem>
-                        <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e) => {
+                        <SearchInput style={{ width: "80%" }} placeholder="Start typing here to find a store" onChange={(e) => {
                             setSearch(e.target.value)
                         }} />
                     </ListItem>
