@@ -8,12 +8,59 @@ import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
+import { bgcolor } from '@material-ui/system';
 
 function Index({ history }) {
     const [loc, setLoc] = useCookies(['location']);
     const [nearby, setNearby] = useState();
     const [AllLocations, setAllLocations] = useState([])
     const [search, setSearch] = useState("");
+
+
+    function isOpening(location){
+        if(!location.opening || !location.closing){
+            return true
+        }
+        var d = new Date();
+        var now;
+        var open;
+        var close;
+        if(d.getUTCMinutes() < 10){
+            now = d.getUTCHours() + ".0" + d.getUTCMinutes();
+        }
+        else{
+            now = d.getUTCHours() + "." + d.getUTCMinutes();
+        }
+        if(location.opening[1] < 10){
+            open = location.opening[0]+".0"+location.opening[1]
+        }else
+        {
+            open = location.opening[0]+"."+location.opening[1]
+        }
+        if(location.closing[1]< 10){
+            close = location.closing[0]+".0"+location.closing[1]
+        }else{
+            close = location.closing[0]+"."+location.closing[1]
+        }
+
+        if(close > open){
+            if(now > open && now < close)
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+        else{
+            if(close > now || (now > open && 24 > now)){
+                return true
+            }else{
+                return false
+            }
+        }
+    }
 
     function compare(a, b) {
         if (distance(a.coordinates[1], a.coordinates[0], loc.location.latitude, loc.location.longitude, "K") < distance(b.coordinates[1], b.coordinates[0], loc.location.latitude, loc.location.longitude, "K"))
@@ -107,7 +154,7 @@ function Index({ history }) {
 
     function renderCard(location) {
         return (
-            <Card key={location._id}>
+            <Card key={location._id} style={{backgroundColor: isOpening(location)? "" : "grey"}}>
                 <ListItem modifier="nodivider">
                     {location.name}
                     <div className="right">
@@ -118,15 +165,18 @@ function Index({ history }) {
                 <ListItem modifier="nodivider">
                     {location.address}
                     <div className="right">
-                        {/*<Button
+                        <Button
                         onClick={() => {
                             history.push('/shopDetails?id=' + location._id)
                         }}
-                    >More Details</Button> */}
+                    >More Details</Button>
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center">Status:&nbsp;{statusToWord(location.status)}</div>
+                    <div className="right">
+                        {isOpening(location) ? "": "Closed"}
+                    </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center">

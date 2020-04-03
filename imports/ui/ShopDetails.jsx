@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
 import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox } from 'react-onsenui'
 import { toast } from 'react-toastify';
-import { locations, additionals, locationsIndex } from '../api/lines.js';
+import { Locations, Additionals, LocationsIndex } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
+import { TimePicker } from '@material-ui/pickers'
 
 function ShopDetails({ details, additional, comments, historys, history }) {
     if (!details || !additional) {
@@ -15,6 +16,25 @@ function ShopDetails({ details, additional, comments, historys, history }) {
     }
 
     const [comment, setComment] = useState("");
+    const [opening, setOpening] = useState();
+    const [closing, setClosing] = useState();
+    const [openingTime, setOpeningTime] = useState([]);
+    const [closingTime, setClosingTime] = useState([]);
+
+    useEffect(() => {
+        if(details.opening && details.closing){
+            var d = new Date(Date.UTC(96, 1, 2,[details.opening[0]] , [details.opening[1]], 5));
+            setOpening(d)
+            setOpeningTime([d.getUTCHours(),d.getUTCMinutes()])
+            var d = new Date(Date.UTC(96, 1, 2,[details.closing[0]] , [details.closing[1]], 5));
+            setClosing(d)
+            setClosingTime([d.getUTCHours(),d.getUTCMinutes()])
+        }
+        return () => {
+            
+        }
+    }, [])
+
 
     function statusToWord(statusCode) {
         switch (statusCode) {
@@ -27,9 +47,29 @@ function ShopDetails({ details, additional, comments, historys, history }) {
         }
     }
 
+    function UpdateTime(){
+        if(openingTime == []){
+            toast('please select a opening time!')
+            return
+        }
+       if(closingTime == []){
+            toast('please select a closing time!')
+            return
+        }
+        Meteor.call('Locations.updateOperatingtime', details._id, openingTime, closingTime,(err,result)=>{
+            if(err){
+                toast("some error happens!")
+                console.log(err)
+                return
+            }
+            toast("success!")
+        })
+    }
+
     function addComment() {
         if (comment == "") {
             toast("please enter comment");
+            console.log(err)
             return
         }
         Meteor.call("locations.comment", details._id, comment, (err, result) => {
@@ -84,9 +124,43 @@ function ShopDetails({ details, additional, comments, historys, history }) {
                 <ListTitle>
                     Line Status: {statusToWord(details.status)}
                 </ListTitle>
+                <ListItem>
+                <div className="left">
+                <TimePicker
+                    style={{paddingLeft: 15}}
+                    label="Opening time:"
+                    clearable
+                    ampm={false}
+                    value={opening}
+                    onChange={(e)=>{
+                        setOpening(e._d)
+                        setOpeningTime([e._d.getUTCHours(),e._d.getUTCMinutes()])
+
+                    }}
+                />
+                </div> 
+                <div className="center">
+                <TimePicker
+                    style={{paddingLeft: 15}}
+                    label="Closing time:"
+                    clearable
+                    ampm={false}
+                    value={closing}
+                    onChange={(e)=>{
+                        setClosing(e._d)
+                        setClosingTime([e._d.getUTCHours(),e._d.getUTCMinutes()])
+                    }}
+                />
+                </div>
+                <div className="right">
+                        <Button onClick={() => { UpdateTime() }}>
+                            <Icon icon="fa-send"></Icon>
+                        </Button>
+                </div>
+                </ListItem>
                 <ListTitle style={{ marginTop: 30 }}>
                     Comments:
-            </ListTitle>
+                </ListTitle>
                 <ListItem>
                     <Input
                         style={{ width: "80%" }}
@@ -115,16 +189,16 @@ export default withTracker(() => {
     Meteor.subscribe('additionals')
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
-    if(additionals.findOne({ locationId: id })){
+    if(Additionals.findOne({ locationId: id })){
         return {
             details: Locations.findOne({ _id: id }),
-            additional: additionals.findOne({ locationId: id }),
-            comments: additionals.findOne({ locationId: id }).comments.reverse(),
-            historys: additionals.findOne({ locationId: id }).history.reverse(),
+            additional: Additionals.findOne({ locationId: id }),
+            comments: Additionals.findOne({ locationId: id }).comments.reverse(),
+            historys: Additionals.findOne({ locationId: id }).history.reverse(),
         }
     }
     return {
         details: Locations.findOne({ _id: id }),
-        additional: additionals.findOne({ locationId: id }),
+        additional: Additionals.findOne({ locationId: id }),
     };
 })(ShopDetails);
