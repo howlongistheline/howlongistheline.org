@@ -47,6 +47,12 @@ export default function faq({}) {
         </ul>
 
       </Card>
+          
+       <Card>
+        <div className="title">Why do I have to physically be at the store when adding it to the site?</div>
+        <p>This site relies on the coordinates provided by your phone. When you add a new store, it will use your current location as the store's location. When someone else updates the status of a line, it will check that they are really at the same location.</p>
+        <p>There are some other ways around this problem, but none of them are free and they all provide tracking data to third parties. I would like to avoid this exposing your information to third parties.</p>
+      </Card>
 
            <Card>
         <div className="title">Who are you?</div>
