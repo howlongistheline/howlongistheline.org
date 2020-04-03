@@ -67,8 +67,8 @@ function EditLine({ history, details }) {
                     <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>
                         {/* <FormControlLabel value="0" control={<Radio />} label="How busy is it?" /> */}
                         <FormControlLabel value="no" control={<Radio />} label="There's no line right now" />
-                        <FormControlLabel value="small" control={<Radio />} label="Less than 5 people waiting" />
-                        <FormControlLabel value="long" control={<Radio />} label="More than 5 people waiting" />
+                        <FormControlLabel value="small" control={<Radio />} label="20 people or less are waiting" />
+                        <FormControlLabel value="long" control={<Radio />} label="More than 20 people are waiting" />
                     </RadioGroup>
                 </FormControl>
             </div>
