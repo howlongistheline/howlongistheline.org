@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
-import { locations, locationsIndex } from '../api/lines.js';
+import { Locations, LocationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
 import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar } from 'react-onsenui'
 import moment from 'moment';
@@ -136,7 +136,7 @@ function Index({ history }) {
                             setAllLocations(Locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch())
                         }
                         else {
-                            let cursor = locationsIndex.search(search)
+                            let cursor = LocationsIndex.search(search)
                             setAllLocations(cursor.fetch())
                         }
                     }
