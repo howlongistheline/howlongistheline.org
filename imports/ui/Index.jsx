@@ -133,7 +133,7 @@ function Index({ history }) {
                 Tracker.autorun(function () {
                     if (!isCancelled) {
                         if (search == "") {
-                            setAllLocations(Locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch())
+                            setAllLocations(Locations.find({}, { sort: { lastUpdate: -1 }, limit: 100 }).fetch())
                         }
                         else {
                             let cursor = LocationsIndex.search(search)
