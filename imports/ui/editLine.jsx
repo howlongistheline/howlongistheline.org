@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular } from 'react-onsenui'
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
-import { locations } from '../api/lines.js';
+import { Locations } from '../api/lines.js';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -90,6 +90,6 @@ export default withTracker(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
     return {
-        details: locations.findOne({ _id: id }),
+        details: Locations.findOne({ _id: id }),
     };
 })(EditLine);

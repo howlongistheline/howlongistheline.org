@@ -117,14 +117,14 @@ export default withTracker(() => {
     const id = urlParams.get('id')
     if(additionals.findOne({ locationId: id })){
         return {
-            details: locations.findOne({ _id: id }),
+            details: Locations.findOne({ _id: id }),
             additional: additionals.findOne({ locationId: id }),
             comments: additionals.findOne({ locationId: id }).comments.reverse(),
             historys: additionals.findOne({ locationId: id }).history.reverse(),
         }
     }
     return {
-        details: locations.findOne({ _id: id }),
+        details: Locations.findOne({ _id: id }),
         additional: additionals.findOne({ locationId: id }),
     };
 })(ShopDetails);

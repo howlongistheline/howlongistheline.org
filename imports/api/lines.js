@@ -3,11 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Index, MinimongoEngine } from 'meteor/easy:search'
 
-export const locations = new Mongo.Collection('locations');
-export const additionals = new Mongo.Collection('additionals');
+Locations = new Mongo.Collection('locations');
+Additionals = new Mongo.Collection('additionals');
 
-export const locationsIndex = new Index({
-    collection: locations,
+export { Locations, Additionals }
+
+export const LocationsIndex = new Index({
+    collection: Locations,
     fields: ['name', 'address'],
     engine: new MinimongoEngine(),
 })
@@ -15,12 +17,12 @@ export const locationsIndex = new Index({
 
 if (Meteor.isServer) {
     // This code only runs on the server
-    locations._ensureIndex({ "coordinates": "2dsphere" })
+    Locations._ensureIndex({ "coordinates": "2dsphere" })
     Meteor.publish('locations', function tasksPublication() {
-        return locations.find();
+        return Locations.find();
     });
     Meteor.publish('additionals', function tasksPublication() {
-        return additionals.find();
+        return Additionals.find();
     });
 }
 
@@ -60,7 +62,7 @@ Meteor.methods({
         //     throw new Meteor.Error('not-authorized');
         // }
 
-        locations.insert({
+        Locations.insert({
             name,
             "type": "Point",
             "coordinates": location,
@@ -70,7 +72,7 @@ Meteor.methods({
             createdAt: new Date(),
             lastUpdate: new Date(),
         }, (err, id) => {
-            additionals.insert({
+            Additionals.insert({
                 locationId: id,
                 history: [{ status: status, time: new Date() }],
                 comments: []
@@ -86,7 +88,7 @@ Meteor.methods({
         //     throw new Meteor.Error('not-authorized');
         // }
 
-        var loc = locations.findOne({
+        var loc = Locations.findOne({
             _id: id
         })
         var distanceInMeter =  distance(loc.coordinates[1],loc.coordinates[0], lat, long, "K")*1000
@@ -94,7 +96,7 @@ Meteor.methods({
             throw new Meteor.Error('You do not appear to be at this location right now');
         }
 
-        locations.update({ _id: id },
+        Locations.update({ _id: id },
             {
                 $set:
                 {
@@ -104,7 +106,7 @@ Meteor.methods({
                 }
             });
 
-        additionals.update({ locationId: id }, {
+        Additionals.update({ locationId: id }, {
             $push: { history: { status: status, time: new Date() } }
         })
         return true
@@ -116,14 +118,14 @@ Meteor.methods({
         //     throw new Meteor.Error('not-authorized');
         // }
 
-        additionals.update({ locationId: id }, {
+        Additionals.update({ locationId: id }, {
             $push: { comments: { comment: comment, time: new Date() } }
         })
 
         return true
     },
-    'locations.findnearby'(long, lat) {
-        var locs = locations.find({
+    'Locations.findnearby'(long, lat) {
+        var locs = Locations.find({
             "coordinates": {
                 $near: {
                     $geometry: {
@@ -138,7 +140,7 @@ Meteor.methods({
         return locs
     },
     'locations.upvote'(id) {
-        locations.update(
+        Locations.update(
             { _id: id },
             { $inc: { upvote: 1 } }
         )

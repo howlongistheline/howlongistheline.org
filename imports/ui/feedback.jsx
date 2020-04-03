@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular } from 'react-onsenui'
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
-import { locations } from '../api/lines.js';
+import { Locations } from '../api/lines.js';
 
 export default function feedback({ history, details }) {
 
@@ -53,6 +53,3 @@ export default function feedback({ history, details }) {
         </MainLayout>
     )
 }
-
-
-

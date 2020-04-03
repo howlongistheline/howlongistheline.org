@@ -48,7 +48,7 @@ function Index({ history }) {
     useEffect(() => {
         if (loc.location != undefined) {
             if ((new Date().getTime() - new Date(loc.location.time).getTime()) / 1000 < 300) {
-                // getNearby(loc.location.longitude, loc.location.latitude)   
+                // getNearby(loc.location.longitude, loc.location.latitude)
             }
             else {
                 getLocation()
@@ -86,7 +86,7 @@ function Index({ history }) {
                 Tracker.autorun(function () {
                     if (!isCancelled) {
                         if (search == "") {
-                            setAllLocations(locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch())
+                            setAllLocations(Locations.find({}, { sort: { lastUpdate: -1 }, limit: 20 }).fetch())
                         }
                         else {
                             let cursor = locationsIndex.search(search)
@@ -273,7 +273,7 @@ export default withTracker(() => {
     Meteor.subscribe('locations');
 
     return {
-        // AllLocations: locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
+        // AllLocations: Locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
         //   currentUser: Meteor.user,
     };
 })(Index);
