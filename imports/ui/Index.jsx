@@ -268,9 +268,9 @@ function Index({ history }) {
     if (search != "") {
         return (
             <MainLayout>
-                <div style={{ position: "sticky", top: 0 }}>
+                <div style={{ position: "sticky", top: 0, zIndex: 1000}}>
                     <ListItem>
-                        <SearchInput style={{ width: "80%" }} placeholder="Start typing here to find a store" onChange={(e) => {
+                        <SearchInput style={{ width: "80%", backgroundColor: "pink", color: 'black'}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
                             setSearch(e.target.value)
                         }} />
                     </ListItem>
@@ -294,9 +294,9 @@ function Index({ history }) {
 
     return (
         <MainLayout>
-            <div style={{ position: "sticky", top: 0 }}>
+            <div style={{ position: "sticky", top: 0, zIndex: 1000 }}>
                 <ListItem>
-                    <SearchInput style={{ width: "80%" }} placeholder="search" onChange={(e) => {
+                    <SearchInput style={{ width: "80%", backgroundColor: "pink", color: "black"}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
                         setSearch(e.target.value)
                     }} />
                 </ListItem>
