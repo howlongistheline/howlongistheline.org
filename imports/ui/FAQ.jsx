@@ -41,7 +41,7 @@ export default function faq({}) {
         <p>If you think this site is helpful, here are some ways you could help even more than you already are:</p>
         <ul>
         <li>If your store is not listed, please <a href="/addLine">add it</a>.</li>
-        <li>Put a sign on the shop door with the site address (howlongistheline.org), asking people to update the line status.</li>
+        <li>Print <a href="https://www.dropbox.com/s/n3fh33wywy7op21/howlongistheline.pdf?dl=1>this sign</a> and put it in the front door of the store. </li>
         <li>Tell your manager about this site, and if they think it's helpful they might want to let other stores know about it.</li>
         <li>Get in <a href="/feedback">contact</a> and let me know what I can do to make this site more useful for <i>you</i>, and what other problems I might be able to solve for <i>you</i> during this difficult period.</li>
         </ul>
