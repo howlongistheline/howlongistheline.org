@@ -61,7 +61,7 @@ function SideBar({ children, history }) {
 
                         </div>
                     </Toolbar>}
-                ><div className="center">This site was made in a bit of a hurry and is being constantly improved along the way. Sometimes things go wrong, for example I just reset all the statuses to "no lines" by accident, sorry about that! Posted: {moment(1585967082000).fromNow()}</div>
+                >
                     {children}
                 </Page>
             </Ons.SplitterContent>
