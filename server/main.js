@@ -8,7 +8,7 @@ Meteor.startup(() => {
   name: 'Reset status to No Line if it has not been updated for a while',
   schedule: function(parser) {
     // parser is a later.parse object
-    return parser.text('every 31 minutes');
+    return parser.text('every 81 minutes');
   },
   job: function() {
     updateStatus();
