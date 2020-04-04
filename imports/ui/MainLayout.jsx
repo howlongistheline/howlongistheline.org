@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router'
 import { Page, Toolbar, Icon, ToolbarButton } from 'react-onsenui'
 import * as Ons from 'react-onsenui'
+import moment from 'moment'
 
 function SideBar({ children, history }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +56,12 @@ function SideBar({ children, history }) {
                         )} /> */}
                         How Long is the Line?
                         </div>
+
                         <div className="right">
 
                         </div>
                     </Toolbar>}
-                >
+                ><div className="center">This site was made in a bit of a hurry and is being constantly improved along the way. Sometimes things go wrong, for example I just reset all the statuses to "no lines" by accident, sorry about that! Posted: {moment(1585967082000).fromNow()}</div>
                     {children}
                 </Page>
             </Ons.SplitterContent>
