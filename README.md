@@ -26,13 +26,15 @@ meteor npm install
 meteor run
 
 #### Insert the database if running locally (never for production)
-While meteor is running, in a new shell from *outside* of the howlongistheline directory run:
+Run this from within the project directory while Meteor is running (it must be running to serve the local MongoDB instance):
 ```
-wget <coming soon> && tar -xvf dump.tar.gz && mongorestore -h 127.0.0.1 --port 3001 -d meteor dump/meteor
+cd ..
+tar -xvf howlongistheline.org/mongodump.tar.gz
+mongorestore -h 127.0.0.1 --port 3001 -d meteor dump/meteor
 ```   
 (You will need [Mongo](https://docs.mongodb.com/manual/installation/) to be installed on your system).
 
-If you already have the database but want to update it to the latest version, do a `meteor reset` before running the above.
+If you already have the database but want to update it to the latest version, do a `meteor reset` from within the project directory before running the above, otherwise you will recieve `duplicate key error` errors.
 
 #### Mongo errors   
 If Mongo exists with status 1:
