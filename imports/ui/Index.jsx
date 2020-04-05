@@ -249,7 +249,7 @@ function Index({ history }) {
         if (loc.location == undefined) {
             return (<Card>
                 <ProgressBar indeterminate />
-                getting you location
+                Getting your location...
             </Card>
             )
         }
