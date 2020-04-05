@@ -145,6 +145,29 @@ Meteor.methods({
             { $inc: { upvote: 1 } }
         )
     },
+
+    'locations.updatelinesize'(id, long, lat, line) {
+      var loc = Locations.findOne({
+          _id: id
+      })
+      var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
+      if (distanceInMeter > 100) {
+          throw new Meteor.Error('You do not appear to be at this shop right now');
+      }
+      Locations.update({ _id: id },
+        {
+          $set:
+          {
+            line: line,
+            lastUpdate: new Date()
+          }
+        }
+      )
+      Additionals.update({ locationId: id }, {
+          $push: { history: { line: line, time: new Date() } }
+      })
+    },
+
     'Locations.updateOperatingtime'(id, opening, closing) {
         Locations.update({ _id: id },
             {

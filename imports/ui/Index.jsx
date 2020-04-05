@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations, LocationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar, Range } from 'react-onsenui'
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
@@ -15,7 +15,8 @@ function Index({ history }) {
     const [nearby, setNearby] = useState();
     const [AllLocations, setAllLocations] = useState([])
     const [search, setSearch] = useState("");
-
+    const [line, setLine] = useState();
+    const [loading, setLoading] = useState(false);
 
     function isOpening(location){
         if(!location.opening || !location.closing){
@@ -153,14 +154,11 @@ function Index({ history }) {
     }, [search])
 
     function renderCard(location) {
+      var lineupdate = 0;
         return (
             <Card key={location._id} style={{backgroundColor: isOpening(location)? "" : "grey"}}>
                 <ListItem modifier="nodivider">
                     {location.name}
-                    <div className="right">
-                        Updated: {moment(location.lastUpdate).fromNow()}
-
-                    </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
                     {location.address}
@@ -173,44 +171,40 @@ function Index({ history }) {
                     </div> */}
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="center">Status:&nbsp;{statusToWord(location.status)}</div>
+                    <div className="center">There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                     <div className="right">
                         {isOpening(location) ? "": "Closed"}
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="center">
-                        <Button
-                            onClick={() => {
-                                history.push('/editLine?id=' + location._id)
-                            }}
-                        >Change line status now</Button>
-                    </div>
-                </ListItem>
-                {/*
-                    <div className="right">
-                        {location.upvote}
-                        <Button modifier="quiet"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                Meteor.call("locations.upvote", location._id, (err, result)=>{
-                                    if(err){
-                                    toast(err)
-                                    }
-                                    if(result=="wait"){
-                                        toast("please wait 1 min to upvote")
-                                    }
-                                })
-                                getNearby(currentLocation)
-                            }}>
+                <div className="center">
+                0
+                <Range modifier="material" style={{width:"80%"}} min={0} max={50} value={parseInt(location.line) ? parseInt(location.line) : 0}
+                onChange={ function(event) {
+                  if (event.type == "change") {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, event.target.value, function (err, result) {
+                          console.log(event.type)
+                            if (err) {
+                                setLoading(false)
+                                toast("Are you at this shop right now?")
+                                console.log(err)
+                                return
+                            }
+                            // setLoading(false)
+                            toast("Thank You!")
+                            history.push('/')
+                        });
+                    })
+                  }}}
 
-                            <Icon
-                                size={15}
-                                icon="fa-thumbs-up"
-                            />
-                        </Button>
-                    </div>
-                    */}
+                />
+                50+
+                </div>
+                </ListItem>
+                <ListItem modifier="nodivider">
+                <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
+                </ListItem>
             </Card>
         )
     }
@@ -317,6 +311,7 @@ function Index({ history }) {
         </MainLayout>
     )
 }
+
 
 
 export default withTracker(() => {
