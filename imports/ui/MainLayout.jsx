@@ -30,7 +30,7 @@ function SideBar({ children, history }) {
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/faq") }} tappable>FAQ</Ons.ListItem>
                         )} />
                         <Route render={({ history }) => (
-                            <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { window.open("https://github.com/gazhayes/howlongistheline.org") }} tappable>SOURCE CODE</Ons.ListItem>
+                            <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { window.open("https://github.com/howlongistheline/howlongistheline.org") }} tappable>SOURCE CODE</Ons.ListItem>
                         )} />
                         <Route render={({ history }) => (
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/feedback") }} tappable>CONTACT</Ons.ListItem>
