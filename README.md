@@ -12,10 +12,10 @@ curl https://install.meteor.com/ | sh
 
 #### Clone repository    
 ```
-git clone https://github.com/gazhayes/howlongistheline.org.git
+git clone https://github.com/howlongistheline/howlongistheline.org.git
 ```
 
-Note: if you want to edit things and send a pull request you should _fork_ this project on Github first and clone _your_ fork instead of https://github.com/gazhayes/howlongistheline.org.git.
+Note: if you want to edit things and send a pull request you should _fork_ this project on Github first and clone _your_ fork instead of https://github.com/howlongistheline/howlongistheline.org.git.
 
 #### Install Dependencies   
 ```
@@ -70,7 +70,7 @@ If at some point you want to abandon the issue and let someone else have a go, l
 
 4. Add the howlongistheline repository as an upstream source and pull any changes:
 ```
-@: git remote add upstream git://github.com/gazhayes/howlongistheline //only needs to be done once
+@: git remote add upstream git://github.com/howlongistheline/howlongistheline //only needs to be done once
 @: git checkout master //just to make sure you're on the correct branch
 @: git pull upstream master //this grabs any code that has changed, you want to be working on the latest 'version'
 @: git push //update your remote fork with the changes you just pulled from upstream master
@@ -110,7 +110,7 @@ And then commit your changes:
   ```
     Done in #(PR_NUMBER)
   ```
-  
+
   Your change will be pushed to production, usually within a few hours. Everyone can then test your solution and whoever opened the issue can close it if it solves the problem.
 
 #### What happens after I send a pull request?    
