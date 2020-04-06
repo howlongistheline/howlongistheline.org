@@ -10,7 +10,7 @@ assignees: ''
 ### The user or Contributor SHOULD write the issue by describing the problem they face or observe.   
 “Problem: we need feature X. Solution: make it” is not a good issue. “Problem: user cannot do common tasks A or B except by using a complex workaround. Solution: make feature X” is a decent explanation. 
 
-Since everyone I’ve ever worked with has needed to learn this, it seems worth restating: document the real *problem* first, solution (optional) second.
+Document the *problem* first, solution (optional) second.
 
 By stating the problem explicitly we give others a chance to correct our logic. “You’re only using A and B a lot because function C is unreliable. Solution: make function C work properly.”
 
