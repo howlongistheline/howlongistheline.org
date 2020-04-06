@@ -33,6 +33,9 @@ function SideBar({ children, history }) {
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { window.open("https://github.com/howlongistheline/howlongistheline.org") }} tappable>SOURCE CODE</Ons.ListItem>
                         )} />
                         <Route render={({ history }) => (
+                            <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { loadPage(history, "/learntocode") }} tappable>LEARN TO CODE</Ons.ListItem>
+                        )} />
+                        <Route render={({ history }) => (
                             <Ons.ListItem key={"MAIN_PAGE"} onClick={() => { window.open("https://www.facebook.com/groups/1161156860891990/") }} tappable>FACEBOOK GROUP</Ons.ListItem>
                         )} />
                         <Route render={({ history }) => (
