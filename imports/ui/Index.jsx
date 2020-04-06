@@ -264,7 +264,7 @@ function Index({ history }) {
             <MainLayout>
                 <div style={{ position: "sticky", top: 0, zIndex: 1000}}>
                     <ListItem>
-                        <SearchInput style={{ width: "80%", backgroundColor: "pink", color: 'black'}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
+                        <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: 'black'}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
                             setSearch(e.target.value)
                         }} />
                     </ListItem>
@@ -290,7 +290,7 @@ function Index({ history }) {
         <MainLayout>
             <div style={{ position: "sticky", top: 0, zIndex: 1000 }}>
                 <ListItem>
-                    <SearchInput style={{ width: "80%", backgroundColor: "pink", color: "black"}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
+                    <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black"}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
                         setSearch(e.target.value)
                     }} />
                 </ListItem>
