@@ -124,21 +124,24 @@ Meteor.methods({
 
         return true
     },
-    'Locations.findnearby'(long, lat) {
-        var locs = Locations.find({
+    'locations.findnearby': function(coords, long) {
+      if (!Meteor.isServer) { console.log("Fetching data from server")
+      } else if (Meteor.isServer) {
+      console.log("SRV coords")
+      console.log(coords)
+        return (
+          Locations.find({
             "coordinates": {
-                $near: {
+                $nearSphere: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [long, lat],
-                        $maxDistance: 10
+                        coordinates: [parseFloat(coords.long), parseFloat(coords.lat)]
                     },
                 }
             }
-        }, { limit: 3 }).fetch()
-
-        return locs
-    },
+        }, {limit: 50 }).fetch()
+      )
+    }},
     'locations.upvote'(id) {
         Locations.update(
             { _id: id },

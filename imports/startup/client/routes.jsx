@@ -9,6 +9,7 @@ import EditLine from '../../ui/editLine';
 import ShopDetails from '../../ui/ShopDetails';
 import FeedBack from '../../ui/feedback'
 import learntocode from '../../ui/learntocode'
+import Nearme from '../../ui/nearme'
 import faq from '../../ui/FAQ'
 import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
@@ -34,6 +35,7 @@ export const renderRoutes = () => (
         <Route exact path="/feedback" component={FeedBack} />
         <Route exact path="/FAQ" component={faq} />
         <Route exact path="/learntocode" component={learntocode} />
+        <Route exact path="/nearme" component={Nearme} />
       </Switch>
       </CookiesProvider>
       </MuiPickersUtilsProvider>
