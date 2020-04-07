@@ -17,6 +17,7 @@ function Index({ history }) {
     const [search, setSearch] = useState("");
     const [line, setLine] = useState();
     const [loading, setLoading] = useState(false);
+    const [denied, setDenied] = useState(false);
 
     function isOpening(location){
         if(!location.opening || !location.closing){
@@ -114,6 +115,7 @@ function Index({ history }) {
             setLoc('location', { longitude: position.coords.longitude, latitude: position.coords.latitude, time: new Date() }, { path: '/' });
             getNearby(position.coords.longitude, position.coords.latitude)
         }, (err) => {
+            setDenied(true)
             toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
             console.warn(`ERROR(${err.code}): ${err.message}`);
         });
@@ -246,6 +248,9 @@ function Index({ history }) {
     }
 
     function renderLoading() {
+        if(denied){
+            return
+        }
         if (loc.location == undefined) {
             return (<Card>
                 <ProgressBar indeterminate />
