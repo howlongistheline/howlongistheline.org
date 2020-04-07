@@ -11,18 +11,14 @@ import { useCookies } from 'react-cookie';
 import { bgcolor } from '@material-ui/system';
 
 
-
-export default function Nearme({ history }) {
+function Index({ history }) {
   {/*Initialise props*/}
   const [clientLocation, setclientLocation] = useCookies(['location']);
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
 
-checkClientLocation()
-
 function checkClientLocation() {
   if (clientLocation.location != undefined) {
-  console.log("nm 0.0")
     if ((new Date().getTime() - new Date(clientLocation.location.time).getTime()) / 1000 < 300) {
       if (nearestShops.length == undefined || nearestShops.length <= 1) {
         fetchNearestShops()
@@ -34,7 +30,6 @@ function checkClientLocation() {
 }
 
 function getClientLocation() {
-  console.log("nm 1")
   var options = {
     enableHighAccuracy: false,
     timeout: 10000,
@@ -59,33 +54,47 @@ function getClientLocation() {
   navigator.geolocation.getCurrentPosition(success, error, options);
 
 
-}
-
-function fetchNearestShops() {
-    console.log("CLT updating nearest shops")
-    let lat = clientLocation.location.latitude;
-    let long = clientLocation.location.longitude;
-    Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
-      if (result) {
-        console.log(true)
-        setnearestShops(result)
-      } else {
-        console.log(false)
-        console.log(err)
-      }
-    },
-  );
-}
-
-function renderList() {
-      return nearestShops.map((location) => {
-          return renderCard(location)
-      }
-    )
   }
 
+  function fetchNearestShops() {
+      console.log("CLT updating nearest shops")
+      let lat = clientLocation.location.latitude;
+      let long = clientLocation.location.longitude;
+      Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
+        if (result) {
+          console.log(true)
+          setnearestShops(result)
+        } else {
+          console.log(false)
+          console.log(err)
+        }
+      },
+    );
+  }
+
+  function renderList() {
+        return nearestShops.map((location) => {
+            return renderCard(location)
+        }
+      )
+    }
+
   function renderCard(location) {
-    console.log(8)
+    var Indicator = "green"
+    switch(true){
+      case (location.line == undefined):
+          Indicator = "green"
+          break
+      case (location.line <= 20 && location.line >= 0 ):
+          Indicator = "green"
+          break
+      case (location.line <= 35 && location.line > 20 ):
+          Indicator = "orange"
+          break
+      case (location.line > 35 ):
+          Indicator = "red"
+          break
+    }
       return (
           <Card key={location._id} style={{backgroundColor:"white"}}>
               <ListItem modifier="nodivider">
@@ -102,7 +111,7 @@ function renderList() {
                   </div> */}
               </ListItem>
               <ListItem modifier="nodivider">
-                  <div className="center">There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                  <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                   <div className="right">
                   </div>
               </ListItem>
@@ -138,6 +147,7 @@ function renderList() {
           </Card>
       )
   }
+
   return (
       <MainLayout>
           <div style={{ position: "sticky", top: 0, zIndex: 1000 }}>
@@ -163,3 +173,12 @@ function renderList() {
       </MainLayout>
   )
 }
+
+export default withTracker(() => {
+  Meteor.subscribe('locations');
+
+  return {
+      // AllLocations: Locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
+      //   currentUser: Meteor.user,
+  };
+})(Index);
