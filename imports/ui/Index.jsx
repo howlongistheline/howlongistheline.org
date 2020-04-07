@@ -157,6 +157,21 @@ function Index({ history }) {
 
     function renderCard(location) {
       var lineupdate = 0;
+      var Indicator = "green"
+      switch(true){
+        case (location.line == undefined):
+            Indicator = "green"
+            break
+        case (location.line <= 20 && location.line >= 0 ):
+            Indicator = "green"
+            break
+        case (location.line <= 35 && location.line > 20 ):
+            Indicator = "orange"
+            break
+        case (location.line > 35 ):
+            Indicator = "red"
+            break
+      }
         return (
             <Card key={location._id} style={{backgroundColor: isOpening(location)? "" : "grey"}}>
                 <ListItem modifier="nodivider">
@@ -173,7 +188,7 @@ function Index({ history }) {
                     </div> */}
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="center">There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                    <div className="center" style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                     <div className="right">
                         {isOpening(location) ? "": "Closed"}
                     </div>
