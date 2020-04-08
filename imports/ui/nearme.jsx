@@ -8,8 +8,7 @@ import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
-import { bgcolor } from '@material-ui/system';
-import { listenerCount } from 'cluster';
+
 
 
 function Index({ history }) {
@@ -214,7 +213,9 @@ function getClientLocation() {
               </ListItem>
           </div>
           <div style={{ marginBottom: 55 }}>
-
+                <Card>
+                This site is still developing. It is constantly being improved by volunteers. If something is broken, check back a few days later and it will probably be fixed.
+                </Card>
               <ListTitle>
                   All Shops
           </ListTitle>
