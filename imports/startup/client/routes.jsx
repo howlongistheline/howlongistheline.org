@@ -3,7 +3,7 @@ import { Router, Route, Switch } from 'react-router';
 import history from 'history';
 
 // route components
-import Main from '../../ui/Index';
+// import Main from '../../ui/Index';
 import AddLine from '../../ui/addLine';
 import EditLine from '../../ui/editLine';
 import ShopDetails from '../../ui/ShopDetails';
@@ -28,7 +28,7 @@ export const renderRoutes = () => (
     <CookiesProvider>
     <ToastContainer />
       <Switch>
-        <Route exact path="/" component={Main} />
+        <Route exact path="/" component={Nearme} />
         <Route exact path="/addLine" component={AddLine} />
         <Route exact path="/editLine" component={EditLine} />
         <Route exact path="/shopDetails" component={ShopDetails} />
