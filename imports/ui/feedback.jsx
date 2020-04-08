@@ -34,11 +34,11 @@ export default function feedback({ history, details }) {
                 Feedback
             </ListTitle>
             <ListItem>
-                <p>Problems that are currently known and being worked on can be seen at <a href="https://github.com/gazhayes/howlongistheline.org/issues">https://github.com/gazhayes/howlongistheline.org/issues</a></p>
+                <p>Problems that are currently known and being worked on can be seen at <a href="https://github.com/howlongistheline/howlongistheline.org/issues">https://github.com/howlongistheline/howlongistheline.org/issues</a></p>
             </ListItem>
                  <ListItem>
-                 
-                
+
+
                 <Input
                         style={{ width: "80%" }}
                         value={feedback} float
