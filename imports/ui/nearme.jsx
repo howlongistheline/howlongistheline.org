@@ -18,7 +18,7 @@ function Index({ history }) {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  
+
   useEffect(() => {
     checkClientLocation()
   }, [])
@@ -93,7 +93,7 @@ function getClientLocation() {
 
   function fetchNearestShops(latitude, longitude) {
       console.log("CLT updating nearest shops")
-      var lat; 
+      var lat;
       var long;
       if(clientLocation.location == undefined){
         lat = latitude;
@@ -186,8 +186,8 @@ function getClientLocation() {
                               return
                           }
                           // setLoading(false)
-                          toast("Thank You!")
-                          history.push('/')
+                          alert("The shop has been updated, thank you!")
+                          history.go(0)
                       });
                   })
                 }}}
