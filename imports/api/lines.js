@@ -171,6 +171,27 @@ Meteor.methods({
       })
     },
 
+    'locations.forceUpdatelinesize'(id, long, lat, line) {
+        var loc = Locations.findOne({
+            _id: id
+        })
+
+        Additionals.update({ locationId: id }, {
+            $push: { coordinatesHistory: { coordinates: loc.coordinates, time: new Date() } }
+        })
+
+        Locations.update({ _id: id },
+          {
+            $set:
+            {
+              coordinates: [long, lat],
+              line: line,
+              lastUpdate: new Date()
+            }
+          }
+        )
+      },
+
     'Locations.updateOperatingtime'(id, opening, closing) {
         Locations.update({ _id: id },
             {
