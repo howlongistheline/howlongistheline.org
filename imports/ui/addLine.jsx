@@ -73,9 +73,14 @@ export default function AddLine({ history }) {
     return (
         <MainLayout>
              <div style={{ marginBottom: 55 }}>
-            <ListTitle>
-            Shop Details
-            </ListTitle>
+            <ListItem>
+                <div className="left"> Shop Details</div>
+                <div className="right">
+                <Button onClick={()=>{history.push('/')}}>
+                    Cancel
+                </Button>
+                </div>
+            </ListItem>
             <ListItem modifier="nodivider" tappable onClick={()=>{setListed(!listed)}}>
             <Checkbox
                 style={{paddingRight: 10}}
