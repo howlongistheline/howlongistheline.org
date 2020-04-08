@@ -9,8 +9,6 @@ import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 
-
-
 function Index({ history }) {
   {/*Initialise props*/}
   const [clientLocation, setclientLocation] = useCookies(['location']);
@@ -18,7 +16,7 @@ function Index({ history }) {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-
+  
   useEffect(() => {
     checkClientLocation()
   }, [])
@@ -47,7 +45,6 @@ function Index({ history }) {
         isCancelled = true;
     }
   }, [search])
-
 
 
 function checkClientLocation() {
@@ -181,7 +178,8 @@ function getClientLocation() {
                       Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, event.target.value, function (err, result) {
                         console.log(event.type)
                           if (err) {
-                              toast("Are you at this shop right now?")
+                              // toast("Are you at this shop right now? Looks like you current location is different with the shop's location in our record")
+                              history.push("/editLine?id="+location._id+"&lineSize="+event.target.value, {location: location})
                               console.log(err)
                               return
                           }

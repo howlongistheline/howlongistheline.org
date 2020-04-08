@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
-import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar, Range } from 'react-onsenui'
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations } from '../api/lines.js';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import moment from 'moment';
 
 function EditLine({ history, details }) {
+
     if (!details) {
         return (
             <MainLayout>
@@ -20,7 +17,61 @@ function EditLine({ history, details }) {
     }
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(details.status); //0:not selected
+    const [lineSize, setLineSize] = useState(parseInt(new URLSearchParams(window.location.search).get('lineSize')))
 
+    function renderCard(location) {
+        var Indicator = "green"
+        switch(true){
+          case (location.line == undefined):
+              Indicator = "green"
+              break
+          case (location.line <= 20 && location.line >= 0 ):
+              Indicator = "green"
+              break
+          case (location.line <= 35 && location.line > 20 ):
+              Indicator = "orange"
+              break
+          case (location.line > 35 ):
+              Indicator = "red"
+              break
+        }
+          return (
+              <Card key={location._id} style={{backgroundColor:"white"}}>
+                  <ListItem modifier="nodivider">
+                      {location.name}
+                  </ListItem>
+                  <ListItem modifier="nodivider">
+                      {location.address}
+                      {/*<div className="right">
+                           }<Button
+                          onClick={() => {
+                              history.push('/shopDetails?id=' + location._id)
+                          }}
+                      >More Details</Button>
+                      </div> */}
+                  </ListItem>
+                  <ListItem modifier="nodivider">
+                      <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                      <div className="right">
+                      </div>
+                  </ListItem>
+                  <ListItem modifier="nodivider">
+                  <div className="center">
+                  0
+                  <Range modifier="material" style={{width:"80%"}} min={0} max={50} value={lineSize}
+                  onChange={ function(event) {
+                      setLineSize(parseInt(event.target.value))
+                  }}
+                  />
+                  50+
+                  </div>
+                  </ListItem>
+                  <ListItem modifier="nodivider">
+                  <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
+                  </ListItem>
+              </Card>
+          )
+      }
 
     function submit() {
 
@@ -31,15 +82,13 @@ function EditLine({ history, details }) {
 
         setLoading(true)
         navigator.geolocation.getCurrentPosition((position) => {
-            Meteor.call('locations.update', details._id, status, position.coords.longitude, position.coords.latitude, function (err, result) {
+            Meteor.call('locations.forceUpdatelinesize', details._id, position.coords.longitude, position.coords.latitude, lineSize, function (err, result) {
                 if (err) {
-                    setLoading(false)
-                    toast("Are you really at this shop?")
-                    console.log(err)
+                    toast("Some Error happens")
                     return
                 }
                 // setLoading(false)
-                toast("Thank You!")
+                alert("The shop has been updated, thank you!")
                 history.push('/')
             });
         }, error)
@@ -60,17 +109,16 @@ function EditLine({ history, details }) {
     return (
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
-                <ListTitle>
-                    Status
-            </ListTitle>
-                <FormControl component="fieldset" style={{ width: "80%", margin: 20 }}>
-                    <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>
-                        {/* <FormControlLabel value="0" control={<Radio />} label="How busy is it?" /> */}
-                        <FormControlLabel value="no" control={<Radio />} label="There's no line right now" />
-                        <FormControlLabel value="small" control={<Radio />} label="20 people or less are waiting" />
-                        <FormControlLabel value="long" control={<Radio />} label="More than 20 people are waiting" />
-                    </RadioGroup>
-                </FormControl>
+                <Card>
+                Are you really at this location? It appears that either you are not at the shop, or we have the wrong coordinates for the shop.
+                </Card>
+                <Card>
+                If you are not at this shop right now: ask your friends on facebook etc to update this shop for you whenever they go.
+                </Card>
+                <Card onClick={()=>{console.log(123)}}>
+                If you are at this shop right now, please submit to reset the location.
+                </Card>
+                {renderCard(details)}
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
