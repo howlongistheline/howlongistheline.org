@@ -79,7 +79,7 @@ function getClientLocation() {
   function error(err) {
     setLoading(false)
     console.log("nm location failure")
-    toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
+    toast("Cant get current location, please try a different browser if this continues")
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
@@ -212,7 +212,7 @@ function getClientLocation() {
           </div>
           <div style={{ marginBottom: 55 }}>
                 <Card>
-                This site is still developing. It is constantly being improved by volunteers. If something is broken, check back a few days later and it will probably be fixed.
+                This site is constantly being improved by volunteers. If something is broken, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what we are currently working on.
                 </Card>
               <ListTitle>
                   All Shops
