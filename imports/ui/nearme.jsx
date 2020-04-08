@@ -9,32 +9,62 @@ import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import { bgcolor } from '@material-ui/system';
+import { listenerCount } from 'cluster';
 
 
-
-export default function Nearme({ history }) {
+function Index({ history }) {
   {/*Initialise props*/}
   const [clientLocation, setclientLocation] = useCookies(['location']);
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  
+  useEffect(() => {
+    checkClientLocation()
+  }, [])
 
-checkClientLocation()
+  useEffect(() => {
+    let isCancelled = false;
+    try {
+        if (!isCancelled) {
+            Tracker.autorun(function () {
+                if (!isCancelled) {
+                    if (search == "") {
+                    }
+                    else {
+                        let cursor = LocationsIndex.search(search)
+                        setSearchResult(cursor.fetch())
+                    }
+                }
+            })
+        }
+    } catch (e) {
+        if (!isCancelled) {
+            throw e;
+        }
+    }
+    return function cleanup() {
+        isCancelled = true;
+    }
+  }, [search])
+
+
 
 function checkClientLocation() {
   if (clientLocation.location != undefined) {
-  console.log("nm 0.0")
     if ((new Date().getTime() - new Date(clientLocation.location.time).getTime()) / 1000 < 300) {
       if (nearestShops.length == undefined || nearestShops.length <= 1) {
         fetchNearestShops()
       } else {
-        console.log(nearestShops)
+        // console.log(nearestShops)
       }
     } else {getClientLocation()}
   } else {getClientLocation()}
 }
 
 function getClientLocation() {
-  console.log("nm 1")
+  setLoading(true)
   var options = {
     enableHighAccuracy: false,
     timeout: 10000,
@@ -47,10 +77,11 @@ function getClientLocation() {
       console.log("CLT latitude: ")
       console.log(position.coords.latitude)
     setclientLocation('location', { longitude: position.coords.longitude, latitude: position.coords.latitude, time: new Date() });
-    fetchNearestShops();
+    fetchNearestShops(position.coords.latitude, position.coords.longitude);
   }
 
   function error(err) {
+    setLoading(false)
     console.log("nm location failure")
     toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
     console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -59,33 +90,68 @@ function getClientLocation() {
   navigator.geolocation.getCurrentPosition(success, error, options);
 
 
-}
+  }
 
-function fetchNearestShops() {
-    console.log("CLT updating nearest shops")
-    let lat = clientLocation.location.latitude;
-    let long = clientLocation.location.longitude;
-    Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
-      if (result) {
-        console.log(true)
-        setnearestShops(result)
-      } else {
-        console.log(false)
-        console.log(err)
+  function fetchNearestShops(latitude, longitude) {
+      console.log("CLT updating nearest shops")
+      var lat; 
+      var long;
+      if(clientLocation.location == undefined){
+        lat = latitude;
+        long = longitude;
+      }else{
+        lat = clientLocation.location.latitude;
+        long = clientLocation.location.longitude;
       }
-    },
-  );
-}
+      Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
+        if (result) {
+          // console.log(true)
+          setnearestShops(result)
+        } else {
+          // console.log(false)
+          console.log(err)
+        }
+      }
+    );
+    setLoading(false)
+  }
 
-function renderList() {
-      return nearestShops.map((location) => {
-          return renderCard(location)
-      }
-    )
+  function renderList() {
+    if(loading){
+      return (<Card>
+        <ProgressBar indeterminate />
+        Getting your location...
+    </Card>)
+    }
+    if(search == ""){
+        return nearestShops.map((location) => {
+            return renderCard(location)
+        }
+      )
+    }
+    else{
+      return searchResult.map((location) => {
+        return renderCard(location)
+    })
+    }
   }
 
   function renderCard(location) {
-    console.log(8)
+    var Indicator = "green"
+    switch(true){
+      case (location.line == undefined):
+          Indicator = "green"
+          break
+      case (location.line <= 20 && location.line >= 0 ):
+          Indicator = "green"
+          break
+      case (location.line <= 35 && location.line > 20 ):
+          Indicator = "orange"
+          break
+      case (location.line > 35 ):
+          Indicator = "red"
+          break
+    }
       return (
           <Card key={location._id} style={{backgroundColor:"white"}}>
               <ListItem modifier="nodivider">
@@ -102,7 +168,7 @@ function renderList() {
                   </div> */}
               </ListItem>
               <ListItem modifier="nodivider">
-                  <div className="center">There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                  <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                   <div className="right">
                   </div>
               </ListItem>
@@ -116,7 +182,6 @@ function renderList() {
                       Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, event.target.value, function (err, result) {
                         console.log(event.type)
                           if (err) {
-                              setLoading(false)
                               toast("Are you at this shop right now?")
                               console.log(err)
                               return
@@ -138,6 +203,7 @@ function renderList() {
           </Card>
       )
   }
+
   return (
       <MainLayout>
           <div style={{ position: "sticky", top: 0, zIndex: 1000 }}>
@@ -163,3 +229,12 @@ function renderList() {
       </MainLayout>
   )
 }
+
+export default withTracker(() => {
+  Meteor.subscribe('locations');
+
+  return {
+      // AllLocations: Locations.find({}, { sort: { lastUpdate: -1 } }).fetch(),
+      //   currentUser: Meteor.user,
+  };
+})(Index);
