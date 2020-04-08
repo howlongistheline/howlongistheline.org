@@ -9,6 +9,7 @@ import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import { bgcolor } from '@material-ui/system';
+import { listenerCount } from 'cluster';
 
 
 function Index({ history }) {
@@ -16,6 +17,39 @@ function Index({ history }) {
   const [clientLocation, setclientLocation] = useCookies(['location']);
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  
+  useEffect(() => {
+    checkClientLocation()
+  }, [])
+
+  useEffect(() => {
+    let isCancelled = false;
+    try {
+        if (!isCancelled) {
+            Tracker.autorun(function () {
+                if (!isCancelled) {
+                    if (search == "") {
+                    }
+                    else {
+                        let cursor = LocationsIndex.search(search)
+                        setSearchResult(cursor.fetch())
+                    }
+                }
+            })
+        }
+    } catch (e) {
+        if (!isCancelled) {
+            throw e;
+        }
+    }
+    return function cleanup() {
+        isCancelled = true;
+    }
+  }, [search])
+
+
 
 function checkClientLocation() {
   if (clientLocation.location != undefined) {
@@ -23,13 +57,14 @@ function checkClientLocation() {
       if (nearestShops.length == undefined || nearestShops.length <= 1) {
         fetchNearestShops()
       } else {
-        console.log(nearestShops)
+        // console.log(nearestShops)
       }
     } else {getClientLocation()}
   } else {getClientLocation()}
 }
 
 function getClientLocation() {
+  setLoading(true)
   var options = {
     enableHighAccuracy: false,
     timeout: 10000,
@@ -42,10 +77,11 @@ function getClientLocation() {
       console.log("CLT latitude: ")
       console.log(position.coords.latitude)
     setclientLocation('location', { longitude: position.coords.longitude, latitude: position.coords.latitude, time: new Date() });
-    fetchNearestShops();
+    fetchNearestShops(position.coords.latitude, position.coords.longitude);
   }
 
   function error(err) {
+    setLoading(false)
     console.log("nm location failure")
     toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
     console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -56,28 +92,49 @@ function getClientLocation() {
 
   }
 
-  function fetchNearestShops() {
+  function fetchNearestShops(latitude, longitude) {
       console.log("CLT updating nearest shops")
-      let lat = clientLocation.location.latitude;
-      let long = clientLocation.location.longitude;
+      var lat; 
+      var long;
+      if(clientLocation.location == undefined){
+        lat = latitude;
+        long = longitude;
+      }else{
+        lat = clientLocation.location.latitude;
+        long = clientLocation.location.longitude;
+      }
       Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
         if (result) {
-          console.log(true)
+          // console.log(true)
           setnearestShops(result)
         } else {
-          console.log(false)
+          // console.log(false)
           console.log(err)
         }
-      },
+      }
     );
+    setLoading(false)
   }
 
   function renderList() {
+    if(loading){
+      return (<Card>
+        <ProgressBar indeterminate />
+        Getting your location...
+    </Card>)
+    }
+    if(search == ""){
         return nearestShops.map((location) => {
             return renderCard(location)
         }
       )
     }
+    else{
+      return searchResult.map((location) => {
+        return renderCard(location)
+    })
+    }
+  }
 
   function renderCard(location) {
     var Indicator = "green"
@@ -125,7 +182,6 @@ function getClientLocation() {
                       Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, event.target.value, function (err, result) {
                         console.log(event.type)
                           if (err) {
-                              setLoading(false)
                               toast("Are you at this shop right now?")
                               console.log(err)
                               return
