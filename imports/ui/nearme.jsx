@@ -204,14 +204,14 @@ function getClientLocation() {
 
   return (
       <MainLayout>
-          <div style={{ position: "sticky", top: 0, zIndex: 1000 }}>
+          <div className="search-container" style={{ position: "sticky", top: 0, zIndex: 1000 }}>
               <ListItem>
                   <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black"}} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
                       setSearch(e.target.value)
                   }} />
               </ListItem>
           </div>
-          <div style={{ marginBottom: 55 }}>
+          <div className="border-top" style={{ marginBottom: 55 }}>
                 <Card>
                 This site experiencing a high traffic load (150k+ visitors a day) as multiple countries have now discovered it. We know it's slow sometimes, and we're actively working on that. If something is broken doesn't work properly, check back a few days later and it will probably be fixed (volunteers are actively working on improving things). Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what we are currently working on.
                 </Card>

@@ -24,3 +24,8 @@ body {
 .FAQ {
   height: 100px;
 }
+
+.search-container .list-item__center { background-image: none; }
+
+/* */
+.border-top { border-top: 1px solid #cccccc; }
