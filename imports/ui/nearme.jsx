@@ -16,7 +16,7 @@ function Index({ history }) {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  
+
   useEffect(() => {
     checkClientLocation()
   }, [])
@@ -213,10 +213,10 @@ function getClientLocation() {
           </div>
           <div style={{ marginBottom: 55 }}>
                 <Card>
-                This site is constantly being improved by volunteers. If something is broken, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what we are currently working on.
+                This site experiencing a high traffic load (150k+ visitors a day) as multiple countries have now discovered it. We know it's slow sometimes, and we're actively working on that. If something is broken doesn't work properly, check back a few days later and it will probably be fixed (volunteers are actively working on improving things). Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what we are currently working on.
                 </Card>
               <ListTitle>
-                  All Shops
+                  Shops Near You
           </ListTitle>
               {renderList()}
           </div>
