@@ -15,12 +15,8 @@ function Index({ history }) {
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-<<<<<<< HEAD
-  
-=======
   const [searchResult, setSearchResult] = useState([]);
 
->>>>>>> 1e9491c2f050e39c0a83eb3e39173cf94ca36658
   useEffect(() => {
     checkClientLocation()
   }, [])
