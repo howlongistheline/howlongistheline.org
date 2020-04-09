@@ -15,7 +15,6 @@ function Index({ history }) {
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
   
   useEffect(() => {
     checkClientLocation()
@@ -166,6 +165,9 @@ function getClientLocation() {
               <ListItem modifier="nodivider">
                   <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                   <div className="right">
+                    {/* <Button onClick={()=>{history.push('/duplicated?id='+location._id)}}>
+                      Report duplicated
+                    </Button> */}
                   </div>
               </ListItem>
               <ListItem modifier="nodivider">
@@ -193,7 +195,8 @@ function getClientLocation() {
               />
               50+
               </div>
-              <div className="right"></div>
+              <div className="right">
+              </div>
               </ListItem>
               <ListItem modifier="nodivider">
               <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
