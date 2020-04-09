@@ -135,8 +135,10 @@ Meteor.methods({
       parsedLat = parseFloat(coords.lat);
       if (!parsedLong && !parsedLat) {
         console.log("Changing to different coordinate object");
-        parsedLong = parseFloat(long);
-        parsedLat = parseFloat(coords);
+        parsedLong = parseFloat(coords);
+        parsedLat = parseFloat(long);
+        console.log("NEW COORDS");
+        console.log(parsedLat, parsedLong);
       }
         return (
           Locations.find({
