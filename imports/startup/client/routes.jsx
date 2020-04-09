@@ -11,6 +11,7 @@ import FeedBack from '../../ui/feedback'
 import learntocode from '../../ui/learntocode'
 import Nearme from '../../ui/nearme'
 import faq from '../../ui/FAQ'
+import duplicated from '../../ui/Duplicated'
 import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -35,7 +36,7 @@ export const renderRoutes = () => (
         <Route exact path="/feedback" component={FeedBack} />
         <Route exact path="/FAQ" component={faq} />
         <Route exact path="/learntocode" component={learntocode} />
-        <Route exact path="/nearme" component={Nearme} />
+        <Route exact path="/duplicated" component={duplicated} />
       </Switch>
       </CookiesProvider>
       </MuiPickersUtilsProvider>

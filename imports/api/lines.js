@@ -5,6 +5,7 @@ import { Index, MinimongoEngine } from 'meteor/easy:search'
 
 Locations = new Mongo.Collection('locations');
 Additionals = new Mongo.Collection('additionals');
+Archived = new Mongo.Collection('archived');
 
 export { Locations, Additionals }
 
@@ -67,6 +68,7 @@ Meteor.methods({
             "type": "Point",
             "coordinates": location,
             status,
+            line: 0,
             address,
             upvote: 0,
             createdAt: new Date(),
@@ -212,5 +214,37 @@ Meteor.methods({
                     closing
                 }
             });
+    },
+    'Locations.merge'(ids, name, location, address, line, lastUpdate) {
+        check(name, String);
+        check(address, String);
+
+        if (location == undefined) {
+            throw new Meteor.Error("location is undefined")
+        }
+
+        ids.forEach((id)=>{
+            var loc = Locations.findOne({
+                _id: id
+            })
+            Archived.insert(loc)
+            Locations.remove({_id: id})
+        })
+
+        Locations.insert({
+            name,
+            "type": "Point",
+            "coordinates": location,
+            address,
+            line,
+            createdAt: new Date(),
+            lastUpdate,
+        }, (err, id) => {
+            Additionals.insert({
+                locationId: id,
+                history: [{ line: line, time: new Date() }],
+            })
+        });
+
     },
 })
