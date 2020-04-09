@@ -131,13 +131,24 @@ Meteor.methods({
       } else if (Meteor.isServer) {
       console.log("SRV coords")
       console.log(coords)
+      var parsedLong = 0;
+      var parsedLat = 0;
+      parsedLong = parseFloat(coords.long);
+      parsedLat = parseFloat(coords.lat);
+      if (!parsedLong && !parsedLat) {
+        console.log("Changing to different coordinate object");
+        parsedLong = parseFloat(coords);
+        parsedLat = parseFloat(long);
+        console.log("NEW COORDS");
+        console.log(parsedLat, parsedLong);
+      }
         return (
           Locations.find({
             "coordinates": {
                 $nearSphere: {
                     $geometry: {
                         type: "Point",
-                        coordinates: [parseFloat(coords.long), parseFloat(coords.lat)]
+                        coordinates: [parsedLong, parsedLat]
                     },
                 }
             }
