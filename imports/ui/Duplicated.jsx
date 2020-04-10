@@ -299,7 +299,7 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem modifier="nodivider">
-                            <div className="left"> Does everything look ok? </div>
+                            <div className="left"> Does everything look ok? Please note that if you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.</div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
                                     Cancel
