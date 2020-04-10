@@ -183,7 +183,7 @@ function Duplicated({ history, ready, original }) {
             }}>
                 <div className="left">
                     {/* {location.coordinates} */}
-                    <img src={"maps.howlongistheline.org/LAT"+location.coordinates[1]+"_LONG"+location.coordinates[0]+".png"}></img>
+                    <img src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
                 </div>
                 <div className="right">
                     <Icon icon="fa-chevron-right" />
@@ -282,7 +282,7 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem>
-                        <div className="left"> Please select the best coordinates from the list.</div>
+                        <div className="left"> Please select the best location from the list.</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -297,7 +297,7 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem>
-                            <div className="left"> Please confirm all the informations are correct. </div>
+                            <div className="left"> Please confirm that all the information is correct. </div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
                                     Cancel
@@ -313,7 +313,9 @@ function Duplicated({ history, ready, original }) {
                             </ListItem>
                             <ListItem modifier="nodivider">
                                 {/* {coord} */}
-                                <img src={"maps.howlongistheline.org/LAT"+location.coordinates[1]+"_LONG"+location.coordinates[0]+".png"}></img>
+
+                                <img src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
+                                console.log(location)
                             </ListItem>
                         </Card>
                     </div>
@@ -324,8 +326,8 @@ function Duplicated({ history, ready, original }) {
                             var mostRecentDate = new Date(Math.max.apply(null, selected.map( e => {
                                 return new Date(e.lastUpdate);
                              })));
-                            var mostRecentObject = selected.filter( e => { 
-                                var d = new Date( e.lastUpdate ); 
+                            var mostRecentObject = selected.filter( e => {
+                                var d = new Date( e.lastUpdate );
                                 return d.getTime() == mostRecentDate.getTime();
                             })[0];
                             Meteor.call('Locations.merge', ids, name, coord, address, mostRecentObject.line, mostRecentObject.lastUpdate, (err, result)=>{
