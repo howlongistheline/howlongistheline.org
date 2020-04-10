@@ -52,14 +52,17 @@ function Duplicated({ history, ready, original }) {
 
     function renderSelectedCard(location) {
         return (<ListItem tappable key={"m" + location._id} onClick={() => {
+            if (location._id == original._id) {
+                return
+            }
             const index = selected.indexOf(location);
             if (index > -1) {
-                var test = selected.filter(item => item !== location)
-                setSelected(test)
+                var removed = selected.filter(item => item !== location)
+                setSelected(removed)
             }
         }}>
             <div className="left">
-                <Icon icon="fa-minus" />
+                {location._id == original._id? <Icon icon="dot-circle" /> : <Icon icon="fa-minus" />}
             </div>
             <div className="center">
                 {"name: " + location.name} {" address: " + location.address}
@@ -81,11 +84,15 @@ function Duplicated({ history, ready, original }) {
 
     function renderSearchCard(location) {
         return (<ListItem tappable key={"s" + location._id} onClick={() => {
+            if (location._id == original._id) {
+                return
+            }
             if (selected.includes(location)) {
                 return
             }
             var nA = selected.concat([location])
             setSelected(nA)
+            console.log(selected)
         }}>
             <div className="left">
                 <Icon icon="fa-plus" />
