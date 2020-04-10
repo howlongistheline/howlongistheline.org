@@ -314,8 +314,8 @@ function Duplicated({ history, ready, original }) {
                             <ListItem modifier="nodivider">
                                 {/* {coord} */}
 
-                                <img src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
-                                console.log(location)
+                                <img src={"https://howlongistheline.org/maps/" + coord[1] + "," + coord[0] + ",K3340"} />
+
                             </ListItem>
                         </Card>
                     </div>
