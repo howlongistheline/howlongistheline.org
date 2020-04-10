@@ -197,24 +197,26 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
-                        <ListItem>
-                            <div className="left"> Report Duplicated Shops</div>
+                        <ListItem modifier="nodivider">
+                            <div className="left">Report Duplicate Shops</div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
                                     Cancel
                 </Button>
                             </div>
                         </ListItem>
+                        <ListTitle style={{ marginTop: 50 }}>
+                                    Selected Listings
+                        </ListTitle>
+                                {renderSelected()}
                         <ListItem modifier="nodivider">
-                            <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Type the name of a store or locality to find duplicated shops" onChange={(e) => {
+                        Find all other listings that are referring to the same shop as above. Do not add unrelated shops, even if they are also duplicates.
+                            <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Type the name of a store or locality to find shops" onChange={(e) => {
                                 setSearch(e.target.value)
                             }} />
                         </ListItem>
                         {renderList()}
-                        <ListTitle style={{ marginTop: 50 }}>
-                            Duplicated Shops
-                </ListTitle>
-                        {renderSelected()}
+
                     </div>
                     <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                         // type="submit"
@@ -230,7 +232,7 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
-                        <ListItem>
+                        <ListItem modifier="nodivider">
                             <div className="left"> Please verify that these are really all duplicates of the same store. </div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
@@ -253,8 +255,8 @@ function Duplicated({ history, ready, original }) {
         case 2:
             return (
                 <MainLayout>
-                    <ListItem>
-                        <div className="left"> Please select the best shop name from the list.</div>
+                    <ListItem modifier="nodivider">
+                        <div className="left"> Which is the best name to use for this particular shop?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -267,8 +269,8 @@ function Duplicated({ history, ready, original }) {
         case 3:
             return (
                 <MainLayout>
-                    <ListItem>
-                        <div className="left"> Please select the best address from the list.</div>
+                    <ListItem modifier="nodivider">
+                        <div className="left"> Which is the most accurate address for this shop?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -281,8 +283,8 @@ function Duplicated({ history, ready, original }) {
         case 4:
             return (
                 <MainLayout>
-                    <ListItem>
-                        <div className="left"> Please select the best location from the list.</div>
+                    <ListItem modifier="nodivider">
+                        <div className="left"> Which map below best shows the location of this shop?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -296,8 +298,8 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
-                        <ListItem>
-                            <div className="left"> Please confirm that all the information is correct. </div>
+                        <ListItem modifier="nodivider">
+                            <div className="left"> Does everything look ok? </div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
                                     Cancel
@@ -332,10 +334,10 @@ function Duplicated({ history, ready, original }) {
                             })[0];
                             Meteor.call('Locations.merge', ids, name, coord, address, mostRecentObject.line, mostRecentObject.lastUpdate, (err, result)=>{
                                 if(err){
-                                    toast("some Error happens")
+                                    toast("Some unknown error has occured, let us know what you were doing and we can probably fix it.")
                                     return
                                 }
-                                toast("Thank you for you input! The duplicated shops are removed now!")
+                                toast("Thank you! The duplicate listings have been removed!")
                                 history.push('/')
                                 return
                             })

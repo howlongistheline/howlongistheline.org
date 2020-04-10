@@ -155,6 +155,11 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
                   {location.address}
+                  <div className="right">
+                  <Button onClick={()=>{history.push('/duplicated?id='+location._id)}}>
+                   <i className="fas fa-exclamation-triangle"></i>
+                 </Button>
+                 </div>
                   {/*<div className="right">
                        }<Button
                       onClick={() => {
@@ -166,9 +171,7 @@ function getClientLocation() {
               <ListItem modifier="nodivider">
                   <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
                   <div className="right">
-                    {/* <Button onClick={()=>{history.push('/duplicated?id='+location._id)}}>
-                      Report duplicated
-                    </Button> */}
+
                   </div>
               </ListItem>
               <ListItem modifier="nodivider">
