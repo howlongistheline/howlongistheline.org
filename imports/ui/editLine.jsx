@@ -116,7 +116,8 @@ function EditLine({ history, details }) {
                 If you are not at this shop right now: ask your friends on facebook etc to update this shop for you whenever they go.
                 </Card>
                 <Card onClick={()=>{console.log(123)}}>
-                If you are at this shop right now, please submit to reset the location.
+                If you are at this shop right now, please submit to reset the location. If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
+
                 </Card>
                 {renderCard(details)}
             </div>
