@@ -220,7 +220,7 @@ function getClientLocation() {
           </div>
           <div className="border-top" style={{ marginBottom: 55 }}>
                 <Card>
-                If something doesn't work properly, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on. <p>Anyone at the supermarket who isn't wearing something to cover their face is a potential super-spreader.</p>
+                If something doesn't work properly, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
                 </Card>
               <ListTitle>
                   Shops Near You
