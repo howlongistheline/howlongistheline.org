@@ -14,25 +14,13 @@ export default function faq({}) {
       </Card>
 
       <Card>
-        <div className="title">This looks like it's just for Dunedin. Can you do the same for Auckland?</div>
-        <p>Sorry to hear that you are not in Dunedin, which most people agree is the best place to live.</p>
-        <p>The good news is that you can add any shop to this site, whether it is in Dunedin, Auckland, or even Sydney, or New York! This site will automatically detect your location and tell you what the closest shops are, and how long the line is. To add a shop, simply tap on the <a href="addLine">Add New Shop</a> button at the bottom of the page.</p>
-      </Card>
-
-      <Card>
-        <div className="title">Can I change the status if I'm at the shop and the status is <i>different?</i></div>
-        <p>Absolutely! Please do. When you are at a shop, tap the "Change line status now" button. You will then be able to change the status, and everyone who visits the site will see that change <i>immediately</i>.</p>
-        <p>By updating the status, YOU are helping to "flatten the curve" by allowing people to stay home when a shop is busy, and to get their shopping when it's quiet.</p>
+        <div className="title">This looks like it's just for New Zealand. Can you do the same for other countries?</div>
+        <p>You can add any shop to this site, no matter where it is. If your local stores are not listed, simply add them and ask you local community to update the numbers when they visit the store.</p>
       </Card>
 
       <Card>
         <div className="title">I've got an idea to make this better, what should I do?</div>
-        <p>Please leave a comment on the <a href="/feedback">feedback</a> page if there's anything at all I can do to make this site more useful for you, or if you notice something wrong/broken.</p>
-      </Card>
-
-      <Card>
-        <div className="title">I'm a developer and want to help, what can I do?</div>
-        <p>This project is 100% open source and all contributions are welcome. The source code is on <a href="https://github.com/gazhayes/howlongistheline.org">Github</a> and pull requests are welcome!</p>
+        <p>If you're a developer, send a pull request to the <a href="https://github.com/gazhayes/howlongistheline.org">Github</a> repository. If you're not a developer, you can still browse through the list of issues we are working on and features we are adding. You may also want to look at the <a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a>.</p>
       </Card>
 
       <Card>
@@ -56,9 +44,8 @@ export default function faq({}) {
 
            <Card>
         <div className="title">Who are you?</div>
-        <p><a href="https://www.facebook.com/chancelloronbrinkofsecondbailoutforbanks">https://www.facebook.com/chancelloronbrinkofsecondbailoutforbanks</a></p>
-        <p><a href="https://github.com/gazhayes">https://github.com/gazhayes</a></p>
-        <p><a href="http://socialarchitecture.science/">http://socialarchitecture.science/</a></p>
+        <p>This project is released under the <a href="https://github.com/howlongistheline/howlongistheline.org/blob/master/LICENSE">Mozilla Public License v2.0</a> and owned by everyone (and anyone) who contributes to the codebase. That list can be seen <a href="https://github.com/howlongistheline/howlongistheline.org/blob/master/AUTHORS">here</a>.</p>
+        <p>This license ensures that Contributors to this project cannot have their code stolen and used against them. It's very common for corporate interests to take code from open source projects licensed under BSD/MIT style licenses and use it in their closed source or even patented products and services, often in direct competition to the original project. This is a poorly understood concept in the software development community. This type of license also legally binds anyone using any code from this project to also share their derivative work under this share-alike type of license, so that other people can continue to benefit from their work the same way the business interest is benefitting from ours. Even the founders of this project cannot legally sell this project without unanimous agreement from all involved. It belongs to everyone who contributes to it along the way.</p>
       </Card>
 
       </div>
