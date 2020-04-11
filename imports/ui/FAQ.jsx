@@ -20,7 +20,7 @@ export default function faq({}) {
 
       <Card>
         <div className="title">I've got an idea to make this better, what should I do?</div>
-        <p>If you're a developer, send a pull request to the <a href="https://github.com/gazhayes/howlongistheline.org">Github</a> repository. If you're not a developer, you can still browse through the list of issues we are working on and features we are adding. You may also want to look at the <a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a>.</p>
+        <p>If you're a developer, send a pull request to the <a href="https://github.com/howlongistheline/howlongistheline.org">Github</a> repository. If you're not a developer, you can still browse through the list of issues we are working on and features we are adding. You may also want to look at the <a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a>.</p>
       </Card>
 
       <Card>
