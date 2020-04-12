@@ -152,23 +152,18 @@ function getClientLocation() {
     var updateNumber = 0;
       return (
           <Card key={location._id} style={{backgroundColor:"white"}}>
-              <ListItem modifier="nodivider">
+              <ListItem style={{fontSize: 20, fontWeight: "bold"}} modifier="nodivider">
                   {location.name}
+                  <div className="right">
+                      <Button onClick={() => {
+                          history.push('/duplicated?id=' + location._id)
+                      }}>
+                          <i className="fas fa-exclamation-triangle"/>
+                      </Button>
+                  </div>
               </ListItem>
               <ListItem modifier="nodivider">
                   {location.address}
-                  <div className="right">
-                  <Button onClick={()=>{history.push('/duplicated?id='+location._id)}}>
-                   <i className="fas fa-exclamation-triangle"></i>
-                 </Button>
-                 </div>
-                  {/*<div className="right">
-                       }<Button
-                      onClick={() => {
-                          history.push('/shopDetails?id=' + location._id)
-                      }}
-                  >More Details</Button>
-                  </div> */}
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center" style={{color:Indicator}}>
