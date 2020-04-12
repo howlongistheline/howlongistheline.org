@@ -207,7 +207,7 @@ function getClientLocation() {
                        console.log(event.type)
                          if (err) {
                              // toast("Are you at this shop right now? Looks like you current location is different with the shop's location in our record")
-                             history.push("/editLine?id="+location._id+"&lineSize="+event.target.value, {location: location})
+                             history.push("/editLine?id="+location._id+"&lineSize="+updateNumber, {location: location})
                              console.log(err)
                              return
                          }
