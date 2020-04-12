@@ -38,18 +38,11 @@ function EditLine({ history, details }) {
         }
           return (
               <Card key={location._id} style={{backgroundColor:"white"}}>
-                  <ListItem modifier="nodivider">
+                  <ListItem style={{fontSize: 20, fontWeight: "bold"}} modifier="nodivider">
                       {location.name}
                   </ListItem>
                   <ListItem modifier="nodivider">
                       {location.address}
-                      {/*<div className="right">
-                           }<Button
-                          onClick={() => {
-                              history.push('/shopDetails?id=' + location._id)
-                          }}
-                      >More Details</Button>
-                      </div> */}
                   </ListItem>
                   <ListItem modifier="nodivider">
                       <div className="center" style={{color:Indicator}}>
@@ -80,7 +73,9 @@ function EditLine({ history, details }) {
                       </div>
                   </ListItem>
                   <ListItem modifier="nodivider">
-                  <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
+                  <div className="center">
+                      Press Submit below to confirm that you are at the store, and there {lineSize === 1 ? "is" : "are"} {lineSize ? lineSize : 0} {lineSize === 1 ? "person" : "people"} in line right now.
+                  </div>
                   </ListItem>
               </Card>
           )
