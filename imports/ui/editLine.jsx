@@ -64,7 +64,7 @@ function EditLine({ history, details }) {
                                   return value < 50 ? value : "50+";
                               }}
                               onChangeCommitted={function (event, value) {
-                                  if (event.type === "mouseup") {
+                                  if (event.type === "mouseup" || event.type==="touchend") {
                                       setLineSize(value)
                                   }
                               }}
