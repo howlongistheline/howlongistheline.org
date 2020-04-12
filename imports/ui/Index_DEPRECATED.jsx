@@ -116,7 +116,7 @@ function Index({ history }) {
             getNearby(position.coords.longitude, position.coords.latitude)
         }, (err) => {
             setDenied(true)
-            toast("Cant get current location, please turn on browser's geolocation function and refresh, or try a different browser")
+            toast("Can't get current location, please turn on browser's geolocation function and refresh, or try a different browser")
             console.warn(`ERROR(${err.code}): ${err.message}`);
         });
     }
@@ -188,7 +188,9 @@ function Index({ history }) {
                     </div> */}
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="center" style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                    <div className="center" style={{color:Indicator}}>
+                        There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                    </div>
                     <div className="right">
                         {isOpening(location) ? "": "Closed"}
                     </div>
@@ -204,7 +206,7 @@ function Index({ history }) {
                           console.log(event.type)
                             if (err) {
                                 setLoading(false)
-                                toast("Are you at this shop right now?")
+                                toast("Are you at this store right now?")
                                 console.log(err)
                                 return
                             }
@@ -298,7 +300,7 @@ function Index({ history }) {
                 <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                     // type="submit"
                     onClick={() => { history.push('/addLine') }}>
-                    Missing shop? Add it now!
+                    Missing store? Add it now!
                         <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
                 </Button>
             </MainLayout>
@@ -318,14 +320,14 @@ function Index({ history }) {
             <div style={{ marginBottom: 55 }}>
                 {renderLoading()}
                 <ListTitle>
-                    All Shops
+                    All Stores
             </ListTitle>
                 {renderList()}
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => { history.push('/addLine') }}>
-                Missing shop? Add it now!
+                Missing store? Add it now!
                     <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
         </MainLayout>

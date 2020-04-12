@@ -21,9 +21,9 @@ export default function learntocode({}) {
 
       <Card>
         <div className="title">How do I get started?</div>
-        <p>The first thing you'll want to do is learn Javascript. This is the language used by most web applications today. Here is a <a href="https://www.codecademy.com/learn/introduction-to-javascript">great introductory course</a> that you can take right now for free.</p>
+        <p>The first thing you'll want to do is learn JavaScript. This is the language used by most web applications today. Here is a <a href="https://www.codecademy.com/learn/introduction-to-javascript">great introductory course</a> that you can take right now for free.</p>
         <p>Once you've finished that course, or if you already know JavaScript, take <a href="https://www.meteor.com/tutorials/react/creating-an-app">this tutorial</a> if you'd like to improve this site.</p>
-        <p>Finally, go to the <a href="https://github.com/howlongistheline/howlongistheline.org">Github Repository</a> for this site and follow the instructions in the Readme file!</p>
+        <p>Finally, go to the <a href="https://github.com/howlongistheline/howlongistheline.org">GitHub repository</a> for this site and follow the instructions in the Readme file!</p>
       </Card>
       </div>
       </MainLayout>

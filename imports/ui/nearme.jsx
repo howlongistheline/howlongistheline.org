@@ -80,7 +80,7 @@ function getClientLocation() {
   function error(err) {
     setLoading(false)
     console.log("nm location failure")
-    toast("Cant get current location, please try a different browser if this continues")
+    toast("Can't get current location, please try a different browser if this continues")
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
@@ -90,7 +90,7 @@ function getClientLocation() {
   }
 
   function fetchNearestShops(latitude, longitude) {
-      console.log("CLT updating nearest shops")
+      console.log("CLT updating nearest stores")
       var lat;
       var long;
       if(clientLocation.location == undefined){
@@ -171,11 +171,13 @@ function getClientLocation() {
                   </div> */}
               </ListItem>
               <ListItem modifier="nodivider">
-                  <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                  <div className="center" style={{color:Indicator}}>
+                      There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                  </div>
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center">
-                  If you are at this shop right now, drag the slider to update the line numbers, or confirm the existing numbers.
+                  If you are at this store right now, drag the slider to update the line numbers, or confirm the existing numbers.
                   </div>
               </ListItem>
               <ListItem modifier="nodivider">
@@ -211,19 +213,19 @@ function getClientLocation() {
                      Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, updateNumber, function (err, result) {
                        console.log(event.type)
                          if (err) {
-                             // toast("Are you at this shop right now? Looks like you current location is different with the shop's location in our record")
+                             // toast("Are you at this store right now? Looks like you current location is different with the store's location in our record")
                              history.push("/editLine?id="+location._id+"&lineSize="+updateNumber, {location: location})
                              console.log(err)
                              return
                          }
                          // setLoading(false)
-                         alert("The shop has been updated, thank you!")
+                         alert("The store has been updated, thank you!")
                          history.go(0)
                      });
                  })
                }
              }>
-              Update/Confirm <i id={location._id}>{location.line}</i> are waiting in line
+              Update/confirm <i id={location._id}>{location.line}</i> {location.line === 1 ? "person is" : "people are"} waiting in line
               </Button>
               </div>
               </ListItem>
@@ -245,14 +247,14 @@ function getClientLocation() {
                 If something doesn't work properly, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
                 </Card>
               <ListTitle>
-                  Shops Near You
+                  Stores Near You
           </ListTitle>
               {renderList()}
           </div>
           <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
               // type="submit"
               onClick={() => { history.push('/addLine') }}>
-              Missing shop? Add it now!
+              Missing store? Add it now!
                   <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
           </Button>
       </MainLayout>

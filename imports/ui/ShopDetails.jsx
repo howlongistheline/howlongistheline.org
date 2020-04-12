@@ -49,7 +49,7 @@ function ShopDetails({ details, additional, comments, historys, history }) {
 
     function UpdateTime(){
         if(openingTime == []){
-            toast('please select a opening time!')
+            toast('please select an opening time!')
             return
         }
        if(closingTime == []){
@@ -58,7 +58,7 @@ function ShopDetails({ details, additional, comments, historys, history }) {
         }
         Meteor.call('Locations.updateOperatingtime', details._id, openingTime, closingTime,(err,result)=>{
             if(err){
-                toast("some error happens!")
+                toast("an error occurred!")
                 console.log(err)
                 return
             }
@@ -68,13 +68,13 @@ function ShopDetails({ details, additional, comments, historys, history }) {
 
     function addComment() {
         if (comment == "") {
-            toast("please enter comment");
+            toast("please enter a comment");
             console.log(err)
             return
         }
         Meteor.call("locations.comment", details._id, comment, (err, result) => {
             if (err) {
-                toast("error when comment")
+                toast("an error occurred when adding the comment")
                 return
             }
             toast("success!")
@@ -111,7 +111,7 @@ function ShopDetails({ details, additional, comments, historys, history }) {
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
                 <ListTitle>
-                    Shop Details
+                    Store Details
             </ListTitle>
                 <ListItem modifier="nodivider">
                     {details.name}

@@ -168,7 +168,7 @@ Meteor.methods({
       })
       var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
       if (distanceInMeter > 100) {
-          throw new Meteor.Error('You do not appear to be at this shop right now');
+          throw new Meteor.Error('You do not appear to be at this store right now');
       }
       Locations.update({ _id: id },
         {

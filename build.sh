@@ -9,7 +9,7 @@ then
     cd /home/gareth/temp/howlongistheline.org
     echo "Fetching current HEAD sha1"
     CURRENTHEAD=$(git rev-parse --verify HEAD)
-    # github API sometimes times out, so we use git clone which is more resiliant.
+    # github API sometimes times out, so we use git clone which is more resilient.
     echo "Attempting to pull latest commits from Github..."
     cd ..
     rm -rf howlongistheline.org
