@@ -19,7 +19,7 @@ export default function AddLine({ history }) {
     function submit() {
 
         if (name == "") {
-            toast("Please enter the shop name");
+            toast("Please enter the store name");
             return
         }
         if (status == "0") {
@@ -31,16 +31,16 @@ export default function AddLine({ history }) {
             return
         }
         if (confirm == false) {
-            toast("You must be at the shop's location in order to add it or update the status.");
+            toast("You must be at the store's location in order to add it or update the status.");
             return
         }
         if (listed == false) {
-            toast("Please make sure the shop is not already listed first.");
+            toast("Please make sure the store is not already listed first.");
             return
         }
         if (!navigator.geolocation) {
-            toast("Cant get current location")
-            console.log("Cant get current location")
+            toast("Can't get current location")
+            console.log("Can't get current location")
         }
         setLoading(true)
         navigator.geolocation.getCurrentPosition((position) => {
@@ -57,7 +57,7 @@ export default function AddLine({ history }) {
         }, error)
 
         function error(err) {
-            toast("Cant get current location, please turn on browser's geolocation function or try a different browser")
+            toast("Can't get current location, please turn on your browser's geolocation function or try a different browser.")
             setLoading(false)
             console.warn(`ERROR(${err.code}): ${err.message}`);
           }
@@ -74,7 +74,7 @@ export default function AddLine({ history }) {
         <MainLayout>
              <div style={{ marginBottom: 55 }}>
             <ListItem>
-                <div className="left"> Shop Details</div>
+                <div className="left"> Store Details</div>
                 <div className="right">
                 <Button onClick={()=>{history.push('/')}}>
                     Cancel
@@ -94,7 +94,7 @@ export default function AddLine({ history }) {
                     value={name}
                     onChange={(event) => { setName(event.target.value) }}
                     modifier='material'
-                    placeholder='Name of shop; e.g. Countdown' />
+                    placeholder='Name of store; e.g. Countdown' />
             </ListItem>
 
             <ListTitle>
@@ -108,7 +108,7 @@ export default function AddLine({ history }) {
                 style={{paddingRight: 10}}
                 checked={confirm}
                 modifier='material' />
-            Are you at this location right now? If not, please wait until you next go to this store and add it at that time rather than adding it now. You may also consider posting this to your social media and asking other people to add stores in your area when they are physically at the location :) For more information on why this is important please see the FAQ page.
+            Are you at this location right now? If not, please wait until you next go to this store and add it at that time, rather than adding it now. You may also consider posting this to your social media and asking other people to add stores in your area when they are physically at the location :) For more information on why this is important please see the FAQ page.
             </ListItem>
             <FormControl component="fieldset" style={{ width: "80%", margin: 20 }}>
                 <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>

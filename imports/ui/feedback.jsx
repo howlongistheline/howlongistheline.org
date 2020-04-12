@@ -13,7 +13,7 @@ export default function feedback({ }) {
                 Feedback
             </ListTitle>
             <ListItem>
-                <p>Problems (and new features) that are currently known and being worked on can be seen at <a href="https://github.com/howlongistheline/howlongistheline.org/issues">https://github.com/howlongistheline/howlongistheline.org/issues</a></p>
+                <p>Problems (and new features) that are currently known and being worked on can be seen at <a href="https://github.com/howlongistheline/howlongistheline.org/issues">https://github.com/howlongistheline/howlongistheline.org/issues</a>.</p>
                 <p><a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a> that some of the volunteer developers sometimes hang around in.</p>
             </ListItem>
         </MainLayout>

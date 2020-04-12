@@ -106,7 +106,7 @@ function Duplicated({ history, ready, original }) {
     function submit() {
 
         if (selected.length <= 1) {
-            toast("Please select more than 1 shops");
+            toast("Please select more than 1 store");
             return
         }
         setStep(1)
@@ -137,7 +137,9 @@ function Duplicated({ history, ready, original }) {
                     {location.address}
                 </ListItem>
                 <ListItem modifier="nodivider">
-                    <div className="center" style={{ color: Indicator }}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                    <div className="center" style={{ color: Indicator }}>
+                        There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                    </div>
                 </ListItem>
             </Card>
         )
@@ -205,7 +207,7 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem modifier="nodivider">
-                            <div className="left">Report Duplicate Shops</div>
+                            <div className="left">Report Duplicate Stores</div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
                                     Cancel
@@ -217,8 +219,8 @@ function Duplicated({ history, ready, original }) {
                         </ListTitle>
                                 {renderSelected()}
                         <ListItem modifier="nodivider">
-                        Find all other listings that are referring to the same shop as above. Do not add unrelated shops, even if they are also duplicates.
-                            <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Type the name of a store or locality to find shops" onChange={(e) => {
+                        Find all other listings that are referring to the same store as above. Do not add unrelated stores, even if they are also duplicates (of another store).
+                            <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Type the name of a store or locality to find stores" onChange={(e) => {
                                 setSearch(e.target.value)
                             }} />
                         </ListItem>
@@ -263,7 +265,7 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which is the best name to use for this particular shop?</div>
+                        <div className="left"> Which is the best name to use for this particular store?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -277,7 +279,7 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which is the most accurate address for this shop?</div>
+                        <div className="left"> Which is the most accurate address for this storev?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -291,7 +293,7 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which map below best shows the location of this shop?</div>
+                        <div className="left"> Which map below best shows the location of this store?</div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
                                 Cancel
@@ -341,7 +343,7 @@ function Duplicated({ history, ready, original }) {
                             })[0];
                             Meteor.call('Locations.merge', ids, name, coord, address, mostRecentObject.line, mostRecentObject.lastUpdate, (err, result)=>{
                                 if(err){
-                                    toast("Some unknown error has occured, let us know what you were doing and we can probably fix it.")
+                                    toast("Some unknown error has occurred, let us know what you were doing and we can probably fix it.")
                                     return
                                 }
                                 toast("Thank you! The duplicate listings have been removed!")

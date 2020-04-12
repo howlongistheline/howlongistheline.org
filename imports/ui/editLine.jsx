@@ -52,7 +52,9 @@ function EditLine({ history, details }) {
                       </div> */}
                   </ListItem>
                   <ListItem modifier="nodivider">
-                      <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
+                      <div className="center" style={{color:Indicator}}>
+                          There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                      </div>
                       <div className="right">
                       </div>
                   </ListItem>
@@ -95,17 +97,17 @@ function EditLine({ history, details }) {
         navigator.geolocation.getCurrentPosition((position) => {
             Meteor.call('locations.forceUpdatelinesize', details._id, position.coords.longitude, position.coords.latitude, lineSize, function (err, result) {
                 if (err) {
-                    toast("Some Error happens")
+                    toast("An error happened.")
                     return
                 }
                 // setLoading(false)
-                alert("The shop has been updated, thank you!")
+                alert("The store has been updated, thank you!")
                 history.push('/')
             });
         }, error)
 
         function error(err) {
-            toast("Cant get current location, please turn on browser's geolocation function or try a different browser")
+            toast("Can't get current location, please turn on browser's geolocation function or try a different browser")
             setLoading(false)
             console.warn(`ERROR(${err.code}): ${err.message}`);
         }
@@ -121,13 +123,13 @@ function EditLine({ history, details }) {
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
                 <Card>
-                Are you really at this location? It appears that either you are not at the shop, or we have the wrong coordinates for the shop.
+                Are you really at this location? It appears that either you are not at the store, or we have the wrong coordinates for the store.
                 </Card>
                 <Card>
-                If you are not at this shop right now: ask your friends on facebook etc to update this shop for you whenever they go.
+                If you are not at this store right now: ask your friends to update this store for you whenever they go.
                 </Card>
                 <Card onClick={()=>{console.log(123)}}>
-                If you are at this shop right now, please submit to reset the location. If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
+                If you are at this store right now, please submit to reset the location. If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
 
                 </Card>
                 {renderCard(details)}
