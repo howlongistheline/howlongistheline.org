@@ -62,7 +62,7 @@ function EditLine({ history, details }) {
                       <div className="center">
                           0
                           <Slider
-                              defaultValue={parseInt(location.line) ? parseInt(location.line) : 0}
+                              defaultValue={parseInt(lineSize) ? parseInt(lineSize) : 0}
                               min={0}
                               max={50}
                               style={{width: "80%", margin: "0px 15px"}}
