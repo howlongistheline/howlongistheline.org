@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
-import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar, Range } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar } from 'react-onsenui'
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations } from '../api/lines.js';
 import moment from 'moment';
+import Slider from "@material-ui/core/Slider";
 
 function EditLine({ history, details }) {
 
@@ -56,15 +57,25 @@ function EditLine({ history, details }) {
                       </div>
                   </ListItem>
                   <ListItem modifier="nodivider">
-                  <div className="center">
-                  0
-                  <Range modifier="material" style={{width:"80%"}} min={0} max={50} value={lineSize}
-                  onChange={ function(event) {
-                      setLineSize(parseInt(event.target.value))
-                  }}
-                  />
-                  50+
-                  </div>
+                      <div className="center">
+                          0
+                          <Slider
+                              defaultValue={parseInt(location.line) ? parseInt(location.line) : 0}
+                              min={0}
+                              max={50}
+                              style={{width: "80%", margin: "0px 15px"}}
+                              valueLabelDisplay="auto"
+                              valueLabelFormat={function displaySliderLabel(value) {
+                                  return value < 50 ? value : "50+";
+                              }}
+                              onChangeCommitted={function (event, value) {
+                                  if (event.type === "mouseup") {
+                                      setLineSize(value)
+                                  }
+                              }}
+                          />
+                          50+
+                      </div>
                   </ListItem>
                   <ListItem modifier="nodivider">
                   <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
