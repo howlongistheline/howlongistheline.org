@@ -15,6 +15,7 @@ function Index({ history }) {
   const [clientLocation, setclientLocation] = useCookies(['location']);
   const [nearestShops, setnearestShops] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Getting your location...");
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
@@ -89,35 +90,34 @@ function getClientLocation() {
 
   }
 
-  function fetchNearestShops(latitude, longitude) {
-      console.log("CLT updating nearest stores")
-      var lat;
-      var long;
-      if(clientLocation.location == undefined){
-        lat = latitude;
-        long = longitude;
-      }else{
-        lat = clientLocation.location.latitude;
-        long = clientLocation.location.longitude;
-      }
-      Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
-        if (result) {
-          // console.log(true)
-          setnearestShops(result)
+    function fetchNearestShops(latitude, longitude) {
+        console.log("CLT updating nearest stores")
+        var lat;
+        var long;
+        if (clientLocation.location == undefined) {
+            lat = latitude;
+            long = longitude;
         } else {
-          // console.log(false)
-          console.log(err)
+            lat = clientLocation.location.latitude;
+            long = clientLocation.location.longitude;
         }
-      }
-    );
-    setLoading(false)
-  }
+        Meteor.call('locations.findnearby', {lat, long}, (err, result) => {
+                if (result) {
+                    setLoading(false)
+                    setnearestShops(result)
+                } else {
+                    console.log(err)
+                }
+            }
+        );
+        setLoadingMessage("Loading nearby stores...")
+    }
 
   function renderList() {
     if(loading){
       return (<Card>
         <ProgressBar indeterminate />
-        Getting your location...
+        {loadingMessage}
     </Card>)
     }
     if(search == ""){
