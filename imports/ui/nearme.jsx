@@ -148,6 +148,7 @@ function getClientLocation() {
           Indicator = "red"
           break
     }
+    var updateNumber = 0;
       return (
           <Card key={location._id} style={{backgroundColor:"white"}}>
               <ListItem modifier="nodivider">
@@ -170,32 +171,27 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center"  style={{color:Indicator}}>There were {location.line ? location.line : 0} people in line {moment(location.lastUpdate).fromNow()}. </div>
-                  <div className="right">
-
+              </ListItem>
+              <ListItem modifier="nodivider">
+                  <div className="center">
+                  If you are at this shop right now, drag the slider to update the line numbers, or reconfirm the existing numbers.
                   </div>
               </ListItem>
               <ListItem modifier="nodivider">
+              <ListItem>
+              {/*<Range modifier="material"
+  value={this.state.value}
+  onChange={(event) => this.setState({value: parseInt(event.target.value)})}
+  />*/}
+              </ListItem>
               <div className="center">
               0
               <Range modifier="material" style={{width:"80%"}} min={0} max={50} value={parseInt(location.line) ? parseInt(location.line) : 0}
               onChange={ function(event) {
-                if (event.type == "change") {
-                  navigator.geolocation.getCurrentPosition((position) => {
-                      Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, event.target.value, function (err, result) {
-                        console.log(event.type)
-                          if (err) {
-                              // toast("Are you at this shop right now? Looks like you current location is different with the shop's location in our record")
-                              history.push("/editLine?id="+location._id+"&lineSize="+event.target.value, {location: location})
-                              console.log(err)
-                              return
-                          }
-                          // setLoading(false)
-                          alert("The shop has been updated, thank you!")
-                          history.go(0)
-                      });
-                  })
-                }}}
-
+                  window.document.activeElement.value = event.target.value;
+                  document.getElementById(location._id).innerHTML = event.target.value;
+                  updateNumber = event.target.value;
+                }}
               />
               50+
               </div>
@@ -203,7 +199,28 @@ function getClientLocation() {
               </div>
               </ListItem>
               <ListItem modifier="nodivider">
-              <div className="center">If you are at this store, drag the slider above to update the number of people waiting in line right now.</div>
+              <div className="center">
+             <Button onClick={
+               function() {
+                 navigator.geolocation.getCurrentPosition((position) => {
+                     Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, updateNumber, function (err, result) {
+                       console.log(event.type)
+                         if (err) {
+                             // toast("Are you at this shop right now? Looks like you current location is different with the shop's location in our record")
+                             history.push("/editLine?id="+location._id+"&lineSize="+event.target.value, {location: location})
+                             console.log(err)
+                             return
+                         }
+                         // setLoading(false)
+                         alert("The shop has been updated, thank you!")
+                         history.go(0)
+                     });
+                 })
+               }
+             }>
+              Update/Confirm <i id={location._id}>{location.line}</i> are waiting in line
+              </Button>
+              </div>
               </ListItem>
           </Card>
       )
