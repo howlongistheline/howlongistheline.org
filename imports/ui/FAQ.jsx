@@ -15,12 +15,12 @@ export default function faq({}) {
 
       <Card>
         <div className="title">This looks like it's just for New Zealand. Can you do the same for other countries?</div>
-        <p>You can add any shop to this site, no matter where it is. If your local stores are not listed, simply add them and ask you local community to update the numbers when they visit the store.</p>
+        <p>You can add any shop to this site, no matter where it is. If your local stores are not listed, simply add them and ask your local community to update the numbers when they visit the store.</p>
       </Card>
 
       <Card>
         <div className="title">I've got an idea to make this better, what should I do?</div>
-        <p>If you're a developer, send a pull request to the <a href="https://github.com/howlongistheline/howlongistheline.org">Github</a> repository. If you're not a developer, you can still browse through the list of issues we are working on and features we are adding. You may also want to look at the <a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a>.</p>
+        <p>If you're a developer, send a pull request to <a href="https://github.com/howlongistheline/howlongistheline.org">the Github repository</a>. If you're not a developer, you can still browse through the list of issues we are working on and features we are adding. You may also want to look at the <a href="https://www.facebook.com/groups/1161156860891990/">Facebook group</a>.</p>
       </Card>
 
       <Card>

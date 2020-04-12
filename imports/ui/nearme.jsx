@@ -3,11 +3,12 @@ import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations, LocationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar, Range } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar } from 'react-onsenui'
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
+import Slider from "@material-ui/core/Slider";
 
 function Index({ history }) {
   {/*Initialise props*/}
@@ -174,29 +175,33 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center">
-                  If you are at this shop right now, drag the slider to update the line numbers, or reconfirm the existing numbers.
+                  If you are at this shop right now, drag the slider to update the line numbers, or confirm the existing numbers.
                   </div>
               </ListItem>
               <ListItem modifier="nodivider">
-              <ListItem>
-              {/*<Range modifier="material"
-  value={this.state.value}
-  onChange={(event) => this.setState({value: parseInt(event.target.value)})}
-  />*/}
-              </ListItem>
-              <div className="center">
-              0
-              <Range modifier="material" style={{width:"80%"}} min={0} max={50} value={parseInt(location.line) ? parseInt(location.line) : 0}
-              onChange={ function(event) {
-                  window.document.activeElement.value = event.target.value;
-                  document.getElementById(location._id).innerHTML = event.target.value;
-                  updateNumber = event.target.value;
-                }}
-              />
-              50+
-              </div>
-              <div className="right">
-              </div>
+                  <div className="center">
+                      0
+                      <Slider
+                          defaultValue={parseInt(location.line) ? parseInt(location.line) : 0}
+                          min={0}
+                          max={50}
+                          style={{width: "80%", margin: "0px 15px"}}
+                          valueLabelDisplay="auto"
+                          valueLabelFormat={function displaySliderLabel(value) {
+                              return value < 50 ? value : "50+";
+                          }}
+                          onChangeCommitted={function (event, value) {
+                              if (event.type === "mouseup") {
+                                  window.document.activeElement.value = value;
+                                  document.getElementById(location._id).innerHTML = value;
+                                  updateNumber = value;
+                              }
+                          }}
+                      />
+                      50+
+                  </div>
+                  <div className="right">
+                  </div>
               </ListItem>
               <ListItem modifier="nodivider">
               <div className="center">
