@@ -177,7 +177,6 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center">
-                      0
                       <Slider
                           defaultValue={parseInt(location.line) ? parseInt(location.line) : 0}
                           min={0}
@@ -195,7 +194,6 @@ function getClientLocation() {
                               }
                           }}
                       />
-                      50+
                   </div>
                   <div className="right">
                   </div>
