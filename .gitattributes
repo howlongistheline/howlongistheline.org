@@ -1,0 +1,2 @@
+# The language of the repo should be JavaScript instead of the current CSS.
+    *.css linguist-language=JavaScript
