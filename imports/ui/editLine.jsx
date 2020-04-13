@@ -53,7 +53,6 @@ function EditLine({ history, details }) {
                   </ListItem>
                   <ListItem modifier="nodivider">
                       <div className="center">
-                          0
                           <Slider
                               defaultValue={parseInt(lineSize) ? parseInt(lineSize) : 0}
                               min={0}
@@ -69,7 +68,6 @@ function EditLine({ history, details }) {
                                   }
                               }}
                           />
-                          50+
                       </div>
                   </ListItem>
                   <ListItem modifier="nodivider">
