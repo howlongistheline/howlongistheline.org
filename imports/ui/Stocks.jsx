@@ -28,7 +28,7 @@ function Stocks({ details, additional, history }) {
         return stocks.reverse().map((stock, idx) => {
             return (
                 <ListItem key={idx}>
-                    {stock.name}
+                    {stock.name} is out of stock 
                     <div className="right">{moment(stock.time).fromNow()}</div>
                 </ListItem>
             )
