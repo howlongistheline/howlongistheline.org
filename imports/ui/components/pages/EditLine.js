@@ -13,8 +13,8 @@ import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 import Slider from '@material-ui/core/Slider';
-import { Locations } from '../api/lines.js';
-import MainLayout from './MainLayout';
+import { Locations } from '../../../api/lines.js';
+import MainLayout from '../lib/MainLayout';
 
 function EditLine({ history, details }) {
   if (!details) {

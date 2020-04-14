@@ -13,8 +13,8 @@ import {
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
-import { Locations, LocationsIndex } from '../api/lines.js';
-import MainLayout from './MainLayout';
+import { Locations, LocationsIndex } from '../../../api/lines.js';
+import MainLayout from '../lib/MainLayout';
 
 function Duplicated({ history, ready, original }) {
   const [name, setName] = useState('');

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'react-onsenui';
-import MainLayout from './MainLayout';
+import MainLayout from '../lib/MainLayout';
 
 export default function learntocode({}) {
   return (

@@ -5,15 +5,15 @@ import { ToastContainer } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import AddLine from '../../ui/addLine';
-import EditLine from '../../ui/editLine';
-import ShopDetails from '../../ui/ShopDetails';
-import FeedBack from '../../ui/feedback';
-import learntocode from '../../ui/learntocode';
-import Nearme from '../../ui/nearme';
-import faq from '../../ui/FAQ';
-import duplicated from '../../ui/Duplicated';
-import Stocks from '../../ui/Stocks';
+import AddLine from '../../ui/components/pages/AddLine';
+import EditLine from '../../ui/components/pages/EditLine';
+import ShopDetails from '../../ui/components/lib/ShopDetails';
+import FeedBack from '../../ui/components/pages/Feedback';
+import learntocode from '../../ui/components/pages/LearnToCode';
+import Home from '../../ui/components/pages/Home';
+import faq from '../../ui/components/pages/FAQ';
+import duplicated from '../../ui/components/pages/Duplicated';
+import Stocks from '../../ui/components/lib/Stocks';
 
 // pick a date util library
 
@@ -26,7 +26,7 @@ export const renderRoutes = () => (
       <CookiesProvider>
         <ToastContainer />
         <Switch>
-          <Route exact path="/" component={Nearme} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/addLine" component={AddLine} />
           <Route exact path="/editLine" component={EditLine} />
           <Route exact path="/shopDetails" component={ShopDetails} />
