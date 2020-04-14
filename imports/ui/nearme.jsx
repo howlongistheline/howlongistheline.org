@@ -9,6 +9,7 @@ import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import Slider from "@material-ui/core/Slider";
+import {getDisplayedLineLength, MAX_LINE_LENGTH} from "./Util";
 
 function Index({ history }) {
   {/*Initialise props*/}
@@ -167,7 +168,7 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center" style={{color:Indicator}}>
-                      There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                      There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
                   </div>
                   <div className="right">
                       <Button onClick={()=>{history.push('/stocks?id='+location._id)}}>
@@ -185,16 +186,20 @@ function getClientLocation() {
                       <Slider
                           defaultValue={parseInt(location.line) ? parseInt(location.line) : 0}
                           min={0}
-                          max={50}
+                          max={MAX_LINE_LENGTH}
                           style={{width: "80%", margin: "0px 15px"}}
                           valueLabelDisplay="auto"
-                          valueLabelFormat={function displaySliderLabel(value) {
-                              return value < 50 ? value : "50+";
-                          }}
+                          valueLabelFormat={getDisplayedLineLength}
                           onChangeCommitted={function (event, value) {
                               if (event.type === "mouseup" || event.type==="touchend") {
                                   window.document.activeElement.value = value;
-                                  document.getElementById(location._id).innerHTML = value;
+                                  let buttonText = '';
+                                  if (location.line === value || (value === 0 && !location.line)) {
+                                      buttonText = `Confirm ${getDisplayedLineLength(location.line)} ${location.line === 1 ? "person is" : "people are"} waiting in line`;
+                                  } else {
+                                      buttonText = `Update line length to ${getDisplayedLineLength(value)} ${value === 1 ? "person" : "people"}`;
+                                  }
+                                  document.getElementById(location._id).innerHTML = buttonText;
                                   updateNumber = value;
                               }
                           }}
@@ -205,7 +210,7 @@ function getClientLocation() {
               </ListItem>
               <ListItem modifier="nodivider">
               <div className="center">
-             <Button onClick={
+             <Button id={location._id} onClick={
                function() {
                  navigator.geolocation.getCurrentPosition((position) => {
                      Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, updateNumber, function (err, result) {
@@ -223,7 +228,7 @@ function getClientLocation() {
                  })
                }
              }>
-              Update/confirm <i id={location._id}>{location.line}</i> {location.line === 1 ? "person is" : "people are"} waiting in line
+                 Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
               </Button>
               </div>
               </ListItem>
