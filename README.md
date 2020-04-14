@@ -17,6 +17,11 @@ git clone https://github.com/howlongistheline/howlongistheline.org.git
 
 **Note**: if you want to edit things and send a pull request you should _fork_ this project on GitHub first and clone _your_ fork instead of https://github.com/howlongistheline/howlongistheline.org.git.
 
+#### Configure Your Editor
+
+To ensure code consistency, you should configure [ESLint](https://eslint.org/docs/user-guide/integrations) and 
+[Prettier](https://prettier.io/docs/en/editors.html) for your editor.
+
 #### Install Dependencies   
 ```
 meteor npm install
