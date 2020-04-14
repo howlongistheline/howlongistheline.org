@@ -2,12 +2,12 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Index, MinimongoEngine } from 'meteor/easy:search';
+import Locations from './collections/locations';
 
-const Locations = new Mongo.Collection('locations');
 const Additionals = new Mongo.Collection('additionals');
 const Archived = new Mongo.Collection('archived');
 
-export { Locations, Additionals };
+export { Additionals };
 
 export const LocationsIndex = new Index({
   collection: Locations,
@@ -18,6 +18,8 @@ export const LocationsIndex = new Index({
 if (Meteor.isServer) {
   // This code only runs on the server
   Locations._ensureIndex({ coordinates: '2dsphere' });
+
+  // XXX TODO These publications should be removed in the future
   Meteor.publish('locations', function tasksPublication() {
     return Locations.find();
   });
@@ -76,7 +78,7 @@ Meteor.methods({
         address,
         upvote: 0,
         createdAt: new Date(),
-        lastUpdate: new Date(),
+        updatedAt: new Date(),
       },
       (err, id) => {
         Additionals.insert({
@@ -113,7 +115,7 @@ Meteor.methods({
         $set: {
           status,
           upvote: 0,
-          lastUpdate: new Date(),
+          updatedAt: new Date(),
         },
       },
     );
@@ -142,38 +144,6 @@ Meteor.methods({
 
     return true;
   },
-  'locations.findnearby'(coords, long) {
-    if (!Meteor.isServer) {
-      console.log('Fetching data from server');
-    } else if (Meteor.isServer) {
-      console.log('SRV coords');
-      console.log(coords);
-      let parsedLong = 0;
-      let parsedLat = 0;
-      parsedLong = parseFloat(coords.long);
-      parsedLat = parseFloat(coords.lat);
-      if (!parsedLong && !parsedLat) {
-        console.log('Changing to different coordinate object');
-        parsedLong = parseFloat(coords);
-        parsedLat = parseFloat(long);
-        console.log('NEW COORDS');
-        console.log(parsedLat, parsedLong);
-      }
-      return Locations.find(
-        {
-          coordinates: {
-            $nearSphere: {
-              $geometry: {
-                type: 'Point',
-                coordinates: [parsedLong, parsedLat],
-              },
-            },
-          },
-        },
-        { limit: 50 },
-      ).fetch();
-    }
-  },
   'locations.upvote'(id) {
     Locations.update({ _id: id }, { $inc: { upvote: 1 } });
   },
@@ -192,7 +162,7 @@ Meteor.methods({
       {
         $set: {
           line,
-          lastUpdate: new Date(),
+          updatedAt: new Date(),
         },
       },
     );
@@ -227,7 +197,7 @@ Meteor.methods({
         $set: {
           coordinates: [long, lat],
           line,
-          lastUpdate: new Date(),
+          updatedAt: new Date(),
         },
       },
     );
@@ -244,7 +214,7 @@ Meteor.methods({
       },
     );
   },
-  'Locations.merge'(ids, name, location, address, line, lastUpdate) {
+  'Locations.merge'(ids, name, location, address, line, updatedAt) {
     check(name, String);
     check(address, String);
 
@@ -268,7 +238,7 @@ Meteor.methods({
         address,
         line,
         createdAt: new Date(),
-        lastUpdate,
+        updatedAt,
       },
       (err, id) => {
         Additionals.insert({
