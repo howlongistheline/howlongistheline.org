@@ -149,7 +149,7 @@ function getClientLocation() {
           Indicator = "red"
           break
     }
-    var updateNumber = 0;
+    var updateNumber = location.line;
       return (
           <Card key={location._id} style={{backgroundColor:"white"}}>
               <ListItem style={{fontSize: 20, fontWeight: "bold"}} modifier="nodivider">
