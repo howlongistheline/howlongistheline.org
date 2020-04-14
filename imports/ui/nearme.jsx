@@ -169,6 +169,11 @@ function getClientLocation() {
                   <div className="center" style={{color:Indicator}}>
                       There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
                   </div>
+                  <div className="right">
+                      <Button onClick={()=>{history.push('/stocks?id='+location._id)}}>
+                          Stocks Status
+                      </Button>
+                  </div>
               </ListItem>
               <ListItem modifier="nodivider">
                   <div className="center">

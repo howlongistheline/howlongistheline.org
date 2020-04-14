@@ -245,6 +245,10 @@ Meteor.methods({
                 history: [{ line: line, time: new Date() }],
             })
         });
-
     },
+    'Outofstock.insert'(shopId, name){
+        Additionals.update({ locationId: shopId }, {
+            $push: { outofStock: { name:  name, time: new Date() } }
+        })
+    }
 })
