@@ -2,7 +2,7 @@
   "name": "howlongistheline",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor run --exclude-archs web.browser.legacy",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
@@ -24,7 +24,8 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-toastify": "^5.5.0",
-    "staticmaps": "^1.3.2"
+    "staticmaps": "^1.3.2",
+    "underscore": "^1.10.2"
   },
   "meteor": {
     "mainModule": {
@@ -94,7 +95,9 @@
       "react/require-default-props": 0,
       "max-classes-per-file": 0,
       "import/no-cycle": 0,
-      "no-sparse-arrays": 0
+      "no-sparse-arrays": 0,
+      "no-unused-expressions": 0,
+      "radix": 0
     }
   }
 }
