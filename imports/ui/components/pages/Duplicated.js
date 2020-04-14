@@ -13,8 +13,9 @@ import {
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
-import { Locations, LocationsIndex } from '../../../api/lines.js';
+import { LocationsIndex } from '../../../api/lines.js';
 import MainLayout from '../lib/MainLayout';
+import Locations from '../../../api/collections/locations/index.js';
 
 function Duplicated({ history, ready, original }) {
   const [name, setName] = useState('');
@@ -156,7 +157,7 @@ function Duplicated({ history, ready, original }) {
             There {location.line === 1 ? 'was' : 'were'}{' '}
             {location.line ? location.line : 0}{' '}
             {location.line === 1 ? 'person' : 'people'} in line{' '}
-            {moment(location.lastUpdate).fromNow()}.
+            {moment(location.updatedAt).fromNow()}.
           </div>
         </ListItem>
       </Card>
@@ -440,12 +441,12 @@ function Duplicated({ history, ready, original }) {
                 Math.max.apply(
                   null,
                   selected.map((e) => {
-                    return new Date(e.lastUpdate);
+                    return new Date(e.updatedAt);
                   }),
                 ),
               );
               const mostRecentObject = selected.filter((e) => {
-                const d = new Date(e.lastUpdate);
+                const d = new Date(e.updatedAt);
                 return d.getTime() == mostRecentDate.getTime();
               })[0];
               Meteor.call(
@@ -455,7 +456,7 @@ function Duplicated({ history, ready, original }) {
                 coord,
                 address,
                 mostRecentObject.line,
-                mostRecentObject.lastUpdate,
+                mostRecentObject.updatedAt,
                 (err, result) => {
                   if (err) {
                     toast(

@@ -12,8 +12,9 @@ import {
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
-import { Locations, Additionals, LocationsIndex } from '../../../api/lines.js';
+import { Additionals, LocationsIndex } from '../../../api/lines.js';
 import MainLayout from '../lib/MainLayout';
+import Locations from '../../../api/collections/locations/index.js';
 
 function Stocks({ details, additional, history }) {
   if (!details || !additional) {

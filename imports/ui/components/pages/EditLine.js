@@ -13,8 +13,8 @@ import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 import Slider from '@material-ui/core/Slider';
-import { Locations } from '../../../api/lines.js';
 import MainLayout from '../lib/MainLayout';
+import Locations from '../../../api/collections/locations';
 
 function EditLine({ history, details }) {
   if (!details) {
@@ -60,7 +60,7 @@ function EditLine({ history, details }) {
             There {location.line === 1 ? 'was' : 'were'}{' '}
             {location.line ? location.line : 0}{' '}
             {location.line === 1 ? 'person' : 'people'} in line{' '}
-            {moment(location.lastUpdate).fromNow()}.
+            {moment(location.updatedAt).fromNow()}.
           </div>
           <div className="right" />
         </ListItem>

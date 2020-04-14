@@ -13,8 +13,9 @@ import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 import { TimePicker } from '@material-ui/pickers';
-import { Locations, Additionals, LocationsIndex } from '../../../api/lines.js';
+import { Additionals, LocationsIndex } from '../../../api/lines.js';
 import MainLayout from '../lib/MainLayout';
+import Locations from '../../../api/collections/locations/index.js';
 
 function ShopDetails({ details, additional, comments, historys, history }) {
   if (!details || !additional) {

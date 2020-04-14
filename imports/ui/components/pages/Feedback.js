@@ -10,7 +10,6 @@ import {
 } from 'react-onsenui';
 import { toast } from 'react-toastify';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Locations } from '../../../api/lines.js';
 import MainLayout from '../lib/MainLayout';
 
 export default function feedback({}) {

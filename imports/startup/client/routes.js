@@ -7,13 +7,13 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import AddLine from '../../ui/components/pages/AddLine';
 import EditLine from '../../ui/components/pages/EditLine';
-import ShopDetails from '../../ui/components/lib/ShopDetails';
+import ShopDetails from '../../ui/components/pages/ShopDetails';
 import FeedBack from '../../ui/components/pages/Feedback';
 import learntocode from '../../ui/components/pages/LearnToCode';
-import Home from '../../ui/components/pages/Home';
+import Home from '../../ui/containers/Home';
 import faq from '../../ui/components/pages/FAQ';
 import duplicated from '../../ui/components/pages/Duplicated';
-import Stocks from '../../ui/components/lib/Stocks';
+import Stocks from '../../ui/components/pages/Stocks';
 
 // pick a date util library
 
