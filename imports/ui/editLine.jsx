@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Locations } from '../api/lines.js';
 import moment from 'moment';
 import Slider from "@material-ui/core/Slider";
+import {getDisplayedLineLength, MAX_LINE_LENGTH} from "./Util";
 
 function EditLine({ history, details }) {
 
@@ -46,7 +47,7 @@ function EditLine({ history, details }) {
                   </ListItem>
                   <ListItem modifier="nodivider">
                       <div className="center" style={{color:Indicator}}>
-                          There {location.line === 1 ? "was" : "were"} {location.line ? location.line : 0} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                          There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
                       </div>
                       <div className="right">
                       </div>
@@ -56,12 +57,10 @@ function EditLine({ history, details }) {
                           <Slider
                               defaultValue={parseInt(lineSize) ? parseInt(lineSize) : 0}
                               min={0}
-                              max={50}
+                              max={MAX_LINE_LENGTH}
                               style={{width: "80%", margin: "0px 15px"}}
                               valueLabelDisplay="auto"
-                              valueLabelFormat={function displaySliderLabel(value) {
-                                  return value < 50 ? value : "50+";
-                              }}
+                              valueLabelFormat={getDisplayedLineLength}
                               onChangeCommitted={function (event, value) {
                                   if (event.type === "mouseup" || event.type==="touchend") {
                                       setLineSize(value)
@@ -72,7 +71,7 @@ function EditLine({ history, details }) {
                   </ListItem>
                   <ListItem modifier="nodivider">
                   <div className="center">
-                      Press Submit below to confirm that you are at the store, and there {lineSize === 1 ? "is" : "are"} {lineSize ? lineSize : 0} {lineSize === 1 ? "person" : "people"} in line right now.
+                      Press Submit below to confirm that you are at the store, and there {lineSize === 1 ? "is" : "are"} {getDisplayedLineLength(lineSize)} {lineSize === 1 ? "person" : "people"} in line right now.
                   </div>
                   </ListItem>
               </Card>
