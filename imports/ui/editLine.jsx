@@ -114,15 +114,16 @@ function EditLine({ history, details }) {
     return (
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
-                <Card>
-                Are you really at this location? It appears that either you are not at the store, or we have the wrong coordinates for the store.
+                <Card class="isa_warning">
+                    <i className="fa fa-warning"/> Are you really at this location?
+                    It appears that either you are not at the store, or we have the wrong coordinates for the store.
                 </Card>
-                <Card>
-                If you are not at this store right now: ask your friends to update this store for you whenever they go.
+                <Card class="isa_info">
+                    <i className="fas fa-info-circle"/> If you are not at this store right now: ask your friends to update this store for you whenever they go.
                 </Card>
-                <Card onClick={()=>{console.log(123)}}>
-                If you are at this store right now, please submit to reset the location. If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
-
+                <Card class="isa_info" onClick={()=>{console.log(123)}}>
+                    <i className="fas fa-info-circle"/> If you are at this store right now, please submit to reset the location.
+                    If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
                 </Card>
                 {renderCard(details)}
             </div>

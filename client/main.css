@@ -29,3 +29,25 @@ body {
 
 /* */
 .border-top { border-top: 1px solid #cccccc; }
+
+/* Info, success, warning, and error messages
+ *
+ * Adapted from https://isabelcastillo.com/error-info-messages-css#jl-down-2
+ */
+
+.isa_info {
+  color: #00529B;
+  background-color: #BDE5F8 !important;
+}
+.isa_success {
+  color: #4F8A10;
+  background-color: #DFF2BF !important;
+}
+.isa_warning {
+  color: #9F6000;
+  background-color: #FEEFB3 !important;
+}
+.isa_error {
+  color: #D8000C;
+  background-color: #FFD2D2 !important;
+}
