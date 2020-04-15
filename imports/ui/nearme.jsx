@@ -240,14 +240,14 @@ function getClientLocation() {
               <div className="right">
               <FacebookShareButton
                     url={"https://howlongistheline.org"}
-                    quote={"There are "+ getDisplayedLineLength(location.line) + " people waiting in " + location.name+ " at " + location.address + " " + moment(location.lastUpdate).fromNow() }
+                    quote={"There " + (location.line === 1 ? "was " : "were ") + getDisplayedLineLength(location.line) + " people waiting in line at " + location.name.trim() + " (" + location.address.trim() + ") " + moment(location.lastUpdate).fromNow()}
                     hashtag="#howlongistheline"
                 >
                 <FacebookIcon size={32} round />
                 </FacebookShareButton>
                 <TwitterShareButton
                     url={"https://howlongistheline.org"}
-                    title={"There are "+ getDisplayedLineLength(location.line) + " people waiting in " + location.name+ " at " + location.address + " " + moment(location.lastUpdate).fromNow() }
+                    title={"There " + (location.line === 1 ? "was " : "were ") + getDisplayedLineLength(location.line) + " people waiting in line at " + location.name.trim() + " (" + location.address.trim() + ") " + moment(location.lastUpdate).fromNow()}
                 >
                     <TwitterIcon size={32} round />
                 </TwitterShareButton>
