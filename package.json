@@ -23,6 +23,7 @@
     "react-onsenui": "^1.11.2",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
+    "react-share": "^4.1.0",
     "react-toastify": "^5.5.0",
     "staticmaps": "^1.3.2"
   },

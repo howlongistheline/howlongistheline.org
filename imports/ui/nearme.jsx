@@ -10,6 +10,12 @@ import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import Slider from "@material-ui/core/Slider";
 import {getDisplayedLineLength, MAX_LINE_LENGTH} from "./Util";
+import {
+    FacebookShareButton,
+    FacebookIcon,
+    TwitterIcon,
+    TwitterShareButton
+  } from "react-share";
 
 function Index({ history }) {
   {/*Initialise props*/}
@@ -231,7 +237,24 @@ function getClientLocation() {
                  Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
               </Button>
               </div>
+              <div className="right">
+              <FacebookShareButton
+                    url={"https://howlongistheline.org"}
+                    quote={"There are "+ getDisplayedLineLength(location.line) + " people waiting in " + location.name+ " at " + location.address + " " + moment(location.lastUpdate).fromNow() }
+                    hashtag="#howlongistheline"
+                >
+                <FacebookIcon size={32} round />
+                </FacebookShareButton>
+                <TwitterShareButton
+                    url={"https://howlongistheline.org"}
+                    title={"There are "+ getDisplayedLineLength(location.line) + " people waiting in " + location.name+ " at " + location.address + " " + moment(location.lastUpdate).fromNow() }
+                >
+                    <TwitterIcon size={32} round />
+                </TwitterShareButton>
+
+              </div>
               </ListItem>
+
           </Card>
       )
   }
