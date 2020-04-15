@@ -269,8 +269,9 @@ function getClientLocation() {
               </ListItem>
           </div>
           <div className="border-top" style={{ marginBottom: 55 }}>
-                <Card>
-                If something doesn't work properly, check back a few days later and it will probably be fixed. Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
+              <Card class="isa_info">
+                  <i className="fas fa-info-circle"/> If something doesn't work properly, check back a few days later and it will probably be fixed.
+                  Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
                 </Card>
               <ListTitle>
                   Stores Near You
