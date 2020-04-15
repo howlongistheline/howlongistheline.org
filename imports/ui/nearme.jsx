@@ -217,7 +217,7 @@ function getClientLocation() {
               <ListItem modifier="nodivider">
               <div className="center">
              <Button id={location._id} onClick={
-               function() {
+               function(event) {
                  navigator.geolocation.getCurrentPosition((position) => {
                      Meteor.call('locations.updatelinesize', location._id, position.coords.longitude, position.coords.latitude, updateNumber, function (err, result) {
                        console.log(event.type)
