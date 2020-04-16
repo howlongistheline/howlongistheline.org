@@ -9,7 +9,6 @@ import moment from 'moment';
 function Duplicated({ history, ready, original }) {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState("0"); //0:not selected
     const [address, setAddress] = useState("");
     const [coord, setCoord] = useState([]);
     const [search, setSearch] = useState("");
@@ -51,7 +50,8 @@ function Duplicated({ history, ready, original }) {
     }
 
     function renderSelectedCard(location) {
-        return (<ListItem tappable key={"m" + location._id} onClick={() => {
+        return (
+        <ListItem tappable key={"m" + location._id} onClick={() => {
             if (location._id == original._id) {
                 return
             }
@@ -92,7 +92,6 @@ function Duplicated({ history, ready, original }) {
             }
             var nA = selected.concat([location])
             setSelected(nA)
-            console.log(selected)
         }}>
             <div className="left">
                 <Icon icon="fa-plus" />

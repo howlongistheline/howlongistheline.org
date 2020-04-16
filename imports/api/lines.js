@@ -90,13 +90,13 @@ Meteor.methods({
         //     throw new Meteor.Error('not-authorized');
         // }
 
-        var loc = Locations.findOne({
-            _id: id
-        })
-        var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
-        if (distanceInMeter > 100) {
-            throw new Meteor.Error('You do not appear to be at this location right now');
-        }
+        // var loc = Locations.findOne({
+        //     _id: id
+        // })
+        // var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
+        // if (distanceInMeter > 100) {
+        //     throw new Meteor.Error('You do not appear to be at this location right now');
+        // }
 
         Locations.update({ _id: id },
             {
@@ -162,14 +162,14 @@ Meteor.methods({
         )
     },
 
-    'locations.updatelinesize'(id, long, lat, line) {
-      var loc = Locations.findOne({
-          _id: id
-      })
-      var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
-      if (distanceInMeter > 100) {
-          throw new Meteor.Error('You do not appear to be at this store right now');
-      }
+    'locations.updatelinesize'(id, line) {
+    //   var loc = Locations.findOne({
+    //       _id: id
+    //   })
+    //   var distanceInMeter = distance(loc.coordinates[1], loc.coordinates[0], lat, long, "K") * 1000
+    //   if (distanceInMeter > 100) {
+    //       throw new Meteor.Error('You do not appear to be at this store right now');
+    //   }
       Locations.update({ _id: id },
         {
           $set:
