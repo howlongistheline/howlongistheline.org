@@ -246,6 +246,19 @@ Meteor.methods({
             })
         });
     },
+    'Location.findAllCoordHistory'(ids){
+        var coords = []
+        ids.forEach((id)=>{
+            var history = Additionals.findOne({ locationId : id})
+            if(history.coordinatesHistory == undefined){
+                return
+            }
+            else {
+            coords = coords.concat(history.coordinatesHistory)
+            }
+        })
+        return coords.map(o => o.coordinates)
+    },
     'Outofstock.insert'(shopId, name){
         Additionals.update({ locationId: shopId }, {
             $push: { outofStock: { name:  name, time: new Date() } }

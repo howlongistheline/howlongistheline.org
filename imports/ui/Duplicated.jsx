@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
 import { Input, SearchInput, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox, Card } from 'react-onsenui'
 import { toast } from 'react-toastify';
-import { Locations, LocationsIndex } from '../api/lines.js';
+import { Locations, LocationsIndex, Additionals } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 
 function Duplicated({ history, ready, original }) {
-
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState("0"); //0:not selected
@@ -17,6 +16,7 @@ function Duplicated({ history, ready, original }) {
     const [searchResult, setSearchResult] = useState([]);
     const [selected, setSelected] = useState([]);
     const [step, setStep] = useState(0)
+    const [coordHist, setCoordHist ] = useState([])
 
     useEffect(() => {
         if (original != undefined) {
@@ -109,6 +109,9 @@ function Duplicated({ history, ready, original }) {
             toast("Please select more than 1 store");
             return
         }
+        Meteor.call('Location.findAllCoordHistory', selected.map(o => o._id),(err, result)=>{
+            setCoordHist(result)
+        })
         setStep(1)
     }
 
@@ -185,14 +188,14 @@ function Duplicated({ history, ready, original }) {
     }
 
     function renderCoordList() {
-        return selected.map((location) => {
-            return <ListItem key={location._id} tappable onClick={() => {
-                setCoord(location.coordinates)
+        var coords = selected.map(o => o.coordinates).concat(coordHist)
+        return coords.map((location, idx) => {
+            return <ListItem key={idx} tappable onClick={() => {
+                setCoord(location)
                 setStep(5)
             }}>
                 <div className="left">
-                    {/* {location.coordinates} */}
-                    <img src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
+                    <img src={"https://howlongistheline.org/maps/" + location[1] + "," + location[0] + ",K3340"} />
                 </div>
                 <div className="right">
                     <Icon icon="fa-chevron-right" />
@@ -362,6 +365,7 @@ function Duplicated({ history, ready, original }) {
 
 export default withTracker(() => {
     var sub = Meteor.subscribe('locations');
+    var sub = Meteor.subscribe('additionals');
     const ready = sub.ready();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id')
