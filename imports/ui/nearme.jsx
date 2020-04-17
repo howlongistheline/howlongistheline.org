@@ -25,6 +25,7 @@ function Index({ history }) {
     const [loadingMessage, setLoadingMessage] = useState("Getting your location...");
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
+    const [loadingCardList, setLoadingCardList] = useState({[""]:false});
 
     useEffect(() => {
         checkClientLocation()
@@ -161,6 +162,7 @@ function Index({ history }) {
         }
     }
 
+
     function renderCard(location) {
         var Indicator = "green"
         switch (true) {
@@ -239,6 +241,10 @@ function Index({ history }) {
                     <div className="center">
                         <Button id={location._id} onClick={
                             function (event) {
+                                setLoadingCardList({
+                                    ...loadingCardList,  //take existing key-value pairs and use them in our new state,
+                                    [location._id]: true   //define new key-value pair with new uuid and [].
+                                  })
                                 var loc = Locations.findOne({
                                     _id: location._id
                                 })
@@ -248,12 +254,16 @@ function Index({ history }) {
                                     var distanceInMeter = distance(position.coords.latitude, position.coords.longitude, loc.coordinates[1], loc.coordinates[0], "K") * 1000
                                     if (distanceInMeter > 100) {
                                         history.push("/editLine?id=" + location._id + "&lineSize=" + updateNumber, { location: location })
-                                        return
+                                        return 
                                     }
                                     Meteor.call('locations.updatelinesize', location._id, updateNumber, function (err, result) {
                                         if (err) {
                                             toast("Some error happened, Please try again later!")
                                             console.log(err)
+                                            setLoadingCardList({
+                                                ...loadingCardList,  //take existing key-value pairs and use them in our new state,
+                                                [location._id]: false   //define new key-value pair with new uuid and [].
+                                              })
                                             // history.push("/editLine?id=" + location._id + "&lineSize=" + updateNumber, { location: location })
                                             return
                                         }
@@ -284,7 +294,7 @@ function Index({ history }) {
 
                     </div>
                 </ListItem>
-
+                {loadingCardList[location._id] ? <> <ProgressBar indeterminate/> Updating</> : <></>}
             </Card>
         )
     }
