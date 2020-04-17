@@ -248,7 +248,7 @@ function Index({ history }) {
                                     var distanceInMeter = distance(position.coords.latitude, position.coords.longitude, loc.coordinates[1], loc.coordinates[0], "K") * 1000
                                     if (distanceInMeter > 100) {
                                         history.push("/editLine?id=" + location._id + "&lineSize=" + updateNumber, { location: location })
-                                        return 
+                                        return
                                     }
                                     Meteor.call('locations.updatelinesize', location._id, updateNumber, function (err, result) {
                                         if (err) {
@@ -299,6 +299,9 @@ function Index({ history }) {
                 </ListItem>
             </div>
             <div className="border-top" style={{ marginBottom: 55 }}>
+            <Card class="isa_info">
+                <i className="fas fa-info-circle" />Want to be on TV? Tell us what you like about this site in 6 seconds or less and send the video <a href="https://www.dropbox.com/request/wixiacM0ExzOUSkF63IC">here</a>.
+            </Card>
                 <Card class="isa_info">
                     <i className="fas fa-info-circle" /> If something doesn't work properly, check back a few days later and it will probably be fixed.
                   Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
