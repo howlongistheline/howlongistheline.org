@@ -19,7 +19,7 @@ export default function AddLine({ history }) {
     function submit() {
 
         if (name == "") {
-            toast("Please enter the store name");
+            toast("Please enter the store name and branch");
             return
         }
         if (status == "0") {
@@ -27,7 +27,7 @@ export default function AddLine({ history }) {
             return
         }
         if (address == "") {
-            toast("Please enter address or branch name");
+            toast("Please enter the full address of the store");
             return
         }
         if (confirm == false) {
@@ -94,13 +94,13 @@ export default function AddLine({ history }) {
                     value={name}
                     onChange={(event) => { setName(event.target.value) }}
                     modifier='material'
-                    placeholder='Name of store; e.g. Countdown' />
+                    placeholder='Name of store, e.g. Countdown South Dunedin' />
             </ListItem>
 
             <ListTitle>
             </ListTitle>
             <ListItem modifier="nodivider">
-            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Branch name OR full address; e.g. South Dunedun or 323 Andersons Bay Road, South Dunedin, Dunedin 9012" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
+            <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full address of the store; 323 Andersons Bay Road, South Dunedin, Dunedin 9012" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
             </textarea>
             </ListItem>
             <ListItem modifier="nodivider" tappable onClick={()=>{setCofirm(!confirm)}}>
