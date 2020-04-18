@@ -8,7 +8,7 @@ Meteor.startup(() => {
   name: 'Reset status to No Line if it has not been updated for a while',
   schedule: function(parser) {
     // parser is a later.parse object
-    return parser.text('every 81 minutes');
+    return parser.text('every 11 minutes');
   },
   job: function() {
     updateStatus();
@@ -21,11 +21,21 @@ function updateStatus() {
     var locations = Locations.find({}, { sort: { createdAt: -1 } }).fetch();
     for (var i in locations) {
       var diff = now.diff(locations[i].lastUpdate, 'minutes')
-      if (diff >= 60) {
+      if (diff >= 20 && diff <= 360 && locations[i].line > 0) {
+        var newNumber = Math.floor(locations[i].line * 0.92);
         Locations.upsert(locations[i]._id, {
           $set: {
               lastUpdate: new Date(),
-              status: "no"
+              line: newNumber
+            }
+
+        })
+      }
+      if (diff >= 361) {
+        Locations.upsert(locations[i]._id, {
+          $set: {
+              lastUpdate: new Date(),
+              line: 0
             }
         })
       }
