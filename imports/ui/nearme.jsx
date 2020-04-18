@@ -237,7 +237,7 @@ function Index({ history }) {
                     <div className="right">
                     </div>
                 </ListItem>
-                <ListItem modifier="nodivider">
+                <ListItem modifier="nodivider" style={{ flexWrap: 'wrap' }}>
                     <div className="center">
                         <Button id={location._id} onClick={
                             function (event) {
