@@ -201,7 +201,7 @@ function Index({ history }) {
                   </div>
                     <div className="right">
                         <Button onClick={() => { history.push('/stocks?id=' + location._id) }}>
-                            Stocks Status
+                            Stock Status
                       </Button>
                     </div>
                 </ListItem>

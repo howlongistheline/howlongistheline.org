@@ -75,7 +75,7 @@ function Stocks({ details, additional, history }) {
                         value={itemName} float
                         onChange={(event) => { setItemName(event.target.value) }}
                         modifier='material'
-                        placeholder='Anything is out of stocks?' />
+                        placeholder='Is anything out of stock?' />
                     <div className="right">
                         <Button onClick={() => { addStock() }}>
                             <Icon icon="fa-send"></Icon>
