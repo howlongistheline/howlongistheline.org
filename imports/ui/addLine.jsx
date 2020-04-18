@@ -11,7 +11,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 export default function AddLine({ history }) {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState("0"); //0:not selected
+    const [status, setStatus] = useState("no"); //0:not selected
     const [address, setAddress] = useState("");
     const [confirm, setCofirm] = useState(false);
     const [listed, setListed] = useState(false);
@@ -44,7 +44,7 @@ export default function AddLine({ history }) {
         }
         setLoading(true)
         navigator.geolocation.getCurrentPosition((position) => {
-            Meteor.call('locations.insert', name, [position.coords.longitude, position.coords.latitude], address, status, function (err, result) {
+            Meteor.call('locations.insert', name, [position.coords.longitude, position.coords.latitude], address, "no", function (err, result) {
                 if (err) {
                     setLoading(false)
                     console.log(err)
@@ -110,14 +110,6 @@ export default function AddLine({ history }) {
                 modifier='material' />
             Are you at this location right now? If not, please wait until you next go to this store and add it at that time, rather than adding it now. You may also consider posting this to your social media and asking other people to add stores in your area when they are physically at the location :) For more information on why this is important please see the FAQ page.
             </ListItem>
-            <FormControl component="fieldset" style={{ width: "80%", margin: 20 }}>
-                <RadioGroup aria-label="gender" name="gender1" value={status} onChange={(event) => setStatus(event.target.value)}>
-                    {/* <FormControlLabel value="0" control={<Radio />} label="How busy is it?" /> */}
-                    <FormControlLabel value="no" control={<Radio />} label="There's no line right now" />
-                    <FormControlLabel value="small" control={<Radio />} label="6 or less people waiting" />
-                    <FormControlLabel value="long" control={<Radio />} label="More than 6 people waiting" />
-                </RadioGroup>
-            </FormControl>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
