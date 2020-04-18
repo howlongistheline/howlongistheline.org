@@ -67,7 +67,7 @@ function Stocks({ details, additional, history }) {
                     {details.address}
                 </ListItem>
                 <ListTitle style={{ marginTop: 30 }}>
-                    Stocks Status:
+                    Stock Status:
                 </ListTitle>
                 <ListItem>
                     <Input
