@@ -162,6 +162,17 @@ function Index({ history }) {
         }
     }
 
+    function Line(people) {
+        if(people) {
+            if(people === 1) {
+                return "There was 1 person in line"
+            } else {
+                return `There were ${getDisplayedLineLength(people)} people in line`
+            }
+        } else {
+            return "There was no line"
+        }
+    }
 
     function renderCard(location) {
         var Indicator = "green"
@@ -203,12 +214,12 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center" style={{ color: Indicator }}>
-                        There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
-                  </div>
+                        {Line(location.line)} {moment(location.lastUpdate).fromNow()}.
+                    </div>
                     <div className="right">
                         <Button onClick={() => { history.push('/stocks?id=' + location._id) }}>
                             Stock Status
-                      </Button>
+                       </Button>
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
