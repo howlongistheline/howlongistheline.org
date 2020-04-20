@@ -93,7 +93,7 @@ function Index({ history }) {
     function getClientLocation() {
         setLoading(true)
         var options = {
-            enableHighAccuracy: false,
+            enableHighAccuracy: true,
             timeout: 10000,
             maximumAge: 300000
         };
@@ -115,8 +115,7 @@ function Index({ history }) {
         }
 
         navigator.geolocation.getCurrentPosition(success, error, options);
-
-
+      
     }
 
     function fetchNearestShops(latitude, longitude) {
@@ -248,7 +247,11 @@ function Index({ history }) {
                                 var loc = Locations.findOne({
                                     _id: location._id
                                 })
-
+                                var options = {
+                                    enableHighAccuracy: true,
+                                    timeout: 10000,
+                                    maximumAge: 300000
+                                };
                                 navigator.geolocation.getCurrentPosition((position) => {
                                     //client side distance check
                                     var distanceInMeter = distance(position.coords.latitude, position.coords.longitude, loc.coordinates[1], loc.coordinates[0], "K") * 1000
@@ -271,7 +274,14 @@ function Index({ history }) {
                                         alert("The store has been updated, thank you!")
                                         history.go(0)
                                     });
-                                })
+                                },(err)=>{
+                                    console.log(err)
+                                    toast("Some error happened, Please try again later!")
+                                    setLoadingCardList({
+                                        ...loadingCardList,  //take existing key-value pairs and use them in our new state,
+                                        [location._id]: false   //define new key-value pair with new uuid and [].
+                                    })
+                                }, options)
                             }
                         }>
                         Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
