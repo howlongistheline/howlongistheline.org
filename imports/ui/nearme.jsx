@@ -318,9 +318,9 @@ function Index({ history }) {
 
     return (
         <MainLayout>
-            <div className="search-container" style={{ position: "sticky", top: 0, zIndex: 1000 }}>
+            <div className="search-container" style={{ position: "sticky", top: 0, zIndex: 1000, background: "#fff" }}>
                 <ListItem>
-                    <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
+                    <SearchInput style={{ width: "100%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Find stores near you." onChange={(e) => {
                         setSearch(e.target.value)
                     }} />
                 </ListItem>
