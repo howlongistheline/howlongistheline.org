@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations, LocationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card, ProgressCircular, SearchInput, ProgressBar } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, Popover, SearchInput, ProgressBar } from 'react-onsenui'
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
@@ -25,7 +25,8 @@ function Index({ history }) {
     const [loadingMessage, setLoadingMessage] = useState("Getting your location...");
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [loadingCardList, setLoadingCardList] = useState({[""]:false});
+    const [loadingCardList, setLoadingCardList] = useState({ [""]: false });
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         checkClientLocation()
@@ -115,7 +116,7 @@ function Index({ history }) {
         }
 
         navigator.geolocation.getCurrentPosition(success, error, options);
-      
+
     }
 
     function fetchNearestShops(latitude, longitude) {
@@ -191,8 +192,14 @@ function Index({ history }) {
                         </Button>
                     </div>
                 </ListItem>
-                <ListItem modifier="nodivider">
-                    {location.address}
+                <ListItem modifier="nodivider" expandable>
+                    <div className="left">
+                    <Icon style={{paddingRight:20}} icon="map-marker-alt"/> {location.address}
+                    </div>
+                    <div className="expandable-content">
+                        <img style={{maxHeight: 200}} src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />  
+                    </div>
+
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center" style={{ color: Indicator }}>
@@ -243,7 +250,7 @@ function Index({ history }) {
                                 setLoadingCardList({
                                     ...loadingCardList,  //take existing key-value pairs and use them in our new state,
                                     [location._id]: true   //define new key-value pair with new uuid and [].
-                                  })
+                                })
                                 var loc = Locations.findOne({
                                     _id: location._id
                                 })
@@ -257,7 +264,7 @@ function Index({ history }) {
                                     var distanceInMeter = distance(position.coords.latitude, position.coords.longitude, loc.coordinates[1], loc.coordinates[0], "K") * 1000
                                     if (distanceInMeter > 100) {
                                         history.push("/editLine?id=" + location._id + "&lineSize=" + updateNumber, { location: location })
-                                        return 
+                                        return
                                     }
                                     Meteor.call('locations.updatelinesize', location._id, updateNumber, function (err, result) {
                                         if (err) {
@@ -266,7 +273,7 @@ function Index({ history }) {
                                             setLoadingCardList({
                                                 ...loadingCardList,  //take existing key-value pairs and use them in our new state,
                                                 [location._id]: false   //define new key-value pair with new uuid and [].
-                                              })
+                                            })
                                             // history.push("/editLine?id=" + location._id + "&lineSize=" + updateNumber, { location: location })
                                             return
                                         }
@@ -274,7 +281,7 @@ function Index({ history }) {
                                         alert("The store has been updated, thank you!")
                                         history.go(0)
                                     });
-                                },(err)=>{
+                                }, (err) => {
                                     console.log(err)
                                     toast("Some error happened, Please try again later!")
                                     setLoadingCardList({
@@ -284,7 +291,7 @@ function Index({ history }) {
                                 }, options)
                             }
                         }>
-                        Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
+                            Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
                 </Button>
                     </div>
                     <div className="right">
@@ -304,7 +311,7 @@ function Index({ history }) {
 
                     </div>
                 </ListItem>
-                {loadingCardList[location._id] ? <> <ProgressBar indeterminate/> Updating</> : <></>}
+                {loadingCardList[location._id] ? <> <ProgressBar indeterminate /> Updating</> : <></>}
             </Card>
         )
     }
