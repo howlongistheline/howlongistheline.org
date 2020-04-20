@@ -86,6 +86,11 @@ function EditLine({ history, details }) {
         }
 
         setLoading(true)
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000
+        };
         navigator.geolocation.getCurrentPosition((position) => {
             Meteor.call('locations.forceUpdatelinesize', details._id, position.coords.longitude, position.coords.latitude, lineSize, function (err, result) {
                 if (err) {
@@ -96,7 +101,7 @@ function EditLine({ history, details }) {
                 alert("The store has been updated, thank you!")
                 history.push('/')
             });
-        }, error)
+        }, error, options)
 
         function error(err) {
             toast("Can't get current location, please turn on browser's geolocation function or try a different browser")

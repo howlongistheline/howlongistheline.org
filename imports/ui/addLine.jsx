@@ -43,6 +43,11 @@ export default function AddLine({ history }) {
             console.log("Can't get current location")
         }
         setLoading(true)
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 300000
+        };
         navigator.geolocation.getCurrentPosition((position) => {
             Meteor.call('locations.insert', name, [position.coords.longitude, position.coords.latitude], address, "no", function (err, result) {
                 if (err) {
@@ -54,7 +59,7 @@ export default function AddLine({ history }) {
                 toast("Success!")
                 history.push('/')
             });
-        }, error)
+        }, error, options)
 
         function error(err) {
             toast("Can't get current location, please turn on your browser's geolocation function or try a different browser.")
