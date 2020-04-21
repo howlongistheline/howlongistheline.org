@@ -281,5 +281,12 @@ Meteor.methods({
         Additionals.update({ locationId: shopId }, {
             $push: { outofStock: { name:  name, time: new Date() } }
         })
+    },
+    'Outofstock.refilled'(shopId, stock){
+        Additionals.update({ locationId: shopId , 
+            outofStock: { $elemMatch:  stock  }
+        },
+        { $set: { "outofStock.$.refilled" : true, "outofStock.$.refillTime" : new Date() } }
+        )
     }
 })
