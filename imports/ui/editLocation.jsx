@@ -103,13 +103,14 @@ function EditLocation({ history, ready, original }) {
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => {
+                    setLoading(true)
                     Meteor.call('Location.updateLocation', original._id, coord, (err, result) => {
                         if (err) {
                             console.log(err)
                             toast("Some unknown error has occurred, let us know what you were doing and we can probably fix it.")
                             return
                         }
-                        toast("Thank you! The duplicate listings have been removed!")
+                        toast("Thank you! The location has been changed!")
                         history.push('/')
                         return
                     })
