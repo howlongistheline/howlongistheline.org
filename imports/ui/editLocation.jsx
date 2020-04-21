@@ -20,10 +20,11 @@ function EditLocation({ history, ready, original }) {
             setAddress(original.address)
             setLoading(true)
             Meteor.call('Location.findAllCoordHistory', [original._id],(err, result)=>{
-                if(!err){
+                if(err){
                     setLoading(false)
+                    return
                 }
-                console.log(result)
+                setLoading(false)
                 setCoordHist(result)
             })
             console.log(coordHist)
@@ -42,7 +43,7 @@ function EditLocation({ history, ready, original }) {
 
     function renderCoordList() {
         var coords = coordHist.concat([original.coordinates])
-        console.log(coords)
+        // console.log(coords)
         return coords.map((location, idx) => {
             return <ListItem key={idx} tappable onClick={() => {
                 setCoord(location)
@@ -103,13 +104,15 @@ function EditLocation({ history, ready, original }) {
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => {
+                    setLoading(true)
                     Meteor.call('Location.updateLocation', original._id, coord, (err, result) => {
                         if (err) {
                             console.log(err)
                             toast("Some unknown error has occurred, let us know what you were doing and we can probably fix it.")
+                            setLoading(false)
                             return
                         }
-                        toast("Thank you! The duplicate listings have been removed!")
+                        toast("Thank you! The location has been changed!")
                         history.push('/')
                         return
                     })
