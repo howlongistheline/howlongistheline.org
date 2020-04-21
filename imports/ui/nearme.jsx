@@ -208,7 +208,7 @@ function Index({ history }) {
                     <Icon style={{paddingRight:20}} icon="map-marker-alt"/> {location.address}
                     </div>
                     <div className="expandable-content">
-                        <img style={{maxHeight: 200}} src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />  
+                        <img style={{maxHeight: 200}} src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
                     </div>
 
                 </ListItem>
@@ -337,6 +337,9 @@ function Index({ history }) {
                 </ListItem>
             </div>
             <div className="border-top" style={{ marginBottom: 55 }}>
+            <Card class="isa_custom">
+                <i className="fas fa-info-circle" /> We're looking for something new to work on after the lockdown. <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1uRMABgs-tf-ZhkS28uiVvjRZfMTCTUaPsb9wvQcsbb804Q/viewform?usp=sf_link">Is your business facing a problem that technology could help with?</a>
+            </Card>
                 <Card class="isa_info">
                     <i className="fas fa-info-circle" /> If something doesn't work properly, check back a few days later and it will probably be fixed.
                   Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
