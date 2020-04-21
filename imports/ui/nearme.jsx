@@ -3,7 +3,7 @@ import MainLayout from './MainLayout'
 import { withTracker } from 'meteor/react-meteor-data';
 import { Locations, LocationsIndex } from '../api/lines.js';
 import { Meteor } from 'meteor/meteor';
-import { Icon, Button, ListItem, ListTitle, Card, Popover, SearchInput, ProgressBar } from 'react-onsenui'
+import { Icon, Button, ListItem, ListTitle, Card, ActionSheet, ActionSheetButton , SearchInput, ProgressBar } from 'react-onsenui'
 import moment from 'moment';
 import { Tracker } from 'meteor/tracker'
 import { toast } from 'react-toastify';
@@ -27,6 +27,7 @@ function Index({ history }) {
     const [searchResult, setSearchResult] = useState([]);
     const [loadingCardList, setLoadingCardList] = useState({ [""]: false });
     const [isOpen, setIsOpen] = useState(false);
+    const [reportId, setReportId] = useState("");
 
     useEffect(() => {
         checkClientLocation()
@@ -197,7 +198,9 @@ function Index({ history }) {
                     {location.name}
                     <div className="right">
                         <Button onClick={() => {
-                            history.push('/duplicated?id=' + location._id)
+                            // history.push('/duplicated?id=' + location._id)
+                            setIsOpen(true)
+                            setReportId(location._id)
                         }}>
                             <i className="fas fa-exclamation-triangle" />
                         </Button>
@@ -205,10 +208,10 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider" expandable>
                     <div className="left">
-                    <Icon style={{paddingRight:20}} icon="map-marker-alt"/> {location.address}
+                        <Icon style={{ paddingRight: 20 }} icon="map-marker-alt" /> {location.address}
                     </div>
                     <div className="expandable-content">
-                        <img style={{maxHeight: 200}} src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
+                        <img style={{ maxHeight: 200 }} src={"https://howlongistheline.org/maps/" + location.coordinates[1] + "," + location.coordinates[0] + ",K3340"} />
                     </div>
 
                 </ListItem>
@@ -355,6 +358,13 @@ function Index({ history }) {
                 Missing store? Add it now!
                   <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
+            <ActionSheet isCancelable isOpen={isOpen}
+            onCancel={()=>{setIsOpen(false)}}
+            >
+             <ActionSheetButton onClick={()=>{history.push('/duplicated?id=' + reportId)}}> Report Duplicated</ActionSheetButton>
+             <ActionSheetButton onClick={()=>{history.push('/editLocation?id=' + reportId)}}> Report Wrong Location</ActionSheetButton>
+             <ActionSheetButton onClick={()=>{setIsOpen(false)}}> Cencel</ActionSheetButton>
+            </ActionSheet>
         </MainLayout>
     )
 }
