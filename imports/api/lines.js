@@ -259,6 +259,24 @@ Meteor.methods({
         })
         return coords.map(o => o.coordinates)
     },
+    'Location.updateLocation'(id, location){
+        var loc = Locations.findOne({
+            _id: id
+        })
+
+        Additionals.update({ locationId: id }, {
+            $push: { coordinatesHistory: { coordinates: loc.coordinates, time: new Date() } }
+        })
+
+        Locations.update({ _id: id },
+            {
+              $set:
+              {
+                coordinates: location,
+              }
+            }
+          )
+    },
     'Outofstock.insert'(shopId, name){
         Additionals.update({ locationId: shopId }, {
             $push: { outofStock: { name:  name, time: new Date() } }
