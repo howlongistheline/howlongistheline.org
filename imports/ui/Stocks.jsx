@@ -17,7 +17,7 @@ function Stocks({ details, additional, history }) {
     const [itemName, setItemName] = useState("")
 
     function renderStocks() {
-        if(additional.outofStock == undefined){
+        if (additional.outofStock == undefined) {
             return (
                 <ListItem>
                     No data for this shop right now
@@ -28,14 +28,25 @@ function Stocks({ details, additional, history }) {
         return stocks.reverse().map((stock, idx) => {
             return (
                 <ListItem key={idx}>
-                    {stock.name} is out of stock 
-                    <div className="right">{moment(stock.time).fromNow()}</div>
+                    <div className="left">{stock.name} { stock.refilled ? "is back in stock":"is out of stock" }</div>
+                    <div className="center">{ stock.refilled ? moment(stock.refillTime).fromNow() : moment(stock.time).fromNow()}</div>
+                    <div className="right">
+                    { stock.refilled ? <div style={{color: "green"}}> Back in stock! </div> :
+                        <Button onClick={() => {
+                            Meteor.call('Outofstock.refilled', details._id, stock, (err, result) => {
+                                if (err) {
+                                    console.log(err)
+                                    return
+                                }
+                            })
+                        }}>it is back in stock!</Button>}
+                    </div>
                 </ListItem>
             )
         })
     }
 
-    function addStock(){
+    function addStock() {
         if (itemName == "") {
             toast("please enter the item Name");
             console.log(err)
