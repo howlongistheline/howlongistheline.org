@@ -163,6 +163,17 @@ function Index({ history }) {
         }
     }
 
+    function Line(people) {
+        if(people) {
+            if(people === 1) {
+                return "There was 1 person in line"
+            } else {
+                return `There were ${getDisplayedLineLength(people)} people in line`
+            }
+        } else {
+            return "There was no line"
+        }
+    }
 
     function renderCard(location) {
         var Indicator = "green"
@@ -206,12 +217,12 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center" style={{ color: Indicator }}>
-                        There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
-                  </div>
+                        {Line(location.line)} {moment(location.lastUpdate).fromNow()}.
+                    </div>
                     <div className="right">
                         <Button onClick={() => { history.push('/stocks?id=' + location._id) }}>
                             Stock Status
-                      </Button>
+                       </Button>
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
@@ -321,14 +332,17 @@ function Index({ history }) {
 
     return (
         <MainLayout>
-            <div className="search-container" style={{ position: "sticky", top: 0, zIndex: 1000 }}>
+            <div className="search-container" style={{ position: "sticky", top: 0, zIndex: 1000, background: "#fff" }}>
                 <ListItem>
-                    <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Start typing the name of a store or locality to find things!" onChange={(e) => {
+                    <SearchInput style={{ width: "100%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Find stores near you." onChange={(e) => {
                         setSearch(e.target.value)
                     }} />
                 </ListItem>
             </div>
             <div className="border-top" style={{ marginBottom: 55 }}>
+            <Card class="isa_custom">
+                <i className="fas fa-info-circle" /> We're looking for something new to work on after the lockdown. <a href="https://docs.google.com/forms/d/e/1FAIpQLSc1uRMABgs-tf-ZhkS28uiVvjRZfMTCTUaPsb9wvQcsbb804Q/viewform?usp=sf_link">Is your business facing a problem that technology could help with?</a>
+            </Card>
                 <Card class="isa_info">
                     <i className="fas fa-info-circle" /> If something doesn't work properly, check back a few days later and it will probably be fixed.
                   Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.

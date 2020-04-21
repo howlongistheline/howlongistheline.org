@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router'
-import { Page, Toolbar, Icon, ToolbarButton } from 'react-onsenui'
+import { Page } from 'react-onsenui'
 import * as Ons from 'react-onsenui'
-import moment from 'moment'
+import Header from './components/Header'
 
 function SideBar({ children, history }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,7 @@ function SideBar({ children, history }) {
     }
     return (<>
         <Ons.Splitter>
-            <Ons.SplitterSide side='left' width={220} collapse={true} swipeable={false} isOpen={isOpen} onClose={hide} onOpen={show}>
+            <Ons.SplitterSide side='right' width={220} collapse={true} swipeable={false} isOpen={isOpen} onClose={hide} onOpen={show}>
                 <Ons.Page>
                     <Ons.List>
                         <Route render={({ history }) => (
@@ -48,25 +48,8 @@ function SideBar({ children, history }) {
             <Ons.SplitterContent>
                 {/* {React.cloneElement(children, { showMenu: show })} */}
                 <Page renderToolbar={() =>
-                    <Toolbar>
-                        <div className="left">
-                            <ToolbarButton onClick={() => {
-                                show()
-                            }}>
-                                <Icon icon="bars" />
-                            </ToolbarButton>
-                        </div>
-                        <div className="center">
-                        {/* <Route render={({ history }) => (
-                            <img src='/images/...' onClick={() => { loadPage(history, "/") }}style={{height:"80%", maxWidth:"100%"}}></img>
-                        )} /> */}
-                        How Long is the Line?
-                        </div>
-
-                        <div className="right">
-
-                        </div>
-                    </Toolbar>}
+                    <Header show={show}/>
+                }
                 >
                     {children}
                 </Page>
