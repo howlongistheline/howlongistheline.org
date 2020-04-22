@@ -363,7 +363,7 @@ function Index({ history }) {
             >
              <ActionSheetButton onClick={()=>{history.push('/duplicated?id=' + reportId)}}> Report Duplicated</ActionSheetButton>
              <ActionSheetButton onClick={()=>{history.push('/editLocation?id=' + reportId)}}> Report Wrong Location</ActionSheetButton>
-             <ActionSheetButton onClick={()=>{setIsOpen(false)}}> Cencel</ActionSheetButton>
+             <ActionSheetButton onClick={()=>{setIsOpen(false)}}>Cancel</ActionSheetButton>
             </ActionSheet>
         </MainLayout>
     )
