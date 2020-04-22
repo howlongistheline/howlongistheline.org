@@ -39,7 +39,7 @@ function Stocks({ details, additional, history }) {
                                     return
                                 }
                             })
-                        }}>it is back in stock!</Button>}
+                        }}>It is back in stock!</Button>}
                     </div>
                 </ListItem>
             )
@@ -47,17 +47,18 @@ function Stocks({ details, additional, history }) {
     }
 
     function addStock() {
-        if (itemName == "") {
-            toast("please enter the item Name");
+        sanitisedName = itemName.replace(/[^0-9a-zA-Z ]/g, ''); // Remove non-alphanumerics
+        if (sanitisedName == "" || sanitisedName.length < 3) {
+            toast("Please enter a meaningful description.");
             console.log(err)
             return
         }
-        Meteor.call("Outofstock.insert", details._id, itemName, (err, result) => {
+        Meteor.call("Outofstock.insert", details._id, sanitisedName, (err, result) => {
             if (err) {
-                toast("an error occurred when adding the comment")
+                toast("An error occurred while adding your item.")
                 return
             }
-            toast("success!")
+            toast("Success! Thank you.")
             setItemName("")
         })
 
