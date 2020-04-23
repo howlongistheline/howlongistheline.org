@@ -7,7 +7,7 @@ function Header({ show, history }) {
         <Toolbar>
             <div className="left" style={{ display: 'flex', alignItems: 'center', fontSize: '1.25em', fontWeight: 'bold' }}>
                 <Route render={({ history }) => (
-                    <img src='/images/logo.png' onClick={() => { history.push('/') }} style={{ height: "80%", maxWidth: "100%", padding: "0 15px" }}></img>
+                    <img src='/images/logo.png' onClick={() => { history.push('/') }} style={{ height: "40px", maxWidth: "100%", padding: "0 15px" }}></img>
                 )} />
                 How Long is the Line?
             </div>
