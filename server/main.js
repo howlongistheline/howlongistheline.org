@@ -3,6 +3,8 @@ import { Locations } from '/imports/api/lines.js';
 import Feedbacks from '/imports/api/feedback'
 import moment from 'moment';
 
+import './api/index';
+
 Meteor.startup(() => {
   SyncedCron.add({
   name: 'Reset status to No Line if it has not been updated for a while',
