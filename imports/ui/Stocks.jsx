@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
-import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox } from 'react-onsenui'
+import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox, Card } from 'react-onsenui'
 import { toast } from 'react-toastify';
 import { Locations, Additionals, LocationsIndex } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -20,18 +20,20 @@ function Stocks({ details, additional, history }) {
         if (additional.outofStock == undefined) {
             return (
                 <ListItem>
-                    No data for this shop right now
+                    No data for this store right now.
                 </ListItem>
             )
         }
         const stocks = additional.outofStock.sort((a, b) => a.time - b.time)
         return stocks.reverse().map((stock, idx) => {
             return (
-                <ListItem key={idx}>
-                    <div className="left">{stock.name} { stock.refilled ? "is back in stock":"is out of stock" }</div>
-                    <div className="center">{ stock.refilled ? moment(stock.refillTime).fromNow() : moment(stock.time).fromNow()}</div>
+                <ListItem key={idx} modifier="longdivider" style={{ flexWrap: "wrap", justifyContent: "space-between" }}> 
+                    <div className="left">{stock.name}</div>
+                    <div className="center" style= {{flexFlow: "row-reverse", paddingLeft: 6, paddingRight: 10}}>
+                        { stock.refilled ? moment(stock.refillTime).fromNow() : moment(stock.time).fromNow()}
+                    </div>
                     <div className="right">
-                    { stock.refilled ? <div style={{color: "green"}}> Back in stock! </div> :
+                    { stock.refilled ? <div style={{color: "green"}}> Now back in stock &nbsp; </div> :
                         <Button onClick={() => {
                             Meteor.call('Outofstock.refilled', details._id, stock, (err, result) => {
                                 if (err) {
@@ -39,7 +41,8 @@ function Stocks({ details, additional, history }) {
                                     return
                                 }
                             })
-                        }}>It is back in stock!</Button>}
+                        }}>
+                            Back in stock</Button>}
                     </div>
                 </ListItem>
             )
@@ -48,6 +51,9 @@ function Stocks({ details, additional, history }) {
 
     function addStock() {
         sanitisedName = itemName.replace(/[^0-9a-zA-Z ]/g, ''); // Remove non-alphanumerics
+        if (sanitisedName.match(/Test/i)){                      // Ensure any string containing 'test' is not accepted
+            sanitisedName = "";
+        }
         if (sanitisedName == "" || sanitisedName.length < 3) {
             toast("Please enter a meaningful description.");
             console.log(err)
@@ -67,34 +73,41 @@ function Stocks({ details, additional, history }) {
     return (
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
-                <ListTitle>
-                    Store Details
-            </ListTitle>
-                <ListItem modifier="nodivider">
-                    {details.name}
-                </ListItem>
-                <ListTitle>
-                </ListTitle>
-                <ListItem modifier="nodivider">
-                    {details.address}
-                </ListItem>
-                <ListTitle style={{ marginTop: 30 }}>
-                    Stock Status:
-                </ListTitle>
-                <ListItem>
-                    <Input
-                        style={{ width: "80%" }}
-                        value={itemName} float
-                        onChange={(event) => { setItemName(event.target.value) }}
-                        modifier='material'
-                        placeholder='Is anything out of stock?' />
-                    <div className="right">
-                        <Button onClick={() => { addStock() }}>
-                            <Icon icon="fa-send"></Icon>
-                        </Button>
-                    </div>
-                </ListItem>
-                {renderStocks()}
+                <Card>
+                    <ListTitle>
+                        Store Details
+                    </ListTitle>
+                    <ListItem modifier="nodivider">
+                        {details.name}
+                    </ListItem>
+                    <ListItem modifier="nodivider">
+                        {details.address}
+                    </ListItem>
+                </Card>
+                <Card>
+                    <ListTitle>
+                        Stock Status:
+                    </ListTitle>
+                    <ListItem modifier="nodivider">
+                        <Input
+                            style={{ width: "80%" }}
+                            value={itemName} float
+                            onChange={(event) => { setItemName(event.target.value) }}
+                            modifier='material'
+                            placeholder='Is anything out of stock?' />
+                        <div className="right">
+                            <Button onClick={() => { addStock() }}>
+                                Add Item
+                            </Button>
+                        </div>
+                    </ListItem>
+                </Card>
+                <Card>
+                    <ListTitle>
+                        Out of Stock Items
+                    </ListTitle>
+                    {renderStocks()}
+                </Card>
             </div>
         </MainLayout>
     )
