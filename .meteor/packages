@@ -21,3 +21,6 @@ react-meteor-data       # React higher-order component for reactively tracking M
 easy:search
 tracker
 littledata:synced-cron
+easysearch:elasticsearch
+easysearch:autosuggest
+underscore
