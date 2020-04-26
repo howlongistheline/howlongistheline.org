@@ -42,8 +42,17 @@ function Index({ history }) {
                         if (search == "") {
                         }
                         else {
-                            let cursor = LocationsIndex.search(search)
-                            setSearchResult(cursor.fetch())
+                            var searchArray = search.split(/(\s+)/).filter( e => e.trim().length > 0)
+                            let allResults = []
+                            searchArray.forEach((word)=>{
+                                allResults.push(LocationsIndex.search(word).fetch())
+                            })
+                            var flatten = _.flatten(allResults)
+                            var removeDup = _.unique(flatten, false, function(item, k, v){
+                                return item._id;
+                            });
+                            console.log(removeDup)
+                            setSearchResult(removeDup)
                         }
                     }
                 })
@@ -96,7 +105,7 @@ function Index({ history }) {
         setLoading(true)
         var options = {
             enableHighAccuracy: true,
-            timeout: 10000,
+            timeout: 30000,
             maximumAge: 300000
         };
 
