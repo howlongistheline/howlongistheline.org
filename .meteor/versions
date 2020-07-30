@@ -89,5 +89,6 @@ templating-tools@1.1.2
 tracker@1.2.0
 typescript@3.7.6
 underscore@1.0.10
+universe:i18n@1.30.0
 webapp@1.9.0
 webapp-hashing@1.0.9

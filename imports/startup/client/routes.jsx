@@ -23,28 +23,39 @@ import MomentUtils from '@date-io/moment';
 
 const browserHistory = history.createBrowserHistory();
 
+export function renderRoutes() {
+  // function getLang() {
+  // return (
+  //   navigator.languages && navigator.languages[0] ||
+  //   navigator.language ||
+  //   navigator.browserLanguage ||
+  //   navigator.userLanguage ||
+  //   'en'
+  // );
+  // }
 
-export const renderRoutes = () => (
-  // <Provider store={store}>
+  // i18n.setLocale(getLang());
+  return (
+    // <Provider store={store}>
     <Router history={browserHistory}>
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-    <CookiesProvider>
-    <ToastContainer />
-      <Switch>
-        <Route exact path="/" component={Nearme} />
-        <Route exact path="/addLine" component={AddLine} />
-        <Route exact path="/editLine" component={EditLine} />
-        <Route exact path="/shopDetails" component={ShopDetails} />
-        <Route exact path="/feedback" component={FeedBack} />
-        <Route exact path="/FAQ" component={faq} />
-        <Route exact path="/learntocode" component={learntocode} />
-        <Route exact path="/duplicated" component={duplicated} />
-        <Route exact path="/stocks" component={Stocks} />
-        <Route exact path="/editLocation" component={EditLocation} />
-      </Switch>
-      </CookiesProvider>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <CookiesProvider>
+          <ToastContainer />
+          <Switch>
+            <Route exact path="/" component={Nearme} />
+            <Route exact path="/addLine" component={AddLine} />
+            <Route exact path="/editLine" component={EditLine} />
+            <Route exact path="/shopDetails" component={ShopDetails} />
+            <Route exact path="/feedback" component={FeedBack} />
+            <Route exact path="/FAQ" component={faq} />
+            <Route exact path="/learntocode" component={learntocode} />
+            <Route exact path="/duplicated" component={duplicated} />
+            <Route exact path="/stocks" component={Stocks} />
+            <Route exact path="/editLocation" component={EditLocation} />
+          </Switch>
+        </CookiesProvider>
       </MuiPickersUtilsProvider>
     </Router>
-
+  )
   // </Provider>
-);
+};

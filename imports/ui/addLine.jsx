@@ -7,6 +7,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('addLine'));
 
 export default function AddLine({ history }) {
     const [name, setName] = useState("");
@@ -19,7 +22,7 @@ export default function AddLine({ history }) {
     function submit() {
 
         if (name == "") {
-            toast("Please enter the store name and branch");
+            toast(<T>errorName</T>);
             return
         }
         if (status == "0") {
@@ -27,15 +30,15 @@ export default function AddLine({ history }) {
             return
         }
         if (address == "") {
-            toast("Please enter the full address of the store");
+            toast(<T>errorAddress</T>);
             return
         }
         if (confirm == false) {
-            toast("You must be at the store's location in order to add it or update the status.");
+            toast(<T>errorLocation</T>);
             return
         }
         if (listed == false) {
-            toast("Please make sure the store is not already listed first.");
+            toast(<T>errorNoStore</T>);
             return
         }
         if (!navigator.geolocation) {
@@ -79,10 +82,10 @@ export default function AddLine({ history }) {
         <MainLayout>
              <div style={{ marginBottom: 55 }}>
             <ListItem>
-                <div className="left"> Store Details</div>
+                <div className="left"> <T>details</T></div>
                 <div className="right">
                 <Button onClick={()=>{history.push('/')}}>
-                    Cancel
+                    <T>cancel</T>
                 </Button>
                 </div>
             </ListItem>
@@ -91,8 +94,11 @@ export default function AddLine({ history }) {
                 style={{paddingRight: 10}}
                 checked={listed}
                 modifier='material' />
-            Please use the search bar at the top of the home page to verify that the store you are adding is not already listed and then come back and tick this box, thank you!
+            <T>confirmNoStore</T>
             </ListItem>
+            <ListTitle>
+                <T>nameOfStore</T>
+            </ListTitle>
             <ListItem modifier="nodivider">
                 <Input
                     style={{ width: "100%" }}
@@ -103,6 +109,7 @@ export default function AddLine({ history }) {
             </ListItem>
 
             <ListTitle>
+                <T>fullAddress</T>
             </ListTitle>
             <ListItem modifier="nodivider">
             <textarea style={{width: "80%", margin:20}}className="textarea" rows="3" placeholder="Full address of the store; 323 Andersons Bay Road, South Dunedin, Dunedin 9012" value={address} onChange={(e)=>{setAddress(e.target.value)}}>
@@ -113,7 +120,7 @@ export default function AddLine({ history }) {
                 style={{paddingRight: 10}}
                 checked={confirm}
                 modifier='material' />
-            Are you at this location right now? If not, please wait until you next go to this store and add it at that time, rather than adding it now. You may also consider posting this to your social media and asking other people to add stores in your area when they are physically at the location :) For more information on why this is important please see the FAQ page.
+                <T>confirmLocation</T>
             </ListItem>
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
@@ -121,7 +128,7 @@ export default function AddLine({ history }) {
                 onClick={() => {
                     submit()
                 }}>
-                Submit
+                <T>submit</T>
                     <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
         </MainLayout>

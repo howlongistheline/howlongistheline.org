@@ -1,0 +1,13 @@
+_locale: 'en'
+_namespace: addLine
+details: Store Details
+cancel: Cancel
+nameOfStore: Name of store
+fullAddress: Full address of the store
+submit: Submit
+confirmNoStore: Please use the search bar at the top of the home page to verify that the store you are adding is not already listed and then come back and tick this box, thank you!
+confirmLocation: Are you at this location right now? If not, please wait until you next go to this store and add it at that time, rather than adding it now. You may also consider posting this to your social media and asking other people to add stores in your area when they are physically at the location :) For more information on why this is important please see the FAQ page.
+errorName: Please enter the store name and branch
+errorAddress: Please enter the full address of the store
+errorLocation: You must be at the store's location in order to add it or update the status.
+errorNoStore: Please make sure the store is not already listed first.

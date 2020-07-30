@@ -1,0 +1,17 @@
+_locale: 'zh'
+_namespace: nearme
+gettingLocation: 正在獲取你的位置...
+onePerson: 1人在排隊
+noLine: 沒有人在排隊
+PeopleInLine: 人正在排隊
+StockStatus: 貨品資訊
+confirm: 確認
+waiting: 正在排隊
+update: 更新隊伍長度至
+people: 人
+tips: 如果你在商鋪附近，請確認／更新隊伍長度
+duplicated: 重複商店
+wrongLocation: 錯誤地點
+cancel: 取消
+storesNear: 附近的商店
+addStoreButton: 沒有你想找的商店？把它加進來吧！

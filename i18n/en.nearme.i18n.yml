@@ -1,0 +1,17 @@
+_locale: 'en'
+_namespace: nearme
+gettingLocation: Getting your location...
+onePerson: There was 1 person in line
+noLine: 'There was no line '
+PeopleInLine: people in line
+StockStatus: Stock Status
+confirm: Confirm
+waiting: waiting in line
+update: Update line length to
+people: people
+tips: If you are at this store right now, drag the slider to update the line numbers, or confirm the existing numbers.
+duplicated: Report Duplicated
+wrongLocation: Report Wrong Location
+cancel: Cancel
+storesNear: Stores Near You
+addStoreButton: Missing store? Add it now!

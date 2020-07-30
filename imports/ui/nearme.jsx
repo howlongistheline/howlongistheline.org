@@ -16,13 +16,17 @@ import {
     TwitterIcon,
     TwitterShareButton
 } from "react-share";
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('nearme'));
+
 
 function Index({ history }) {
     {/*Initialise props*/ }
     const [clientLocation, setclientLocation] = useCookies(['location']);
     const [nearestShops, setnearestShops] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [loadingMessage, setLoadingMessage] = useState("Getting your location...");
+    const [loadingMessage, setLoadingMessage] = useState(<T>gettingLocation</T>);
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [loadingCardList, setLoadingCardList] = useState({ [""]: false });
@@ -175,12 +179,12 @@ function Index({ history }) {
     function Line(people) {
         if(people) {
             if(people === 1) {
-                return "There was 1 person in line"
+                return <T>onePerson</T>
             } else {
-                return `There were ${getDisplayedLineLength(people)} people in line`
+                return (<div>{getDisplayedLineLength(people)} <T>PeopleInLine</T> </div>)
             }
         } else {
-            return "There was no line"
+            return <T>noLine</T>
         }
     }
 
@@ -226,17 +230,17 @@ function Index({ history }) {
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center" style={{ color: Indicator }}>
-                        {Line(location.line)} {moment(location.lastUpdate).fromNow()}.
+                        {Line(location.line)} {"_"}{moment(location.lastUpdate).fromNow()}.
                     </div>
                     <div className="right">
                         <Button onClick={() => { history.push('/stocks?id=' + location._id) }}>
-                            Stock Status
+                            <T>StockStatus</T>
                        </Button>
                     </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
                     <div className="center">
-                        If you are at this store right now, drag the slider to update the line numbers, or confirm the existing numbers.
+                        <T>tips</T>
                   </div>
                 </ListItem>
                 <ListItem modifier="nodivider">
@@ -251,11 +255,11 @@ function Index({ history }) {
                             onChangeCommitted={function (event, value) {
                                 if (event.type === "mouseup" || event.type === "touchend") {
                                     window.document.activeElement.value = value;
-                                    let buttonText = '';
+                                    let buttonText = <div></div>;
                                     if (location.line === value || (value === 0 && !location.line)) {
-                                        buttonText = `Confirm ${getDisplayedLineLength(location.line)} ${location.line === 1 ? "person is" : "people are"} waiting in line`;
+                                        buttonText = `${i18n.__('nearme.confirm')} ${getDisplayedLineLength(location.line)} ${i18n.__('nearme.people')} ${i18n.__('nearme.waiting')}` ;
                                     } else {
-                                        buttonText = `Update line length to ${getDisplayedLineLength(value)} ${value === 1 ? "person" : "people"}`;
+                                        buttonText = `${i18n.__('nearme.update')} ${getDisplayedLineLength(value)} ${i18n.__('nearme.people')}`;
                                     }
                                     document.getElementById(location._id).innerHTML = buttonText;
                                     updateNumber = value;
@@ -314,7 +318,8 @@ function Index({ history }) {
                                 }, options)
                             }
                         }>
-                            Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line
+                            {/* Confirm {getDisplayedLineLength(location.line)} {location.line === 1 ? "person is" : "people are"} waiting in line */}
+                            <div><T>confirm</T> {getDisplayedLineLength(location.line)}  <T>people</T>  <T>waiting</T> </div>
                 </Button>
                     </div>
                     <div className="right">
@@ -354,22 +359,22 @@ function Index({ history }) {
                   Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
                 </Card>
                 <ListTitle>
-                    Stores Near You
-          </ListTitle>
+                    <T>storesNear</T>
+            </ListTitle>
                 {renderList()}
             </div>
             <Button modifier="large--cta" style={{ position: "fixed", bottom: 0, zIndex: 1000, minHeight: 50 }}
                 // type="submit"
                 onClick={() => { history.push('/addLine') }}>
-                Missing store? Add it now!
+                <T>addStoreButton</T>
                   <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
             <ActionSheet isCancelable isOpen={isOpen}
             onCancel={()=>{setIsOpen(false)}}
             >
-             <ActionSheetButton onClick={()=>{history.push('/duplicated?id=' + reportId)}}> Report Duplicated</ActionSheetButton>
-             <ActionSheetButton onClick={()=>{history.push('/editLocation?id=' + reportId)}}> Report Wrong Location</ActionSheetButton>
-             <ActionSheetButton onClick={()=>{setIsOpen(false)}}>Cancel</ActionSheetButton>
+             <ActionSheetButton onClick={()=>{history.push('/duplicated?id=' + reportId)}}> <T>duplicated</T></ActionSheetButton>
+             <ActionSheetButton onClick={()=>{history.push('/editLocation?id=' + reportId)}}> <T>wrongLocation</T></ActionSheetButton>
+             <ActionSheetButton onClick={()=>{setIsOpen(false)}}><T>cancel</T></ActionSheetButton>
             </ActionSheet>
         </MainLayout>
     )

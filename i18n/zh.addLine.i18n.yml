@@ -1,0 +1,13 @@
+_locale: 'zh'
+_namespace: addLine
+details: 商店資料
+cancel: 取消
+nameOfStore: 商店名稱
+fullAddress: 店鋪地址
+submit: 提交
+confirmNoStore: 請確認你將新增的商店並沒有重複，可嘗試在主頁搜尋欄搜尋，以避免重複登記商鋪
+confirmLocation: 你確認你在商店的附近嗎? 如果不是，請在下次到店時再新增。你亦可嘗試在社交媒體張貼相關資訊！:) 為何這很重要？ 請至 FAQ 頁面.
+errorName: 請輸入店鋪名稱
+errorAddress: 請輸入店鋪地址
+errorLocation: 請確認你是在店鋪附近
+errorNoStore: 請確認商店沒有被重複登記
