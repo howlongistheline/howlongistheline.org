@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import { Locations, LocationsIndex, Additionals } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('duplicates'));
 
 function EditLocation({ history, ready, original }) {
     const [name, setName] = useState("");
@@ -63,10 +66,10 @@ function EditLocation({ history, ready, original }) {
     return (
         <MainLayout>
             <ListItem modifier="nodivider">
-                <div className="left"> Which map below best shows the location of this store?</div>
+                <div className="left"> <T>bestLocation</T></div>
                 <div className="right">
                     <Button onClick={() => { history.push('/') }}>
-                        Cancel
+                        <T>cancel</T>
                     </Button>
                 </div>
             </ListItem>
@@ -79,10 +82,10 @@ function EditLocation({ history, ready, original }) {
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
                 <ListItem modifier="nodivider">
-                    <div className="left"> Does everything look ok? Please note that if you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.</div>
+                    <div className="left"> <T>confirmAll</T></div>
                     <div className="right">
                         <Button onClick={() => { history.push('/') }}>
-                            Cancel
+                            <T>cancel</T>
                             </Button>
                     </div>
                 </ListItem>
@@ -117,7 +120,7 @@ function EditLocation({ history, ready, original }) {
                         return
                     })
                 }}>
-                Confirm
+                <T>confirm</T>
                 <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
         </MainLayout>

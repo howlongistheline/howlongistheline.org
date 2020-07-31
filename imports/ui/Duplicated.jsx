@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import { Locations, LocationsIndex, Additionals } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('duplicates'));
 
 function Duplicated({ history, ready, original }) {
     const [name, setName] = useState("");
@@ -209,19 +212,19 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem modifier="nodivider">
-                            <div className="left">Report Duplicate Stores</div>
+                            <div className="left"><T>duplicateTitle</T></div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
-                                    Cancel
+                                    <T>cancel</T>
                 </Button>
                             </div>
                         </ListItem>
                         <ListTitle style={{ marginTop: 50 }}>
-                                    Selected Listings
+                                    <T>selected</T>
                         </ListTitle>
                                 {renderSelected()}
                         <ListItem modifier="nodivider">
-                        Find all other listings that are referring to the same store as above. Do not add unrelated stores, even if they are also duplicates (of another store).
+                        <T>instruction</T>
                             <SearchInput style={{ width: "80%", backgroundColor: "#d9f4ff", color: "black" }} placeholder="Type the name of a store or locality to find stores" onChange={(e) => {
                                 setSearch(e.target.value)
                             }} />
@@ -234,7 +237,7 @@ function Duplicated({ history, ready, original }) {
                         onClick={() => {
                             submit()
                         }}>
-                        Submit
+                        <T>submit</T>
                     <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
                     </Button>
                 </MainLayout>
@@ -244,10 +247,10 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem modifier="nodivider">
-                            <div className="left"> Please verify that these are really all duplicates of the same store. </div>
+                            <div className="left"> <T>verify</T> </div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
-                                    Cancel
+                                    <T>cancel</T>
                                 </Button>
                             </div>
                         </ListItem>
@@ -258,7 +261,7 @@ function Duplicated({ history, ready, original }) {
                         onClick={() => {
                             setStep(2)
                         }}>
-                        Confirm
+                        <T>confirm</T>
                     <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
                     </Button>
                 </MainLayout>
@@ -267,10 +270,10 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which is the best name to use for this particular store?</div>
+                        <div className="left"> <T>bestName</T></div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
-                                Cancel
+                                <T>cancel</T>
                             </Button>
                         </div>
                     </ListItem>
@@ -281,10 +284,10 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which is the most accurate address for this storev?</div>
+                        <div className="left"> <T>bestAddress</T></div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
-                                Cancel
+                                <T>cancel</T>
                             </Button>
                         </div>
                     </ListItem>
@@ -295,10 +298,10 @@ function Duplicated({ history, ready, original }) {
             return (
                 <MainLayout>
                     <ListItem modifier="nodivider">
-                        <div className="left"> Which map below best shows the location of this store?</div>
+                        <div className="left"> <T>bestLocation</T></div>
                         <div className="right">
                             <Button onClick={() => { history.push('/') }}>
-                                Cancel
+                                <T>cancel</T>
                             </Button>
                         </div>
                     </ListItem>
@@ -310,10 +313,10 @@ function Duplicated({ history, ready, original }) {
                 <MainLayout>
                     <div style={{ marginBottom: 55 }}>
                         <ListItem modifier="nodivider">
-                            <div className="left"> Does everything look ok? Please note that if you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.</div>
+                            <div className="left"> <T>confirmAll</T></div>
                             <div className="right">
                                 <Button onClick={() => { history.push('/') }}>
-                                    Cancel
+                                    <T>cancel</T>
                             </Button>
                             </div>
                         </ListItem>
@@ -353,7 +356,7 @@ function Duplicated({ history, ready, original }) {
                                 return
                             })
                         }}>
-                        Confirm
+                        <T>confirm</T>
                 <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
                     </Button>
                 </MainLayout>

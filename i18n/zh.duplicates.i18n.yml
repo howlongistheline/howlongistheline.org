@@ -1,0 +1,13 @@
+_locale: 'zh'
+_namespace: duplicates
+duplicateTitle: 重複商店
+cancel: 取消
+selected: 目標商店
+instruction: 請選擇所有跟以上目標重複的商店，請勿選擇其他無關的商店，即使是其他商店的重複商店
+submit: 提交
+verify: 請確認以下都是目標的重複商店
+confirm: 確認
+bestName: 以下那個名字最適合此商店的名字？
+bestAddress: 那一個地址最為準確？
+bestLocation: 那一個地圖位置最為準確？
+confirmAll: 以下的資訊都正確嗎？請勿惡意提供錯誤資訊！

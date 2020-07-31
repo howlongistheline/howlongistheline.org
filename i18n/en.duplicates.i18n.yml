@@ -1,0 +1,13 @@
+_locale: 'en'
+_namespace: duplicates
+duplicateTitle: Report Duplicate Stores
+cancel: Cancel
+selected: Selected Listings
+instruction: Find all other listings that are referring to the same store as above. Do not add unrelated stores, even if they are also duplicates (of another store).
+submit: Submit
+verify: Please verify that these are really all duplicates of the same store.
+confirm: Confirm
+bestName: Which is the best name to use for this particular store?
+bestAddress: Which is the most accurate address for this store?
+bestLocation: Which map below best shows the location of this store?
+confirmAll: Does everything look ok? Please note that if you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
