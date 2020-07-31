@@ -1,0 +1,8 @@
+_locale: 'zh'
+_namespace: editLine
+warningLocation: 你確定你在商店附近嗎？ 看起來你不像在商店附近，或者是我們的座標錯誤了。
+suggest: 如果你不是在商店附近，請嘗試找在附近朋友幫忙更新吧 :)
+warningInfo: 如果你在商店附近，請提交以更新我們的座標！ 請勿惡意提交錯誤資訊！
+submit: 提交
+submitInfo1 : 提交以確認你在商店附近，而且
+submitInfo2: 人正在排隊

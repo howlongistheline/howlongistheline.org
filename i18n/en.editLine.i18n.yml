@@ -1,0 +1,8 @@
+_locale: 'en'
+_namespace: editLine
+warningLocation: Are you really at this location? It appears that either you are not at the store, or we have the wrong coordinates for the store.
+suggest: If you are not at this store right now, ask your friends to update this store for you whenever they go.
+warningInfo: If you are at this store right now, please submit to reset the location. If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
+submit: Submit
+submitInfo1: Press Submit below to confirm that you are at the store, and 
+submitInfo2: people in line right now.

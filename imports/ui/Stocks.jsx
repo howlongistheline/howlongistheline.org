@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import { Locations, Additionals, LocationsIndex } from '../api/lines.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('stock'));
 
 function Stocks({ details, additional, history }) {
     if (!details || !additional) {
@@ -20,7 +23,7 @@ function Stocks({ details, additional, history }) {
         if (additional.outofStock == undefined) {
             return (
                 <ListItem>
-                    No data for this store right now.
+                    <T>noData</T>
                 </ListItem>
             )
         }
@@ -33,7 +36,7 @@ function Stocks({ details, additional, history }) {
                         { stock.refilled ? moment(stock.refillTime).fromNow() : moment(stock.time).fromNow()}
                     </div>
                     <div className="right">
-                    { stock.refilled ? <div style={{color: "green"}}> Now back in stock &nbsp; </div> :
+                    { stock.refilled ? <div style={{color: "green"}}> <T>nowBack</T> </div> :
                         <Button onClick={() => {
                             Meteor.call('Outofstock.refilled', details._id, stock, (err, result) => {
                                 if (err) {
@@ -42,7 +45,7 @@ function Stocks({ details, additional, history }) {
                                 }
                             })
                         }}>
-                            Back in stock</Button>}
+                            <T>backInStock</T></Button>}
                     </div>
                 </ListItem>
             )
@@ -56,7 +59,6 @@ function Stocks({ details, additional, history }) {
         }
         if (sanitisedName == "" || sanitisedName.length < 3) {
             toast("Please enter a meaningful description.");
-            console.log(err)
             return
         }
         Meteor.call("Outofstock.insert", details._id, sanitisedName, (err, result) => {
@@ -75,7 +77,7 @@ function Stocks({ details, additional, history }) {
             <div style={{ marginBottom: 55 }}>
                 <Card>
                     <ListTitle>
-                        Store Details
+                        <T>storeDetails</T>
                     </ListTitle>
                     <ListItem modifier="nodivider">
                         {details.name}
@@ -86,7 +88,7 @@ function Stocks({ details, additional, history }) {
                 </Card>
                 <Card>
                     <ListTitle>
-                        Stock Status:
+                        <T>stockStatus</T>
                     </ListTitle>
                     <ListItem modifier="nodivider">
                         <Input
@@ -97,14 +99,14 @@ function Stocks({ details, additional, history }) {
                             placeholder='Is anything out of stock?' />
                         <div className="right">
                             <Button onClick={() => { addStock() }}>
-                                Add Item
+                                <T>addItem</T>
                             </Button>
                         </div>
                     </ListItem>
                 </Card>
                 <Card>
                     <ListTitle>
-                        Out of Stock Items
+                        <T>outOfStock</T>
                     </ListTitle>
                     {renderStocks()}
                 </Card>

@@ -1,0 +1,9 @@
+_locale: 'zh'
+_namespace: stock
+noData: 暫時沒有資料
+nowBack: 已補充貨品
+backInStock: 確認已補充貨品
+storeDetails: 商店資訊
+stockStatus: 商品資訊
+addItem: 新增缺貨商品
+outOfStock: 缺貨商品

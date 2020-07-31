@@ -7,6 +7,9 @@ import { Locations } from '../api/lines.js';
 import moment from 'moment';
 import Slider from "@material-ui/core/Slider";
 import {getDisplayedLineLength, MAX_LINE_LENGTH} from "./Util";
+import i18n from 'meteor/universe:i18n'; // <--- 1
+
+const T = i18n.createComponent(i18n.createTranslator('editLine'));
 
 function EditLine({ history, details }) {
 
@@ -20,6 +23,18 @@ function EditLine({ history, details }) {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(details.status); //0:not selected
     const [lineSize, setLineSize] = useState(parseInt(new URLSearchParams(window.location.search).get('lineSize')))
+
+    function Line(people) {
+        if(people) {
+            if(people === 1) {
+                return <T _namespace='nearme'>onePerson</T>
+            } else {
+                return (<div>{getDisplayedLineLength(people)} <T _namespace='nearme'>PeopleInLine</T> </div>)
+            }
+        } else {
+            return <T _namespace='nearme'>noLine</T>
+        }
+    }
 
     function renderCard(location) {
         var Indicator = "green"
@@ -47,7 +62,8 @@ function EditLine({ history, details }) {
                   </ListItem>
                   <ListItem modifier="nodivider">
                       <div className="center" style={{color:Indicator}}>
-                          There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}.
+                          {/* There {location.line === 1 ? "was" : "were"} {getDisplayedLineLength(location.line)} {location.line === 1 ? "person" : "people"} in line {moment(location.lastUpdate).fromNow()}. */}
+                          {Line(location.line)} {"_"}{moment(location.lastUpdate).fromNow()}
                       </div>
                       <div className="right">
                       </div>
@@ -71,7 +87,7 @@ function EditLine({ history, details }) {
                   </ListItem>
                   <ListItem modifier="nodivider">
                   <div className="center">
-                      Press Submit below to confirm that you are at the store, and there {lineSize === 1 ? "is" : "are"} {getDisplayedLineLength(lineSize)} {lineSize === 1 ? "person" : "people"} in line right now.
+                        <T>submitInfo1</T> {getDisplayedLineLength(lineSize)} <T>submitInfo2</T>
                   </div>
                   </ListItem>
               </Card>
@@ -120,15 +136,16 @@ function EditLine({ history, details }) {
         <MainLayout>
             <div style={{ marginBottom: 55 }}>
                 <Card class="isa_warning">
-                    <i className="fa fa-warning"/> Are you really at this location?
-                    It appears that either you are not at the store, or we have the wrong coordinates for the store.
+                    <i className="fa fa-warning"/> 
+                    <T>warningLocation</T>
                 </Card>
                 <Card class="isa_info">
-                    <i className="fas fa-info-circle"/> If you are not at this store right now: ask your friends to update this store for you whenever they go.
+                    <i className="fas fa-info-circle"/> 
+                    <T>suggest</T>
                 </Card>
                 <Card class="isa_info" onClick={()=>{console.log(123)}}>
-                    <i className="fas fa-info-circle"/> If you are at this store right now, please submit to reset the location.
-                    If you are intentionally providing misleading information your IP address, device fingerprint, and physical location will be published.
+                    <i className="fas fa-info-circle"/>
+                    <T>warningInfo</T>
                 </Card>
                 {renderCard(details)}
             </div>
@@ -137,7 +154,7 @@ function EditLine({ history, details }) {
                 onClick={() => {
                     submit()
                 }}>
-                Submit
+                <T>submit</T>
                     <Icon style={{ marginLeft: 10 }} icon='fa-plus' />
             </Button>
         </MainLayout>

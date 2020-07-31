@@ -1,0 +1,9 @@
+_locale: 'en'
+_namespace: stock
+noData: No data for this store right now.
+nowBack: Now back in stock
+backInStock: Back in stock
+storeDetails: Store Details
+stockStatus: Stock Status
+addItem: Add Item
+outOfStock:  Out of Stock Items

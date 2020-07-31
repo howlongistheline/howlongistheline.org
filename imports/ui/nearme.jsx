@@ -35,6 +35,7 @@ function Index({ history }) {
 
     useEffect(() => {
         checkClientLocation()
+        
     }, [])
 
     useEffect(() => {
@@ -306,6 +307,10 @@ function Index({ history }) {
                                         }
                                         // setLoading(false)
                                         alert("The store has been updated, thank you!")
+                                        // setLoadingCardList({
+                                        //     ...loadingCardList,  //take existing key-value pairs and use them in our new state,
+                                        //     [location._id]: false   //define new key-value pair with new uuid and [].
+                                        // })
                                         history.go(0)
                                     });
                                 }, (err) => {
@@ -355,8 +360,7 @@ function Index({ history }) {
             </div>
             <div className="border-top" style={{ marginBottom: 55 }}>
                 <Card class="isa_info">
-                    <i className="fas fa-info-circle" /> If something doesn't work properly, check back a few days later and it will probably be fixed.
-                  Go <a href="https://github.com/howlongistheline/howlongistheline.org/issues">here</a> to see what the community behind this is currently working on.
+                    <i className="fas fa-info-circle" /> <T>developInfo1</T> <a href="https://github.com/howlongistheline/howlongistheline.org/issues"><T>developInfo2</T></a> <T>developInfo3</T>
                 </Card>
                 <ListTitle>
                     <T>storesNear</T>

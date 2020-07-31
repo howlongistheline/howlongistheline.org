@@ -2,11 +2,6 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from './MainLayout'
 import { Input, Select, ListItem, ListTitle, Button, Icon, ProgressCircular, Checkbox } from 'react-onsenui'
 import { toast } from 'react-toastify';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import i18n from 'meteor/universe:i18n'; // <--- 1
 
 const T = i18n.createComponent(i18n.createTranslator('addLine'));

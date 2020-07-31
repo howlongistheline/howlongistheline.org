@@ -15,3 +15,6 @@ wrongLocation: Report Wrong Location
 cancel: Cancel
 storesNear: Stores Near You
 addStoreButton: Missing store? Add it now!
+developInfo1: If something doesn't work properly, check back a few days later and it will probably be fixed. Go
+developInfo2: here
+developInfo3: to see what the community behind this is currently working on.
