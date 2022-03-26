@@ -15,7 +15,7 @@
     "body-parser": "^1.19.0",
     "history": "^4.10.1",
     "meteor-node-stubs": "^1.0.0",
-    "minimist": ">=1.2.2",
+    "minimist": ">=1.2.6",
     "moment": "^2.24.0",
     "onsenui": "^2.10.10",
     "react": "^16.13.0",
